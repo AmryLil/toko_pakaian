@@ -5,8 +5,6 @@
         TERRA SHOP
     </div>
 
-
-
     {{-- menu --}}
     <nav class="space-x-5 text-sm flex ">
         <a href="/"
@@ -20,19 +18,19 @@
             onmouseover="this.style.backgroundColor='var(--color-slate-900)';"
             onmouseout="this.style.backgroundColor='';">Toko</a>
 
-        <a href="/kategori"
+        <a href="#"
             class="text-gray-900 hover:text-white {{ Request::is('kategori') ? 'bg-slate-900 text-white' : '' }} px-4 py-2 "
             style="transition: background-color 0.3s;"
             onmouseover="this.style.backgroundColor='var(--color-slate-900)';"
             onmouseout="this.style.backgroundColor='';">Kategori</a>
 
-        <a href="/about"
+        <a href="#"
             class="text-gray-900 hover:text-white {{ Request::is('about') ? 'bg-slate-900 text-white' : '' }} px-4 py-2 "
             style="transition: background-color 0.3s;"
             onmouseover="this.style.backgroundColor='var(--color-slate-900)';"
             onmouseout="this.style.backgroundColor='';">Tentang Kami</a>
 
-        <a href="/contact-us"
+        <a href="#"
             class="text-gray-900 hover:text-white {{ Request::is('contact-us') ? 'bg-slate-900 text-white' : '' }} px-4 py-2 "
             style="transition: background-color 0.3s;"
             onmouseover="this.style.backgroundColor='var(--color-slate-900)';"
@@ -58,13 +56,11 @@
 
     </nav>
 
-
-
     {{-- auth --}}
     @if (Auth::check())
         {{-- Jika pengguna sudah login --}}
         <div class="flex gap-2">
-            <a href="{{ route('cart.view') }}" class="dropdown dropdown-end">
+            <a href="#" class="dropdown dropdown-end">
                 <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
                     <div class="indicator">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -74,7 +70,6 @@
                         </svg>
                     </div>
                 </div>
-
             </a>
 
             <div class="drawer drawer-end z-50">
@@ -82,11 +77,10 @@
                 <div class="drawer-content">
                     <!-- Page content here -->
                     <label for="my-drawer-4" class="drawer-button ">
-
                         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                             <div class="w-10 rounded-full">
                                 <img alt="Tailwind CSS Navbar component"
-                                    src="{{ Auth::user()->profile_photo_222405 ? asset('storage/' . Auth::user()->profile_photo_222405) : asset('images/produk.png') }}"
+                                    src="{{ Auth::user()->profile_photo_222405 ? asset('storage/' . Auth::user()->profile_photo_222405) : 'https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-541.jpg?ga=GA1.1.521895176.1747324526&semt=ais_hybrid&w=740' }}"
                                     alt="Avatar" />
                             </div>
                         </div>
@@ -101,7 +95,7 @@
                             <div class="rounded-lg w-full max-w-md p-6 text-center bg-white shadow-md">
                                 <div class="flex justify-center">
                                     <img class="w-32 h-32 rounded-full border-4 border-green-600 object-cover"
-                                        src="{{ Auth::user()->profile_photo_222405 ? asset('storage/' . Auth::user()->profile_photo_222405) : asset('images/produk.png') }}"
+                                        src="{{ Auth::user()->profile_photo_222405 ? asset('storage/' . Auth::user()->profile_photo_222405) : 'https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-541.jpg?ga=GA1.1.521895176.1747324526&semt=ais_hybrid&w=740' }}"
                                         alt="Avatar">
                                 </div>
                                 <h2 class="mt-4 text-2xl font-semibold text-gray-800">{{ session('name') }}</h2>
@@ -111,76 +105,13 @@
                             <div
                                 class="cursor-pointer w-full max-w-md h-[60vh] bg-gray-100 rounded-t-3xl shadow-lg p-6">
                                 <h3 class="text-gray-700 font-semibold mb-2">Preferences</h3>
-                                <a href="{{ route('user.profile') }}"
-                                    class="flex items-center justify-between py-3 border-b border-gray-200">
-                                    <div class="flex items-center space-x-3">
-                                        <svg class="group-hover:stroke-black stroke-black"
-                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                            stroke="black" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" height="20" width="20">
-                                            <path d="M12 20h9" />
-                                            <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4Z" />
-                                        </svg>
-                                        <p class="text-gray-700">Profile Saya</p>
-                                    </div>
-                                </a>
 
-                                <a href="{{ route('pesanan') }}"
-                                    class="flex items-center justify-between py-3 border-b border-gray-200">
-                                    <div class="flex items-center space-x-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                            stroke="#000000" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" height="16" width="16">
-                                            <path d="M6 6h15l-1.5 9H7.5L6 6z" />
-                                            <circle cx="9" cy="20" r="1" />
-                                            <circle cx="18" cy="20" r="1" />
-                                            <path d="M6 6l-2 0" />
-                                        </svg>
-                                        <p class="text-gray-700">Pesanan Saya</p>
-                                    </div>
-                                </a>
-                                <a href="{{ route('transaksi.index') }}"
-                                    class="flex items-center justify-between py-3 border-b border-gray-200">
-                                    <div class="flex items-center space-x-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 -0.5 16 16"
-                                            fill="none" stroke="#000000" stroke-linecap="round"
-                                            stroke-linejoin="round" id="History--Streamline-Tabler" height="16"
-                                            width="16">
-                                            <desc>History Streamline Icon: https://streamlinehq.com</desc>
-                                            <path d="m7.5 5 0 2.5 1.25 1.25" stroke-width="1"></path>
-                                            <path
-                                                d="M1.90625 6.875a5.625 5.625 0 1 1 0.3125 2.5m-0.3125 3.125v-3.125h3.125"
-                                                stroke-width="1"></path>
-                                        </svg>
-                                        <p class="text-gray-700">Riwayat Transaksi</p>
-                                    </div>
-                                </a>
-                                <a href={{ route('cart.view') }}
-                                    class="cursor-pointer flex items-center justify-between py-3 border-b border-gray-200">
-                                    <div class="flex items-center space-x-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 -0.5 16 16"
-                                            fill="none" stroke="#000000" stroke-linecap="round"
-                                            stroke-linejoin="round" id="Shopping-Cart--Streamline-Tabler"
-                                            height="16" width="16">
-                                            <desc>Shopping Cart Streamline Icon: https://streamlinehq.com</desc>
-                                            <path d="M2.5 11.875a1.25 1.25 0 1 0 2.5 0 1.25 1.25 0 1 0 -2.5 0"
-                                                stroke-width="1"></path>
-                                            <path d="M9.375 11.875a1.25 1.25 0 1 0 2.5 0 1.25 1.25 0 1 0 -2.5 0"
-                                                stroke-width="1"></path>
-                                            <path d="M10.625 10.625H3.75V1.875H2.5" stroke-width="1"></path>
-                                            <path d="m3.75 3.125 8.75 0.625 -0.625 4.375H3.75" stroke-width="1"></path>
-                                        </svg>
-                                        <p class="text-gray-700">Keranjang</p>
-                                    </div>
-
-                                </a>
 
                                 <div class="cursor-pointer flex items-center justify-between py-3">
                                     <div class="flex items-center space-x-3 text-red-600">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 -0.5 16 16"
-                                            fill="none" stroke="#dc2626" stroke-linecap="round"
-                                            stroke-linejoin="round" id="Logout-2--Streamline-Tabler" height="16"
-                                            width="16">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 -0.5 16 16" fill="none"
+                                            stroke="#dc2626" stroke-linecap="round" stroke-linejoin="round"
+                                            id="Logout-2--Streamline-Tabler" height="16" width="16">
                                             <desc>Logout 2 Streamline Icon: https://streamlinehq.com</desc>
                                             <path
                                                 d="M6.25 5V3.75a1.25 1.25 0 0 1 1.25 -1.25h4.375a1.25 1.25 0 0 1 1.25 1.25v7.5a1.25 1.25 0 0 1 -1.25 1.25h-4.375a1.25 1.25 0 0 1 -1.25 -1.25v-1.25"
@@ -196,7 +127,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </ul>
                 </div>
             </div>
