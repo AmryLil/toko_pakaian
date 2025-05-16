@@ -14,19 +14,19 @@ class CreateTransaksiTable extends Migration
      */
     public function up()
     {
-        Schema::create('transaksi', function (Blueprint $table) {
-            $table->id('id_transaksi');
-            $table->unsignedBigInteger('id_pelanggan');
-            $table->unsignedBigInteger('id_produk');
-            $table->integer('jumlah');
-            $table->decimal('harga_total', 10, 2);
-            $table->enum('status', ['pending', 'dikemas', 'dikirim', 'selesai']);
-            $table->string('bukti_tf');
-            $table->timestamp('tanggal_transaksi')->default(DB::raw('CURRENT_TIMESTAMP'));
+        Schema::create('transaksi_222405', function (Blueprint $table) {
+            $table->string('id_transaksi_222405')->primary();
+            $table->string('id_user_222405');
+            $table->string('id_produk_222405');
+            $table->integer('jumlah_222405');
+            $table->decimal('harga_total_222405', 10, 2);
+            $table->enum('status_222405', ['pending', 'dikemas', 'dikirim', 'selesai']);
+            $table->string('bukti_tf_222405');
+            $table->timestamp('tanggal_transaksi_222405')->default(DB::raw('CURRENT_TIMESTAMP'));
 
             $table->timestamps();
-            $table->foreign('id_pelanggan')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('id_produk')->references('id')->on('produk')->onDelete('cascade');
+            $table->foreign('id_user_222405')->references('id_user_222405')->on('users_222405')->onDelete('cascade');
+            $table->foreign('id_produk_222405')->references('id_produk_222405')->on('produk_222405')->onDelete('cascade');
         });
     }
 

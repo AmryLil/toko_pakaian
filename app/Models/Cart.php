@@ -9,16 +9,18 @@ class Cart extends Model
 {
     use HasFactory;
 
-    protected $table      = 'carts';
-    protected $primaryKey = 'id';
+    protected $table      = 'carts_222405';
+    protected $primaryKey = 'id_cart_222405';
+    public $incrementing  = false;  // Penting agar Laravel tidak menganggap ID auto-increment
+    protected $keyType    = 'string';  // Karena UUID adalah string
 
     protected $fillable = [
-        'user_id'
+        'id_user_222405'
     ];
 
     public function items()
     {
-        return $this->hasMany(CartItem::class, 'cart_id');
+        return $this->hasMany(CartItem::class, 'id_cart_222405');
     }
 
     public function cartItems()

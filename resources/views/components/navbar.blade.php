@@ -86,7 +86,7 @@
                         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                             <div class="w-10 rounded-full">
                                 <img alt="Tailwind CSS Navbar component"
-                                    src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : asset('images/produk.png') }}"
+                                    src="{{ Auth::user()->profile_photo_222405 ? asset('storage/' . Auth::user()->profile_photo_222405) : asset('images/produk.png') }}"
                                     alt="Avatar" />
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                             <div class="rounded-lg w-full max-w-md p-6 text-center bg-white shadow-md">
                                 <div class="flex justify-center">
                                     <img class="w-32 h-32 rounded-full border-4 border-green-600 object-cover"
-                                        src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : asset('images/produk.png') }}"
+                                        src="{{ Auth::user()->profile_photo_222405 ? asset('storage/' . Auth::user()->profile_photo_222405) : asset('images/produk.png') }}"
                                         alt="Avatar">
                                 </div>
                                 <h2 class="mt-4 text-2xl font-semibold text-gray-800">{{ session('name') }}</h2>

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CategoryProductController extends Controller
 {
@@ -31,16 +32,17 @@ class CategoryProductController extends Controller
     public function store(Request $request)
     {
         $fileName = null;
-        if ($request->hasFile('path_img')) {
-            $image    = $request->file('path_img');
+        if ($request->hasFile('path_img_222405')) {
+            $image    = $request->file('path_img_222405');
             $fileName = $image->store('images', 'public');
         }
 
         try {
             CategoryProduct::create([
-                'nama'      => $request->input('nama'),
-                'deskripsi' => $request->input('deskripsi'),
-                'path_img'  => $fileName
+                'id_kategori_222405' => (string) Str::uuid(),  // Generate UUID for the primary key
+                'nama_222405'        => $request->input('nama_222405'),
+                'deskripsi_222405'   => $request->input('deskripsi_222405'),
+                'path_img_222405'    => $fileName
             ]);
         } catch (\Exception $e) {
             Log::error('Gagal menyimpan kategori:', ['error' => $e->getMessage()]);
@@ -68,19 +70,19 @@ class CategoryProductController extends Controller
     {
         $category = CategoryProduct::findOrFail($id);
 
-        if ($request->hasFile('path_img')) {
-            if ($category->path_img && !filter_var($category->path_img, FILTER_VALIDATE_URL)) {
-                if (Storage::exists('public/' . $category->path_img)) {
-                    Storage::delete('public/' . $category->path_img);
+        if ($request->hasFile('path_img_222405')) {
+            if ($category->path_img_222405 && !filter_var($category->path_img_222405, FILTER_VALIDATE_URL)) {
+                if (Storage::exists('public/' . $category->path_img_222405)) {
+                    Storage::delete('public/' . $category->path_img_222405);
                 }
             }
 
-            $path               = $request->file('path_img')->store('images', 'public');
-            $category->path_img = $path;
+            $path                      = $request->file('path_img_222405')->store('images', 'public');
+            $category->path_img_222405 = $path;
         }
         try {
-            $category->nama      = $request->input('nama');
-            $category->deskripsi = $request->input('deskripsi');
+            $category->nama_222405      = $request->input('nama_222405');
+            $category->deskripsi_222405 = $request->input('deskripsi_222405');
             $category->save();
         } catch (\Exception $e) {
             Log::error('Gagal menyimpan kategori:', ['error' => $e->getMessage()]);

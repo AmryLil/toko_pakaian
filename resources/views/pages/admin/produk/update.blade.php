@@ -12,7 +12,7 @@
         @endif
 
         <!-- Form Edit Produk -->
-        <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('products.update', $product->id_produk_222405) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -21,7 +21,7 @@
                 <label for="nama" class="block text-gray-700 font-semibold">Product Name</label>
                 <input type="text" name="nama" id="nama"
                     class="mt-1 w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value="{{ old('nama', $product->nama) }}">
+                    value="{{ old('nama', $product->nama_222405) }}">
                 @error('nama')
                     <small class="text-red-500">{{ $message }}</small>
                 @enderror
@@ -32,7 +32,7 @@
                 <label for="deskripsi" class="block text-gray-700 font-semibold">Description</label>
                 <textarea name="deskripsi" id="deskripsi"
                     class="mt-1 w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    rows="5">{{ old('deskripsi', $product->deskripsi) }}</textarea>
+                    rows="5">{{ old('deskripsi', $product->deskripsi_222405) }}</textarea>
                 @error('deskripsi')
                     <small class="text-red-500">{{ $message }}</small>
                 @enderror
@@ -43,7 +43,7 @@
                 <label for="harga" class="block text-gray-700 font-semibold">Price</label>
                 <input type="number" name="harga" id="harga"
                     class="mt-1 w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value="{{ old('harga', $product->harga) }}">
+                    value="{{ old('harga', $product->harga_222405) }}">
                 @error('harga')
                     <small class="text-red-500">{{ $message }}</small>
                 @enderror
@@ -54,7 +54,7 @@
                 <label for="jumlah" class="block text-gray-700 font-semibold">Stock Quantity</label>
                 <input type="number" name="jumlah" id="jumlah"
                     class="mt-1 w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value="{{ old('jumlah', $product->jumlah) }}">
+                    value="{{ old('jumlah', $product->jumlah_222405) }}">
                 @error('jumlah')
                     <small class="text-red-500">{{ $message }}</small>
                 @enderror
@@ -67,9 +67,9 @@
                     class="mt-1 w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="">Select Category</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}"
-                            {{ old('kategori_id', $product->kategori_id) == $category->id ? 'selected' : '' }}>
-                            {{ $category->nama }}
+                        <option value="{{ $category->id_kategori_222405 }}"
+                            {{ old('kategori_id', $product->id_kategori_222405) == $category->id_kategori_222405 ? 'selected' : '' }}>
+                            {{ $category->nama_222405 }}
                         </option>
                     @endforeach
                 </select>
@@ -83,8 +83,8 @@
                 <label for="path_img" class="block text-gray-700 font-semibold">Product Image</label>
                 <input type="file" name="path_img" id="path_img"
                     class="mt-1 w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @if ($product->path_img)
-                    <img src="{{ Str::startsWith($product->path_img, 'http') ? $product->path_img : asset('storage/' . $product->path_img) }}"
+                @if ($product->path_img_222405)
+                    <img src="{{ Str::startsWith($product->path_img_222405, 'http') ? $product->path_img_222405 : asset('storage/' . $product->path_img_222405) }}"
                         alt="Current Image" class="mt-2 h-32 rounded-lg shadow-md">
                 @else
                     <p class="text-gray-500 mt-2">No image available.</p>
@@ -96,6 +96,12 @@
 
             <!-- Tombol Submit -->
             <div class="flex items-center justify-between mt-6">
+                <a href="{{ route('dashboard.products') }}" class="text-gray-600 hover:text-gray-800">
+                    <button type="button"
+                        class="bg-gray-300 text-gray-800 py-2 px-6 rounded-lg hover:bg-gray-400 transition duration-200">
+                        Back to List
+                    </button>
+                </a>
                 <button type="submit"
                     class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-200">
                     Update Product

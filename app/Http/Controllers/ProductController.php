@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoryProduct;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        // Debug untuk melihat request parameter
-
         $products = Product::paginate(15);
 
         if ($request->has('page')) {
@@ -27,7 +27,7 @@ class ProductController extends Controller
 
     public function paginate(Request $request)
     {
-        $size     = $request->query('size', 12);  // Default 15 produk per halaman
+        $size     = $request->query('size', 12);  // Default 12 produk per halaman
         $products = Product::paginate($size);
 
         return view('list_product', compact('products'));
@@ -47,6 +47,12 @@ class ProductController extends Controller
             'title'    => 'Daftar Produk',
             'products' => $products
         ]);
+    }
+
+    public function show($id)
+    {
+        $product = Product::with('category')->findOrFail($id);
+        return view('pages.admin.produk.show', compact('product'));
     }
 
     public function create()
@@ -69,19 +75,22 @@ class ProductController extends Controller
         ]);
 
         // Menangani pengunggahan gambar
+        $imagePath = null;
         if ($request->hasFile('path_img')) {
             $image     = $request->file('path_img');
             $imagePath = $image->store('product_images', 'public');  // Menyimpan gambar di folder 'public/product_images'
         }
 
-        // Menyimpan data produk ke database
+        // Menyimpan data produk ke database dengan field yang sesuai model baru
         Product::create([
-            'nama'        => $request->input('nama'),
-            'deskripsi'   => $request->input('deskripsi'),
-            'harga'       => $request->input('harga'),
-            'jumlah'      => $request->input('jumlah'),
-            'kategori_id' => $request->input('kategori_id'),
-            'path_img'    => $imagePath ?? null,  // Menyimpan path gambar
+            'id_produk_222405'   => Str::uuid()->toString(),  // Generate UUID untuk primary key
+            'nama_222405'        => $request->input('nama'),
+            'deskripsi_222405'   => $request->input('deskripsi'),
+            'harga_222405'       => $request->input('harga'),
+            'jumlah_222405'      => $request->input('jumlah'),
+            'id_kategori_222405' => $request->input('kategori_id'),
+            'path_img_222405'    => $imagePath ?? null,  // Menyimpan path gambar
+            'created_at_222405'  => Carbon::now()  // Set created_at
         ]);
 
         return redirect()->route('dashboard.products');
@@ -97,28 +106,27 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Debug data input dan ID produk
-
         $product = Product::findOrFail($id);
 
         if ($request->hasFile('path_img')) {
-            if ($product->path_img && Storage::exists('public/' . $product->path_img)) {
-                Storage::delete('public/' . $product->path_img);
+            if ($product->path_img_222405 && Storage::exists('public/' . $product->path_img_222405)) {
+                Storage::delete('public/' . $product->path_img_222405);
             }
 
-            $path              = $request->file('path_img')->store('images', 'public');
-            $product->path_img = $path;
+            $path                     = $request->file('path_img')->store('images', 'public');
+            $product->path_img_222405 = $path;
         }
 
-        $product->nama        = $request->input('nama');
-        $product->deskripsi   = $request->input('deskripsi');
-        $product->harga       = $request->input('harga');
-        $product->kategori_id = $request->input('kategori_id');
-        $product->jumlah      = $request->input('jumlah');
+        $product->nama_222405        = $request->input('nama');
+        $product->deskripsi_222405   = $request->input('deskripsi');
+        $product->harga_222405       = $request->input('harga');
+        $product->id_kategori_222405 = $request->input('kategori_id');
+        $product->jumlah_222405      = $request->input('jumlah');
 
         try {
             $product->save();
         } catch (\Exception $e) {
+            Log::error('Failed to update product: ' . $e->getMessage());
         }
 
         return redirect()->route('dashboard.products')->with('success', 'Produk berhasil diperbarui.');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Product;
 use App\Models\Transaksi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -11,13 +12,14 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
     // Method untuk menampilkan semua transaksi
     public function index()
     {
-        $transaksi = Transaksi::where('id_pelanggan', Auth::id())->get();
+        $transaksi = Transaksi::where('id_user_222405', Auth::id())->get();
         return response()->json($transaksi);
     }
 
@@ -49,7 +51,7 @@ class PaymentController extends Controller
         }
 
         // Ambil data keranjang berdasarkan user_id
-        $cart = Cart::where('user_id', $userId)->first();
+        $cart = Cart::where('id_user_222405', $userId)->first();
 
         // Debugging: Log cart data
         Log::debug('Cart data: ' . json_encode($cart));
@@ -59,7 +61,7 @@ class PaymentController extends Controller
         }
 
         // Ambil item dari tabel CartItem berdasarkan cart_id
-        $cartItems = CartItem::where('cart_id', $cart->id)->get();
+        $cartItems = CartItem::where('id_cart_222405', $cart->id_cart_222405)->get();
 
         // Debugging: Log cart items
         Log::debug('Cart Items: ' . json_encode($cartItems));
@@ -88,39 +90,40 @@ class PaymentController extends Controller
             Log::debug('Processing product: ' . json_encode($product));
 
             if (!$product) {
-                return response()->json(['message' => 'Produk dengan ID ' . $item->product_id . ' tidak ditemukan'], 404);
+                return response()->json(['message' => 'Produk dengan ID ' . $item->id_produk_222405 . ' tidak ditemukan'], 404);
             }
 
             // Periksa apakah stok cukup
-            if ($product->jumlah < $item->quantity) {
-                return response()->json(['message' => 'Stok produk ' . $product->nama . ' tidak mencukupi'], 400);
+            if ($product->jumlah_222405 < $item->quantity_222405) {
+                return response()->json(['message' => 'Stok produk ' . $product->nama_222405 . ' tidak mencukupi'], 400);
             }
 
             // Hitung total harga dan jumlah
-            $totalPrice    += $product->harga * $item->quantity;
-            $totalQuantity += $item->quantity;
+            $totalPrice    += $product->harga_222405 * $item->quantity_222405;
+            $totalQuantity += $item->quantity_222405;
 
             // Kurangi stok produk
-            $product->jumlah -= $item->quantity;
+            $product->jumlah_222405 -= $item->quantity_222405;
             $product->save();
 
             // Buat transaksi baru
             Transaksi::create([
-                'id_pelanggan'      => $userId,
-                'jumlah'            => $item->quantity,
-                'id_produk'         => $product->id,
-                'harga_total'       => $product->harga * $item->quantity,
-                'status'            => 'pending',
-                'bukti_tf'          => $path,
-                'tanggal_transaksi' => Carbon::now(),
+                'id_transaksi_222405'      => (string) Str::uuid(),
+                'id_user_222405'           => $userId,
+                'jumlah_222405'            => $item->quantity_222405,
+                'id_produk_222405'         => $product->id_produk_222405,
+                'harga_total_222405'       => $product->harga_222405 * $item->quantity_222405,
+                'status_222405'            => 'pending',
+                'bukti_tf_222405'          => $path,
+                'tanggal_transaksi_222405' => Carbon::now(),
             ]);
 
             // Debugging: Log transaction data
-            Log::debug('Transaction created for product: ' . $product->id . ' with total price: ' . $product->harga * $item->quantity);
+            Log::debug('Transaction created for product: ' . $product->id_produk_222405 . ' with total price: ' . $product->harga_222405 * $item->quantity_222405);
         }
 
         // Kosongkan keranjang setelah checkout berhasil
-        CartItem::where('cart_id', $cart->id)->delete();
+        CartItem::where('id_cart_222405', $cart->id_cart_222405)->delete();
 
         // Hapus keranjang jika sudah kosong
         $cart->delete();
@@ -144,7 +147,7 @@ class PaymentController extends Controller
         ]);
 
         // Update status transaksi
-        $transaksi->update(['status' => $validated['status']]);
+        $transaksi->update(['status_222405' => $validated['status']]);
 
         return response()->json(['message' => 'Status transaksi diperbarui', 'data' => $transaksi]);
     }
@@ -158,8 +161,8 @@ class PaymentController extends Controller
         }
 
         // Hapus file bukti transfer jika ada
-        if ($transaksi->bukti_tf) {
-            Storage::disk('public')->delete($transaksi->bukti_tf);
+        if ($transaksi->bukti_tf_222405) {
+            Storage::disk('public')->delete($transaksi->bukti_tf_222405);
         }
 
         $transaksi->delete();
@@ -183,14 +186,14 @@ class PaymentController extends Controller
         }
 
         // Ambil data produk berdasarkan ID
-        $product = \App\Models\Product::find($productId);
+        $product = Product::find($productId);
 
         if (!$product) {
             return response()->json(['message' => 'Produk tidak ditemukan'], 404);
         }
 
         // Periksa apakah stok mencukupi
-        if ($product->jumlah < $validated['quantity']) {
+        if ($product->jumlah_222405 < $validated['quantity']) {
             return response()->json(['message' => 'Stok produk tidak mencukupi'], 400);
         }
 
@@ -202,18 +205,19 @@ class PaymentController extends Controller
         }
 
         // Kurangi stok produk
-        $product->jumlah -= $validated['quantity'];
+        $product->jumlah_222405 -= $validated['quantity'];
         $product->save();
 
         // Buat transaksi baru
         $transaksi = Transaksi::create([
-            'id_pelanggan'      => $userId,
-            'jumlah'            => $validated['quantity'],
-            'id_produk'         => $product->id,
-            'harga_total'       => $product->harga * $validated['quantity'],
-            'status'            => 'pending',
-            'bukti_tf'          => $path,
-            'tanggal_transaksi' => Carbon::now(),
+            'id_transaksi_222405'      => (string) Str::uuid(),
+            'id_user_222405'           => $userId,
+            'jumlah_222405'            => $validated['quantity'],
+            'id_produk_222405'         => $product->id_produk_222405,
+            'harga_total_222405'       => $product->harga_222405 * $validated['quantity'],
+            'status_222405'            => 'pending',
+            'bukti_tf_222405'          => $path,
+            'tanggal_transaksi_222405' => Carbon::now(),
         ]);
 
         return response()->json([

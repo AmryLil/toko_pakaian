@@ -9,15 +9,17 @@ class CategoryProduct extends Model
 {
     use HasFactory;
 
-    protected $table      = 'kategori_produk';  // Nama tabel kategori
-    protected $primaryKey = 'id';
+    protected $table      = 'kategori_produk_222405';  // Nama tabel kategori
+    protected $primaryKey = 'id_kategori_222405';
     public $timestamps    = false;
+    public $incrementing  = false;  // Penting agar Laravel tidak menganggap ID auto-increment
+    protected $keyType    = 'string';  // Karena UUID adalah string
 
     protected $fillable = [
-        'id',
-        'nama',
-        'deskripsi',
-        'path_img'
+        'id_kategori_222405',
+        'nama_222405',
+        'deskripsi_222405',
+        'path_img_222405'
     ];
 
     // Relasi one-to-many dengan produk

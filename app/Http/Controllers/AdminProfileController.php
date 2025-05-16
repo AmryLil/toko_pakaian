@@ -35,7 +35,7 @@ class AdminProfileController extends Controller
     public function updateProfile(Request $request)
     {
         // Ambil ID pengguna dari sesi yang sedang login
-        $userId = Auth::user()->id;
+        $userId = Auth::user()->id_user_222405;
         $user   = User::findOrFail($userId);
 
         // Validasi input

@@ -10,22 +10,24 @@ class Transaksi extends Model
 {
     use HasFactory;
 
-    protected $table      = 'transaksi';
-    protected $primaryKey = 'id_transaksi';
+    protected $table      = 'transaksi_222405';
+    protected $primaryKey = 'id_transaksi_222405';
+    public $incrementing  = false;  // Penting agar Laravel tidak menganggap ID auto-increment
+    protected $keyType    = 'string';  // Karena UUID adalah string
 
     protected $fillable = [
-        'id_pelanggan',
-        'jumlah',
-        'id_produk',
-        'harga_total',
-        'status',
-        'bukti_tf',
-        'tanggal_transaksi'
+        'id_user_222405',
+        'jumlah_222405',
+        'id_produk_222405',
+        'harga_total_222405',
+        'status_222405',
+        'bukti_tf_222405',
+        'tanggal_transaksi_222405'
     ];
 
     public function pelanggan()
     {
-        return $this->belongsTo(User::class, 'id_pelanggan', 'id');
+        return $this->belongsTo(User::class, 'id_user_222405', 'id_user_222405');
     }
 
     /**
@@ -34,12 +36,12 @@ class Transaksi extends Model
      */
     public function produk()
     {
-        return $this->belongsTo(Product::class, 'id_produk', 'id');
+        return $this->belongsTo(Product::class, 'id_produk_222405', 'id_produk_222405');
     }
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'id_produk');  // Sesuaikan nama kolom foreign key
+        return $this->belongsTo(Product::class, 'id_produk_222405');  // Sesuaikan nama kolom foreign key
     }
 
     // Relasi ke pelanggan

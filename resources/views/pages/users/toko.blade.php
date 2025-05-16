@@ -1,22 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Toko')
 
 @section('content')
     <section class="py-10">
         <h1 class="font-semibold text-xl text-center">LIST PRODUK</h1>
 
-
-
         <!-- Product List -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-            <!-- Product 1 -->
+            <!-- Products -->
             @foreach ($products as $index => $product)
-                <x-shop.card_product :path="route('product.show', $product->id)" title="{{ $product->nama }}" price="{{ $product->harga }}"
-                    image="{{ $product->path_img }}" class="custom-class" />
+                <x-shop.card_product :path="route('product.show', $product->id_produk_222405)" title="{{ $product->nama_222405 }}"
+                    price="{{ $product->harga_222405 }}" image="{{ $product->path_img_222405 }}" class="custom-class" />
             @endforeach
-
-
         </div>
     </section>
 @endsection
@@ -58,7 +54,6 @@
         function isUserLoggedIn() {
             return {{ auth()->check() ? 'true' : 'false' }};
         }
-
 
         document.querySelectorAll('#add-to-cart').forEach(button => {
             button.addEventListener('click', async function() {
@@ -140,7 +135,6 @@
             });
         });
     </script>
-
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

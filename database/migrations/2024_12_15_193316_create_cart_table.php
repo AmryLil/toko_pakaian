@@ -13,11 +13,11 @@ class CreateCartTable extends Migration
      */
     public function up()
     {
-        Schema::create('carts', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
+        Schema::create('carts_222405', function (Blueprint $table) {
+            $table->string('id_cart_222405')->primary();
+            $table->string('id_user_222405');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_user_222405')->references('id_user_222405')->on('users_222405')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,6 @@ class CreateCartTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('carts_222405');
     }
 }

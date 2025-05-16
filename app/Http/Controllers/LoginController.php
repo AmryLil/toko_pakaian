@@ -38,23 +38,23 @@ class LoginController extends Controller
 
         // Attempt login menggunakan kolom yang sudah disesuaikan
         if (Auth::attempt([
-            'email'    => $credentials['email'],
-            'password' => $credentials['password']
+            'email_222405' => $credentials['email'],
+            'password'     => $credentials['password']
         ])) {
             // Regenerasi session ID untuk keamanan
             $request->session()->regenerate();
 
             // Menyimpan data tambahan ke session, termasuk role
             session([
-                'user_id'       => Auth::user()->id,
-                'user_role'     => Auth::user()->role,  // Role user, misalnya 'admin' atau 'user'
-                'email'         => Auth::user()->email,  // Role user, misalnya 'admin' atau 'user'
-                'name'          => Auth::user()->name,
-                'profile_photo' => Auth::user()->profile_photo,
+                'user_id'       => Auth::user()->id_user_222405,
+                'user_role'     => Auth::user()->role_222405,  // Role user, misalnya 'admin' atau 'user'
+                'email'         => Auth::user()->email_222405,  // Role user, misalnya 'admin' atau 'user'
+                'name'          => Auth::user()->name_222405,
+                'profile_photo' => Auth::user()->profile_photo_222405,
             ]);
 
             // Redirect berdasarkan peran pengguna
-            if (Auth::user()->role === 'admin') {
+            if (Auth::user()->role_222405 === 'admin') {
                 return redirect()->intended(route('dashboard.products'))->with('success', 'Login berhasil!');
             } else {
                 return redirect()->intended('/')->with('success', 'Login berhasil!');

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;  // Pastikan model Product sudah di-import
+use App\Models\Product;
 use App\Models\Transaksi;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;  // Make sure to import Carbon for date handling
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -16,13 +17,14 @@ class TransaksiController extends Controller
     {
         $userId = session('user_id');
 
-        $transaksiList = Transaksi::where('id_pelanggan', $userId)
-            ->where('status', 'selesai')
+        $transaksiList = Transaksi::where('id_user_222405', $userId)
+            ->where('status_222405', 'selesai')
             ->get();
 
+        // No need for product exploding since your model already has a relationship
         foreach ($transaksiList as $transaksi) {
-            $productIds          = explode(',', $transaksi->id_produk);
-            $transaksi->products = Product::whereIn('id', $productIds)->get();
+            // Use the relationship defined in the model
+            $transaksi->produk = $transaksi->produk();
         }
 
         return view('pages.users.riwayat', compact('transaksiList'));
@@ -31,9 +33,9 @@ class TransaksiController extends Controller
     public function showPesanan()
     {
         $userId        = session('user_id');
-        $transaksiList = Transaksi::with('product')  // Muat relasi ke produk
-            ->where('id_pelanggan', $userId)
-            ->whereIn('status', ['pending', 'dikemas', 'dikirim'])
+        $transaksiList = Transaksi::with('produk')  // Using the relationship defined in the model
+            ->where('id_user_222405', $userId)
+            ->whereIn('status_222405', ['pending', 'dikemas', 'dikirim'])
             ->get();
 
         return view('pages.users.pesanan', compact('transaksiList'));
@@ -45,9 +47,9 @@ class TransaksiController extends Controller
         $transaksi = Transaksi::findOrFail($id);
 
         // Periksa apakah status saat ini adalah 'dikirim'
-        if ($transaksi->status === 'dikirim') {
+        if ($transaksi->status_222405 === 'dikirim') {
             // Ubah status menjadi 'diterima'
-            $transaksi->status = 'selesai';
+            $transaksi->status_222405 = 'selesai';
             $transaksi->save();
 
             return redirect()->route('pesanan')->with('success', 'Pesanan telah diterima.');
@@ -67,8 +69,8 @@ class TransaksiController extends Controller
     // Mengupdate status transaksi
     public function updateStatus(Request $request, $id)
     {
-        $transaksi         = Transaksi::findOrFail($id);
-        $transaksi->status = $request->status;
+        $transaksi                = Transaksi::findOrFail($id);
+        $transaksi->status_222405 = $request->status;
         $transaksi->save();
 
         return response()->json(['message' => 'Status transaksi berhasil diperbarui']);
@@ -85,18 +87,18 @@ class TransaksiController extends Controller
 
         // Filter berdasarkan tanggal jika diberikan
         if ($startDate) {
-            $query->where('tanggal_transaksi', '>=', $startDate);
+            $query->where('tanggal_transaksi_222405', '>=', $startDate);
         }
 
         if ($endDate) {
-            $query->where('tanggal_transaksi', '<=', $endDate);
+            $query->where('tanggal_transaksi_222405', '<=', $endDate);
         }
 
         // Ambil semua transaksi sesuai filter
         $transaksis = $query->get();
 
         // Hitung total transaksi
-        $totalTransaksi = $transaksis->sum('harga_total');
+        $totalTransaksi = $transaksis->sum('harga_total_222405');
 
         // Generate PDF menggunakan tampilan dan data
         $pdf = Pdf::loadView('dashboard.transaksi.pdf', compact('transaksis', 'totalTransaksi'));
@@ -118,17 +120,17 @@ class TransaksiController extends Controller
         $query = Transaksi::with(['pelanggan', 'produk']);
 
         if ($startDate) {
-            $query->where('tanggal_transaksi', '>=', $startDate);
+            $query->where('tanggal_transaksi_222405', '>=', $startDate);
         }
 
         if ($endDate) {
-            $query->where('tanggal_transaksi', '<=', $endDate);
+            $query->where('tanggal_transaksi_222405', '<=', $endDate);
         }
 
         $transaksis = $query->get();
 
         // Calculate total transaksi
-        $totalTransaksi = $transaksis->sum('harga_total');
+        $totalTransaksi = $transaksis->sum('harga_total_222405');
 
         return view('pages.admin.transaksi.laporan', [
             'transaksi'      => $transaksis,

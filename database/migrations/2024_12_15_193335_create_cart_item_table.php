@@ -13,15 +13,15 @@ class CreateCartItemTable extends Migration
      */
     public function up()
     {
-        Schema::create('cart_items', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('cart_id');
-            $table->unsignedBigInteger('product_id');
-            $table->integer('quantity');
-            $table->decimal('price', 10, 2);
+        Schema::create('cart_items_222405', function (Blueprint $table) {
+            $table->string('id_cart_item_222405')->primary();
+            $table->string('id_cart_222405');
+            $table->string('id_produk_222405');
+            $table->integer('quantity_222405');
+            $table->decimal('price_222405', 10, 2);
             $table->timestamps();
-            $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('produk')->onDelete('cascade');
+            $table->foreign('id_cart_222405')->references('id_cart_222405')->on('carts_222405')->onDelete('cascade');
+            $table->foreign('id_produk_222405')->references('id_produk_222405')->on('produk_222405')->onDelete('cascade');
         });
     }
 
@@ -32,6 +32,6 @@ class CreateCartItemTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cart_items');
+        Schema::dropIfExists('cart_items_222405');
     }
 }

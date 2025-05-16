@@ -8,7 +8,7 @@
             <div class="flex">
                 <!-- Product Image -->
                 <div class="w-1/2 flex justify-center relative h-[80vh] overflow-hidden border-2 shadow-md ">
-                    <img src="{{ Str::startsWith($product->path_img, 'http') ? $product->path_img : asset('storage/' . $product->path_img) }}"
+                    <img src="{{ Str::startsWith($product->path_img_222405, 'http') ? $product->path_img_222405 : asset('storage/' . $product->path_img_222405) }}"
                         alt="Product Image"
                         class="object-cover h-full transform hover:scale-110 transition duration-300 ease-in-out">
                 </div>
@@ -16,8 +16,8 @@
                 <!-- Product Details -->
                 <div class="w-1/2 flex flex-col p-4 justify-between px-8 space-y-6">
                     <div class="text-start">
-                        <h1 class="text-5xl font-extrabold text-gray-800">{{ $product->nama }}</h1>
-                        <p class="text-lg text-gray-500 font-medium mt-2">{{ $product->category->nama }}</p>
+                        <h1 class="text-5xl font-extrabold text-gray-800">{{ $product->nama_222405 }}</h1>
+                        <p class="text-lg text-gray-500 font-medium mt-2">{{ $product->category->nama_222405 }}</p>
                         <div class="h-1 w-1/3 bg-gray-800 mt-4 rounded"></div>
                     </div>
 
@@ -25,7 +25,7 @@
                     <div class="space-y-6">
                         <div>
                             <p class="text-2xl font-semibold text-gray-700">Deskripsi</p>
-                            <p class="text-lg text-gray-600 mt-2">{{ $product->deskripsi }}</p>
+                            <p class="text-lg text-gray-600 mt-2">{{ $product->deskripsi_222405 }}</p>
                         </div>
                         <div class="flex gap-4 justify-between">
                             <div class="flex items-center  border-gray-300 overflow-hidden w-max">
@@ -53,14 +53,14 @@
 
                         <div>
                             <p class="text-2xl font-semibold text-gray-700">Stok</p>
-                            <p class="text-lg font-bold text-gray-900">{{ $product->jumlah }} Barang</p>
+                            <p class="text-lg font-bold text-gray-900">{{ $product->jumlah_222405 }} Barang</p>
                         </div>
                     </div>
 
                     <!-- Price -->
                     <div>
                         <p class="text-4xl font-extrabold text-gray-900">Rp
-                            {{ number_format($product->harga, 0, ',', '.') }}</p>
+                            {{ number_format($product->harga_222405, 0, ',', '.') }}</p>
                         <div class="mt-4 flex justify-between items-center gap-4">
                             <!-- Checkout Button -->
                             <button id="co" onclick="showPaymentModal()"
@@ -114,11 +114,11 @@
                 </div>
                 <h3 class="font-bold text-gray-800 mb-2">Barang yang Dibeli:</h3>
                 <ul class="list-disc list-inside text-gray-700 mb-4">
-                    <li>{{ $product->nama }}</li>
+                    <li>{{ $product->nama_222405 }}</li>
                 </ul>
                 <div class="flex justify-between text-lg font-bold text-gray-900 mb-6">
                     <span>Total:</span>
-                    <span>Rp {{ number_format($product->harga, 0, ',', '.') }}</span>
+                    <span>Rp {{ number_format($product->harga_222405, 0, ',', '.') }}</span>
                 </div>
                 <form id="upload-receipt-form" enctype="multipart/form-data" class="mb-6">
                     <label class="block text-gray-700 font-semibold mb-2">Unggah Bukti Pembayaran:</label>
@@ -173,7 +173,7 @@
             }
 
             const qty = parseInt(document.getElementById('qty').value);
-            const productId = {{ $product->id }};
+            const productId = {{ $product->id_user_222405 }};
 
             if (isNaN(qty) || qty < 1) {
                 alert('Quantity harus minimal 1.');
@@ -224,7 +224,7 @@
             }
 
             const formData = new FormData(document.getElementById('upload-receipt-form'));
-            const productId = {{ $product->id }};
+            const productId = {{ $product->id_user_222405 }};
             const quantity = parseInt(document.getElementById('qty').value);
 
             formData.append('product_id', productId);

@@ -59,16 +59,19 @@
                     @foreach ($products as $index => $product)
                         <tr class="odd:bg-gray-50 even:bg-gray-100 hover:bg-slate-200 transition">
                             <td class="py-4 px-6">{{ $index + 1 }}</td>
-                            <td class="py-4 px-6 font-semibold">{{ $product->nama }}</td>
-                            <td class="py-4 px-6">{{ Str::words($product->deskripsi, 5, '...') }}</td>
-                            <td class="py-4 px-6">{{ $product->category->nama ?? 'Tidak ada kategori' }}</td>
-                            <td class="py-4 px-6">{{ number_format($product->harga, 0, ',', '.') }}</td>
-                            <td class="py-4 px-6">{{ $product->jumlah }}</td>
+                            <td class="py-4 px-6 font-semibold">{{ $product->nama_222405 }}</td>
+                            <td class="py-4 px-6">{{ Str::words($product->deskripsi_222405, 5, '...') }}</td>
+                            <td class="py-4 px-6">{{ $product->category->nama_222405 ?? 'Tidak ada kategori' }}</td>
+                            <td class="py-4 px-6">{{ number_format($product->harga_222405, 0, ',', '.') }}</td>
+                            <td class="py-4 px-6">{{ $product->jumlah_222405 }}</td>
                             <td class="py-4 px-6 text-center">
                                 <div class="flex justify-center space-x-2">
-                                    <a href="{{ route('products.edit', $product->id) }}"
+                                    <a href="{{ route('products.show', $product->id_produk_222405) }}"
+                                        class="btn btn-info p-2 rounded-lg">Lihat</a>
+                                    <a href="{{ route('products.edit', $product->id_produk_222405) }}"
                                         class="btn btn-warning p-2 rounded-lg">Edit</a>
-                                    <form action="{{ route('products.destroy', $product->id) }}" method="POST"
+                                    <form action="{{ route('products.destroy', $product->id_produk_222405) }}"
+                                        method="POST"
                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus barang ini?');">
                                         @csrf
                                         @method('DELETE')

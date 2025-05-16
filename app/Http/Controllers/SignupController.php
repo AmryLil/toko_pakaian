@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class SignupController extends Controller
@@ -20,7 +21,7 @@ class SignupController extends Controller
         // Validasi input
         $request->validate(
             [
-                'email'                 => 'required|email|unique:users',
+                'email'                 => 'required|email|unique:users_222405,email_222405',
                 'name'                  => 'required|string|max:255',
                 'password'              => 'required|string|min:8|max:10',
                 'password_confirmation' => 'required|string|min:8|max:10',
@@ -54,12 +55,20 @@ class SignupController extends Controller
                 'password_confirmation' => ['Password tidak cocok.'],
             ]);
         }
+
         // Membuat user baru
         User::create([
-            'email'    => $request->input('email'),
-            'name'     => $request->input('name'),
-            'password' => Hash::make($request->input('password')),
-            'role'     => 'user',
+            'id_user_222405'       => (string) Str::uuid(),  // Generate UUID for primary key
+            'email_222405'         => $request->input('email'),
+            'name_222405'          => $request->input('name'),
+            'password_222405'      => Hash::make($request->input('password')),
+            'role_222405'          => 'user',
+            // Setting default values for required fields
+            'gender_222405'        => null,
+            'address_222405'       => null,
+            'phone_222405'         => null,
+            'birth_date_222405'    => null,
+            'profile_photo_222405' => null
         ]);
 
         // Redirect ke halaman login setelah sukses sign up

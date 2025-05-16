@@ -13,16 +13,16 @@ class CreateProdukTable extends Migration
      */
     public function up()
     {
-        Schema::create('produk', function (Blueprint $table) {
-            $table->id();  // auto increment id
-            $table->string('nama');
-            $table->text('deskripsi');
-            $table->decimal('harga', 10, 2);
-            $table->unsignedBigInteger('kategori_id');
-            $table->string('path_img');
-            $table->integer('jumlah');
-            $table->timestamp('created_at')->nullable();  // jika 'created_at' ingin ditangani secara manual
-            $table->foreign('kategori_id')->references('id')->on('kategori_produk')->onDelete('cascade');
+        Schema::create('produk_222405', function (Blueprint $table) {
+            $table->string('id_produk_222405')->primary();
+            $table->string('nama_222405');
+            $table->text('deskripsi_222405');
+            $table->decimal('harga_222405', 10, 2);
+            $table->string('id_kategori_222405');
+            $table->string('path_img_222405');
+            $table->integer('jumlah_222405');
+            $table->timestamp('created_at_222405')->nullable();
+            $table->foreign('id_kategori_222405')->references('id_kategori_222405')->on('kategori_produk_222405')->onDelete('cascade');
         });
     }
 

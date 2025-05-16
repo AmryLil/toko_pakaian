@@ -13,12 +13,13 @@ class CreateKategoriProdukTable extends Migration
      */
     public function up()
     {
-        Schema::create('kategori_produk', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
+        Schema::create('kategori_produk_222405', function (Blueprint $table) {
+            $table->string('id_kategori_222405')->primary();
 
-            $table->text('deskripsi');
-            $table->string('path_img');
+            $table->string('nama_222405');
+
+            $table->text('deskripsi_222405');
+            $table->string('path_img_222405');
         });
     }
 
@@ -29,6 +30,6 @@ class CreateKategoriProdukTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kategori_produk');
+        Schema::dropIfExists('kategori_produk_222405');
     }
 }
