@@ -13,13 +13,13 @@
                 @foreach ($categories as $category)
                     <!-- Dynamic Category Cards -->
                     @include('components.categories.card_category', [
-                        'path' => route('categories.show', $category->id),
-                        'title' => $category->nama,
+                        'path' => route('categories.show', $category->id_kategori_222405),
+                        'title' => $category->nama_222405,
                         'isOdd' => $loop->iteration % 2 !== 1,
-                        'desc' => $category->deskripsi,
-                        'image' => Str::startsWith($category->path_img, 'http')
-                            ? $category->path_img
-                            : asset('storage/' . $category->path_img),
+                        'desc' => $category->deskripsi_222405,
+                        'image' => Str::startsWith($category->path_img_222405, 'http')
+                            ? $category->path_img_222405
+                            : asset('storage/' . $category->path_img_222405),
                     ])
                 @endforeach
 

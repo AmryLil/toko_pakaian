@@ -84,119 +84,167 @@
                     <label for="my-drawer-4" class="drawer-button ">
 
                         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                            <div class="w-10 rounded-full">
-                                <img alt="Tailwind CSS Navbar component"
-                                    src="{{ Auth::user()->profile_photo_222405 ? asset('storage/' . Auth::user()->profile_photo_222405) : asset('images/produk.png') }}"
-                                    alt="Avatar" />
+                            <div
+                                class="bg-gradient-to-br from-primary to-secondary text-primary-content rounded-full w-10 h-10 ring ring-primary ring-offset-2 ring-offset-base-100 shadow-lg flex justify-center items-center pt-1">
+                                <span
+                                    class="text-lg font-bold">{{ preg_match_all('/\b\w/u', Auth::user()->name_222405, $matches) ? strtoupper(implode('', $matches[0])) : '' }}</span>
                             </div>
                         </div>
                     </label>
                 </div>
-                <div class="drawer-side ">
+                <div class="drawer-side">
                     <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
-                    <ul style="overflow: hidden" class="text-base-content min-h-full w-96 overflow-hidden">
+                    <ul class="text-base-content min-h-full w-96 bg-gradient-to-b from-slate-50 to-white">
                         <!-- Sidebar content here -->
-                        <div class="flex p-4 flex-col items-center bg-white w-full h-screen ">
+                        <div class="flex flex-col items-center w-full h-screen">
                             <!-- Profile Section -->
-                            <div class="rounded-lg w-full max-w-md p-6 text-center bg-white shadow-md">
+                            <div class="w-full max-w-md p-8 text-center">
                                 <div class="flex justify-center">
-                                    <img class="w-32 h-32 rounded-full border-4 border-green-600 object-cover"
-                                        src="{{ Auth::user()->profile_photo_222405 ? asset('storage/' . Auth::user()->profile_photo_222405) : asset('images/produk.png') }}"
-                                        alt="Avatar">
+                                    <!-- Avatar with enhanced styling -->
+                                    <div
+                                        class="w-32 h-32 rounded-full border-4 border-primary flex items-center justify-center bg-gradient-to-br from-primary to-secondary text-white shadow-xl transform hover:scale-105 transition-transform duration-300">
+                                        <span
+                                            class="text-4xl font-bold">{{ preg_match_all('/\b\w/u', Auth::user()->name_222405, $matches) ? strtoupper(implode('', $matches[0])) : '' }}</span>
+                                    </div>
                                 </div>
-                                <h2 class="mt-4 text-2xl font-semibold text-gray-800">{{ session('name') }}</h2>
-                                <p class="text-gray-500 text-sm">{{ session('email') }}</p>
+                                <h2 class="mt-6 text-2xl font-bold text-slate-800">{{ session('name') }}</h2>
+                                <p class="text-slate-500 text-sm mt-1">{{ session('email') }}</p>
                             </div>
 
-                            <div
-                                class="cursor-pointer w-full max-w-md h-[60vh] bg-gray-100 rounded-t-3xl shadow-lg p-6">
-                                <h3 class="text-gray-700 font-semibold mb-2">Preferences</h3>
+                            <!-- Menu Section with refined design -->
+                            <div class="w-full max-w-md bg-white rounded-t-3xl shadow-xl p-6 px-8">
+
+                                <!-- Profile Link -->
                                 <a href="{{ route('user.profile') }}"
-                                    class="flex items-center justify-between py-3 border-b border-gray-200">
-                                    <div class="flex items-center space-x-3">
-                                        <svg class="group-hover:stroke-black stroke-black"
-                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                            stroke="black" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" height="20" width="20">
-                                            <path d="M12 20h9" />
-                                            <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4Z" />
-                                        </svg>
-                                        <p class="text-gray-700">Profile Saya</p>
+                                    class="flex items-center justify-between py-4 px-3 rounded-xl hover:bg-slate-50 transition-colors duration-200 group mb-2">
+                                    <div class="flex items-center space-x-4">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" class="h-5 w-5 text-blue-600">
+                                                <path d="M12 20h9" />
+                                                <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                                            </svg>
+                                        </div>
+                                        <p class="text-slate-700 font-medium group-hover:text-slate-900">Profile Saya
+                                        </p>
                                     </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 text-slate-400 group-hover:text-slate-700" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
                                 </a>
 
+                                <!-- Orders Link -->
                                 <a href="{{ route('pesanan') }}"
-                                    class="flex items-center justify-between py-3 border-b border-gray-200">
-                                    <div class="flex items-center space-x-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                            stroke="#000000" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" height="16" width="16">
-                                            <path d="M6 6h15l-1.5 9H7.5L6 6z" />
-                                            <circle cx="9" cy="20" r="1" />
-                                            <circle cx="18" cy="20" r="1" />
-                                            <path d="M6 6l-2 0" />
-                                        </svg>
-                                        <p class="text-gray-700">Pesanan Saya</p>
+                                    class="flex items-center justify-between py-4 px-3 rounded-xl hover:bg-slate-50 transition-colors duration-200 group mb-2">
+                                    <div class="flex items-center space-x-4">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center group-hover:bg-green-100 transition-colors duration-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="h-5 w-5 text-green-600">
+                                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                                                <line x1="3" y1="6" x2="21" y2="6" />
+                                                <path d="M16 10a4 4 0 0 1-8 0" />
+                                            </svg>
+                                        </div>
+                                        <p class="text-slate-700 font-medium group-hover:text-slate-900">Pesanan Saya
+                                        </p>
                                     </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 text-slate-400 group-hover:text-slate-700" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
                                 </a>
+
+                                <!-- Transaction History Link -->
                                 <a href="{{ route('transaksi.index') }}"
-                                    class="flex items-center justify-between py-3 border-b border-gray-200">
-                                    <div class="flex items-center space-x-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 -0.5 16 16"
-                                            fill="none" stroke="#000000" stroke-linecap="round"
-                                            stroke-linejoin="round" id="History--Streamline-Tabler" height="16"
-                                            width="16">
-                                            <desc>History Streamline Icon: https://streamlinehq.com</desc>
-                                            <path d="m7.5 5 0 2.5 1.25 1.25" stroke-width="1"></path>
-                                            <path
-                                                d="M1.90625 6.875a5.625 5.625 0 1 1 0.3125 2.5m-0.3125 3.125v-3.125h3.125"
-                                                stroke-width="1"></path>
-                                        </svg>
-                                        <p class="text-gray-700">Riwayat Transaksi</p>
+                                    class="flex items-center justify-between py-4 px-3 rounded-xl hover:bg-slate-50 transition-colors duration-200 group mb-2">
+                                    <div class="flex items-center space-x-4">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center group-hover:bg-purple-100 transition-colors duration-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="h-5 w-5 text-purple-600">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <polyline points="12 6 12 12 16 14" />
+                                            </svg>
+                                        </div>
+                                        <p class="text-slate-700 font-medium group-hover:text-slate-900">Riwayat
+                                            Transaksi</p>
                                     </div>
-                                </a>
-                                <a href={{ route('cart.view') }}
-                                    class="cursor-pointer flex items-center justify-between py-3 border-b border-gray-200">
-                                    <div class="flex items-center space-x-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 -0.5 16 16"
-                                            fill="none" stroke="#000000" stroke-linecap="round"
-                                            stroke-linejoin="round" id="Shopping-Cart--Streamline-Tabler"
-                                            height="16" width="16">
-                                            <desc>Shopping Cart Streamline Icon: https://streamlinehq.com</desc>
-                                            <path d="M2.5 11.875a1.25 1.25 0 1 0 2.5 0 1.25 1.25 0 1 0 -2.5 0"
-                                                stroke-width="1"></path>
-                                            <path d="M9.375 11.875a1.25 1.25 0 1 0 2.5 0 1.25 1.25 0 1 0 -2.5 0"
-                                                stroke-width="1"></path>
-                                            <path d="M10.625 10.625H3.75V1.875H2.5" stroke-width="1"></path>
-                                            <path d="m3.75 3.125 8.75 0.625 -0.625 4.375H3.75" stroke-width="1"></path>
-                                        </svg>
-                                        <p class="text-gray-700">Keranjang</p>
-                                    </div>
-
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 text-slate-400 group-hover:text-slate-700" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
                                 </a>
 
-                                <div class="cursor-pointer flex items-center justify-between py-3">
-                                    <div class="flex items-center space-x-3 text-red-600">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 -0.5 16 16"
-                                            fill="none" stroke="#dc2626" stroke-linecap="round"
-                                            stroke-linejoin="round" id="Logout-2--Streamline-Tabler" height="16"
-                                            width="16">
-                                            <desc>Logout 2 Streamline Icon: https://streamlinehq.com</desc>
-                                            <path
-                                                d="M6.25 5V3.75a1.25 1.25 0 0 1 1.25 -1.25h4.375a1.25 1.25 0 0 1 1.25 1.25v7.5a1.25 1.25 0 0 1 -1.25 1.25h-4.375a1.25 1.25 0 0 1 -1.25 -1.25v-1.25"
-                                                stroke-width="1"></path>
-                                            <path d="M9.375 7.5H1.875l1.875 -1.875" stroke-width="1"></path>
-                                            <path d="m3.75 9.375 -1.875 -1.875" stroke-width="1"></path>
-                                        </svg>
-                                        <form action="{{ route('logout') }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="w-full text-left ">Logout</button>
-                                        </form>
+                                <!-- Cart Link -->
+                                <a href="{{ route('cart.view') }}"
+                                    class="flex items-center justify-between py-4 px-3 rounded-xl hover:bg-slate-50 transition-colors duration-200 group mb-2">
+                                    <div class="flex items-center space-x-4">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center group-hover:bg-amber-100 transition-colors duration-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="h-5 w-5 text-amber-600">
+                                                <circle cx="9" cy="21" r="1" />
+                                                <circle cx="20" cy="21" r="1" />
+                                                <path
+                                                    d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                                            </svg>
+                                        </div>
+                                        <p class="text-slate-700 font-medium group-hover:text-slate-900">Keranjang</p>
                                     </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 text-slate-400 group-hover:text-slate-700" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+
+                                <!-- Logout Button -->
+                                <div class="mt-6 pt-4 border-t border-slate-100">
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit"
+                                            class="flex items-center w-full py-4 px-3 rounded-xl hover:bg-red-50 transition-colors duration-200 group">
+                                            <div class="flex items-center space-x-4">
+                                                <div
+                                                    class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center group-hover:bg-red-100 transition-colors duration-200">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                        class="h-5 w-5 text-red-600">
+                                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                                        <polyline points="16 17 21 12 16 7" />
+                                                        <line x1="21" y1="12" x2="9"
+                                                            y2="12" />
+                                                    </svg>
+                                                </div>
+                                                <p class="text-red-600 font-medium">Logout</p>
+                                            </div>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-
                     </ul>
                 </div>
             </div>

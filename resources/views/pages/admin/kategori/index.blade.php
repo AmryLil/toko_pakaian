@@ -30,11 +30,11 @@
                         <tr class="border-b"
                             style="background-color: #ffffff; border-bottom: 1px solid #d1d5db; color: black;">
                             <th>{{ $index + 1 }}</th>
-                            <td>{{ $category->nama }}</td>
-                            <td>{{ Str::words($category->deskripsi, 5, '...') }}</td>
+                            <td>{{ $category->nama_222405 }}</td>
+                            <td>{{ Str::words($category->deskripsi_222405, 5, '...') }}</td>
                             <td>
-                                @if ($category->path_img)
-                                    <img src="{{ Str::startsWith($category->path_img, 'http') ? $category->path_img : asset('storage/' . $category->path_img) }}"
+                                @if ($category->path_img_222405)
+                                    <img src="{{ Str::startsWith($category->path_img_222405, 'http') ? $category->path_img_222405 : asset('storage/' . $category->path_img_222405) }}"
                                         alt="Category Image" class="w-20 h-20 object-cover rounded-full">
                                 @else
                                     <span class="text-sm text-gray-500">Tidak ada gambar</span>
@@ -43,8 +43,8 @@
                             <td>
                                 <div class="flex gap-3">
                                     <!-- Edit Button -->
-                                    <a href="{{ route('dashboard.category_products.edit', $category->id) }}" class="tooltip"
-                                        data-tip="Edit">
+                                    <a href="{{ route('dashboard.category_products.edit', $category->id_kategori_222405) }}"
+                                        class="tooltip" data-tip="Edit">
                                         <button class="btn btn-warning p-2 rounded-lg">
                                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                                                 viewBox="0 0 48 48" id="Pencil-Circle--Streamline-Plump" height="48"
@@ -66,7 +66,8 @@
                                     </a>
 
                                     <!-- Delete Button -->
-                                    <form action="{{ route('dashboard.category_products.destroy', $category->id) }}"
+                                    <form
+                                        action="{{ route('dashboard.category_products.destroy', $category->id_kategori_222405) }}"
                                         method="POST"
                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
                                         @csrf

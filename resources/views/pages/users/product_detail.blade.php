@@ -97,44 +97,135 @@
             </div>
         </div>
 
-        <!-- Payment Modal -->
-        <div id="payment-modal"
-            class="fixed z-50 inset-0  bg-opacity-50 hidden flex items-center justify-center overflow-auto">
-            <div class="bg-white rounded-lg shadow-xl w-1/3 p-6 relative">
+        <div id="payment-modal" class="fixed z-50 inset-0  hidden flex items-center justify-center overflow-auto"
+            style="background-color: rgba(0,0,0,0.7);">
+            <div class="bg-white rounded-2xl shadow-2xl w-1/3 p-6 relative border-l-4 border-green-500">
                 <button onclick="closePaymentModal()"
-                    class="absolute top-4 right-4 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-full w-8 h-8 flex items-center justify-center font-bold">&times;</button>
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Pembayaran QRIS</h2>
-                <p class="text-gray-700 mb-4">Silakan scan kode QR di bawah ini untuk menyelesaikan pembayaran:</p>
-                <div class="bg-gray-100 p-4 rounded-lg text-gray-800 mb-6">
-                    <strong>QRIS Pembayaran:</strong>
-                    <div class="flex justify-center">
-                        <img src="{{ asset('images/frame.png') }}" alt="QRIS" class="w-48 h-48">
+                    class="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-full w-8 h-8 flex items-center justify-center font-bold transition-all duration-200">&times;</button>
+
+                <div class="flex items-center mb-4">
+                    <div class="bg-green-500 rounded-full p-2 mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                     </div>
-                    <p class="mt-2">Pastikan untuk memasukkan jumlah yang sesuai dengan total yang tertera.</p>
+                    <h2 class="text-2xl font-bold text-gray-800">Pembayaran QRIS</h2>
                 </div>
-                <h3 class="font-bold text-gray-800 mb-2">Barang yang Dibeli:</h3>
-                <ul class="list-disc list-inside text-gray-700 mb-4">
-                    <li>{{ $product->nama_222405 }}</li>
-                </ul>
-                <div class="flex justify-between text-lg font-bold text-gray-900 mb-6">
-                    <span>Total:</span>
-                    <span>Rp {{ number_format($product->harga_222405, 0, ',', '.') }}</span>
+
+                <!-- Compact Summary -->
+                <div class="bg-gray-50 rounded-xl p-3 border border-gray-200 mb-4">
+                    <div class="flex justify-between items-center text-sm">
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                            <span class="text-gray-700 truncate">{{ $product->nama_222405 }}</span>
+                        </div>
+                        <span class="text-green-600 font-bold">Rp
+                            {{ number_format($product->harga_222405, 0, ',', '.') }}</span>
+                    </div>
                 </div>
-                <form id="upload-receipt-form" enctype="multipart/form-data" class="mb-6">
-                    <label class="block text-gray-700 font-semibold mb-2">Unggah Bukti Pembayaran:</label>
-                    <input type="file" name="receipt" id="receipt"
-                        class="border-2 border-gray-300 p-2 w-full rounded-lg focus:ring-2 focus:ring-gray-500 focus:outline-none"
-                        accept="image/*" required onchange="previewReceipt()">
-                </form>
-                <div id="receipt-preview" class="hidden mb-6">
-                    <h3 class="font-semibold text-gray-700 mb-2">Pratinjau Bukti Pembayaran:</h3>
-                    <img id="receipt-image" src="" alt="Bukti Pembayaran" class="w-full rounded-lg shadow-lg">
+
+                <!-- QR Code Section - Initially Visible -->
+                <div id="qr-section" class="transition-all duration-300">
+                    <p class="text-gray-700 mb-3 font-medium text-sm">Scan kode QR di bawah ini untuk menyelesaikan
+                        pembayaran:</p>
+
+                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 mb-4">
+                        <div class="flex justify-center">
+                            <div class="bg-white p-2 rounded-xl shadow-md">
+                                <img src="{{ asset('images/frame.png') }}" alt="QRIS" class="w-40 h-40">
+                            </div>
+                        </div>
+                        <div class="text-center text-xs text-gray-500 mt-2 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Pastikan jumlah pembayaran sesuai dengan total
+                        </div>
+                    </div>
+
+                    <!-- Show Upload Form Button -->
+                    <div class="flex justify-center">
+                        <button onclick="toggleUploadSection()"
+                            class="bg-green-500 text-white font-medium py-2 px-4 rounded-xl hover:bg-green-600 transition-colors duration-200 shadow-md flex items-center text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                            </svg>
+                            Sudah Bayar? Upload Bukti
+                        </button>
+                    </div>
                 </div>
-                <div class="flex justify-end space-x-4">
-                    <button onclick="closePaymentModal()"
-                        class="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600">Tutup</button>
-                    <button onclick="submitPaymentProof()"
-                        class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600">Kirim</button>
+
+                <!-- Upload Section - Initially Hidden -->
+                <div id="upload-section" class="hidden transition-all duration-300">
+                    <form id="upload-receipt-form" enctype="multipart/form-data" class="mb-4">
+                        <label class="block text-gray-700 font-semibold mb-2 flex items-center text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-green-500" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                            </svg>
+                            Unggah Bukti Pembayaran:
+                        </label>
+                        <div
+                            class="border-2 border-gray-200 border-dashed rounded-xl p-4 text-center hover:bg-gray-50 transition-colors duration-200">
+                            <input type="file" name="receipt" id="receipt" class="hidden" accept="image/*"
+                                required onchange="previewReceipt()">
+                            <label for="receipt" class="cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto text-gray-400 mb-2"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                </svg>
+                                <span class="text-gray-600 font-medium text-sm">Klik untuk memilih file</span>
+                                <p class="text-xs text-gray-500 mt-1">JPG, PNG atau PDF (Maks. 5MB)</p>
+                            </label>
+                        </div>
+                    </form>
+
+                    <div id="receipt-preview" class="hidden mb-4">
+                        <h3 class="font-semibold text-gray-700 mb-2 flex items-center text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-green-500" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            Pratinjau Bukti Pembayaran:
+                        </h3>
+                        <div class="border border-gray-200 rounded-xl overflow-hidden">
+                            <img id="receipt-image" src="" alt="Bukti Pembayaran" class="w-full">
+                        </div>
+                    </div>
+
+                    <!-- Show QR Code Button -->
+                    <div class="flex justify-center mb-4">
+                        <button onclick="toggleUploadSection()"
+                            class="bg-gray-100 text-gray-700 font-medium py-2 px-4 rounded-xl hover:bg-gray-200 transition-colors duration-200 flex items-center text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 19l-7-7 7-7" />
+                            </svg>
+                            Kembali ke QRIS
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-3">
+
+                    <button id="submit-button" onclick="submitPaymentProof()"
+                        class="bg-green-500 text-white font-medium py-2 px-4 rounded-xl hover:bg-green-600 transition-colors duration-200 shadow-md flex items-center text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Kirim
+                    </button>
                 </div>
             </div>
         </div>
@@ -143,25 +234,6 @@
 @endsection
 @section('scripts')
     <script>
-        // Toggle Modal
-        function toggleModal(modalId, show = true) {
-            const modal = document.getElementById(modalId);
-            modal.classList.toggle('hidden', !show);
-        }
-
-        function showPaymentModal() {
-            if (!isUserLoggedIn()) {
-                // Jika pengguna belum login, arahkan ke halaman login
-                window.location.href = "{{ route('login') }}";
-                return; // Hentikan eksekusi fungsi
-            }
-            document.getElementById('payment-modal').classList.remove('hidden');
-        }
-
-        function closePaymentModal() {
-            document.getElementById('payment-modal').classList.add('hidden');
-        }
-
         function isUserLoggedIn() {
             return {{ auth()->check() ? 'true' : 'false' }};
         }
@@ -173,7 +245,7 @@
             }
 
             const qty = parseInt(document.getElementById('qty').value);
-            const productId = {{ $product->id_user_222405 }};
+            const productId = {{ $product->id_produk_222405 }};
 
             if (isNaN(qty) || qty < 1) {
                 alert('Quantity harus minimal 1.');
@@ -195,6 +267,46 @@
                 .then(() => document.getElementById('my_modal_3').showModal())
                 .catch(console.error);
         });
+    </script>
+    <script>
+        // Toggle Modal
+        function toggleModal(modalId, show = true) {
+            const modal = document.getElementById(modalId);
+            modal.classList.toggle('hidden', !show);
+        }
+
+        function showPaymentModal() {
+            if (!isUserLoggedIn()) {
+                // Jika pengguna belum login, arahkan ke halaman login
+                window.location.href = "{{ route('login') }}";
+                return; // Hentikan eksekusi fungsi
+            }
+            document.getElementById('payment-modal').classList.remove('hidden');
+        }
+
+        function toggleUploadSection() {
+            const qrSection = document.getElementById('qr-section');
+            const uploadSection = document.getElementById('upload-section');
+
+            if (qrSection.classList.contains('hidden')) {
+                // Show QR section, hide upload section
+                qrSection.classList.remove('hidden');
+                uploadSection.classList.add('hidden');
+            } else {
+                // Show upload section, hide QR section
+                qrSection.classList.add('hidden');
+                uploadSection.classList.remove('hidden');
+            }
+        }
+
+
+        function closePaymentModal() {
+            document.getElementById('payment-modal').classList.add('hidden');
+        }
+
+        function isUserLoggedIn() {
+            return {{ auth()->check() ? 'true' : 'false' }};
+        }
 
 
         // Receipt Preview
@@ -216,6 +328,36 @@
         }
 
         // Submit Payment Proof
+
+        document.getElementById('increment').addEventListener('click', function() {
+            let qty = document.getElementById('qty');
+            qty.value = parseInt(qty.value) + 1;
+        });
+
+        document.getElementById('decrement').addEventListener('click', function() {
+            let qty = document.getElementById('qty');
+            if (qty.value > 1) {
+                qty.value = parseInt(qty.value) - 1;
+            }
+        });
+
+        const sizeButtons = document.querySelectorAll('.size-btn');
+
+        sizeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Reset semua tombol ke keadaan awal
+                sizeButtons.forEach(btn => {
+                    btn.classList.remove('bg-black', 'text-white');
+                    btn.classList.add('bg-white', 'text-gray-700', 'border-gray-500');
+                });
+
+                // Tambahkan kelas untuk tombol yang diklik
+                button.classList.remove('bg-white', 'text-gray-700', 'border-gray-500');
+                button.classList.add('bg-black', 'text-white');
+            });
+        });
+    </script>
+    <script>
         async function submitPaymentProof() {
             if (!isUserLoggedIn()) {
                 // Jika pengguna belum login, arahkan ke halaman login
@@ -224,7 +366,7 @@
             }
 
             const formData = new FormData(document.getElementById('upload-receipt-form'));
-            const productId = {{ $product->id_user_222405 }};
+            const productId = {{ $product->id_produk_222405 }};
             const quantity = parseInt(document.getElementById('qty').value);
 
             formData.append('product_id', productId);
@@ -254,33 +396,5 @@
                 alert('Error submitting payment proof.');
             }
         }
-
-        document.getElementById('increment').addEventListener('click', function() {
-            let qty = document.getElementById('qty');
-            qty.value = parseInt(qty.value) + 1;
-        });
-
-        document.getElementById('decrement').addEventListener('click', function() {
-            let qty = document.getElementById('qty');
-            if (qty.value > 1) {
-                qty.value = parseInt(qty.value) - 1;
-            }
-        });
-
-        const sizeButtons = document.querySelectorAll('.size-btn');
-
-        sizeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Reset semua tombol ke keadaan awal
-                sizeButtons.forEach(btn => {
-                    btn.classList.remove('bg-black', 'text-white');
-                    btn.classList.add('bg-white', 'text-gray-700', 'border-gray-500');
-                });
-
-                // Tambahkan kelas untuk tombol yang diklik
-                button.classList.remove('bg-white', 'text-gray-700', 'border-gray-500');
-                button.classList.add('bg-black', 'text-white');
-            });
-        });
     </script>
 @endsection

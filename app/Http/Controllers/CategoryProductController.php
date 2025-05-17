@@ -70,19 +70,19 @@ class CategoryProductController extends Controller
     {
         $category = CategoryProduct::findOrFail($id);
 
-        if ($request->hasFile('path_img_222405')) {
+        if ($request->hasFile('path_img')) {
             if ($category->path_img_222405 && !filter_var($category->path_img_222405, FILTER_VALIDATE_URL)) {
                 if (Storage::exists('public/' . $category->path_img_222405)) {
                     Storage::delete('public/' . $category->path_img_222405);
                 }
             }
 
-            $path                      = $request->file('path_img_222405')->store('images', 'public');
+            $path                      = $request->file('path_img')->store('images', 'public');
             $category->path_img_222405 = $path;
         }
         try {
-            $category->nama_222405      = $request->input('nama_222405');
-            $category->deskripsi_222405 = $request->input('deskripsi_222405');
+            $category->nama_222405      = $request->input('nama');
+            $category->deskripsi_222405 = $request->input('deskripsi');
             $category->save();
         } catch (\Exception $e) {
             Log::error('Gagal menyimpan kategori:', ['error' => $e->getMessage()]);
