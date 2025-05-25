@@ -58,11 +58,10 @@ class SignupController extends Controller
 
         // Membuat user baru
         User::create([
-            'id_user_222405'       => (string) Str::uuid(),  // Generate UUID for primary key
             'email_222405'         => $request->input('email'),
             'name_222405'          => $request->input('name'),
             'password_222405'      => Hash::make($request->input('password')),
-            'role_222405'          => 'user',
+            'role_222405'          => 'customer',
             // Setting default values for required fields
             'gender_222405'        => null,
             'address_222405'       => null,

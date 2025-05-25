@@ -46,7 +46,7 @@ class LoginController extends Controller
 
             // Menyimpan data tambahan ke session, termasuk role
             session([
-                'user_id'       => Auth::user()->id_user_222405,
+                'user_id'       => Auth::user()->email_222405,
                 'user_role'     => Auth::user()->role_222405,  // Role user, misalnya 'admin' atau 'user'
                 'email'         => Auth::user()->email_222405,  // Role user, misalnya 'admin' atau 'user'
                 'name'          => Auth::user()->name_222405,

@@ -16,7 +16,7 @@ class Transaksi extends Model
     protected $keyType    = 'string';  // Karena UUID adalah string
 
     protected $fillable = [
-        'id_user_222405',
+        'email_222405',
         'jumlah_222405',
         'id_produk_222405',
         'harga_total_222405',
@@ -27,7 +27,7 @@ class Transaksi extends Model
 
     public function pelanggan()
     {
-        return $this->belongsTo(User::class, 'id_user_222405', 'id_user_222405');
+        return $this->belongsTo(User::class, 'email_222405', 'email_222405');
     }
 
     /**

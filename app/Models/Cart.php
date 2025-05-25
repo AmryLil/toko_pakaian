@@ -15,7 +15,7 @@ class Cart extends Model
     protected $keyType    = 'string';  // Karena UUID adalah string
 
     protected $fillable = [
-        'id_user_222405'
+        'email_222405'
     ];
 
     public function items()

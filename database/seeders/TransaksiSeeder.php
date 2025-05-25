@@ -51,7 +51,7 @@ class TransaksiSeeder extends Seeder
 
             Transaksi::create([
                 'id_transaksi_222405'      => Str::uuid()->toString(),
-                'id_user_222405'           => $customer->id_user_222405,
+                'email_222405'             => $customer->email_222405,
                 'jumlah_222405'            => $quantity,
                 'id_produk_222405'         => $product->id_produk_222405,
                 'harga_total_222405'       => $totalPrice,

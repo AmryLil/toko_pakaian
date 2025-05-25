@@ -173,7 +173,7 @@
             }
 
             const qty = parseInt(document.getElementById('qty').value);
-            const productId = {{ $product->id_user_222405 }};
+            const productId = {{ $product->email_222405 }};
 
             if (isNaN(qty) || qty < 1) {
                 alert('Quantity harus minimal 1.');
@@ -224,7 +224,7 @@
             }
 
             const formData = new FormData(document.getElementById('upload-receipt-form'));
-            const productId = {{ $product->id_user_222405 }};
+            const productId = {{ $product->email_222405 }};
             const quantity = parseInt(document.getElementById('qty').value);
 
             formData.append('product_id', productId);

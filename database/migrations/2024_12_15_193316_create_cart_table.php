@@ -15,9 +15,9 @@ class CreateCartTable extends Migration
     {
         Schema::create('carts_222405', function (Blueprint $table) {
             $table->string('id_cart_222405')->primary();
-            $table->string('id_user_222405');
+            $table->string('email_222405');
             $table->timestamps();
-            $table->foreign('id_user_222405')->references('id_user_222405')->on('users_222405')->onDelete('cascade');
+            $table->foreign('email_222405')->references('email_222405')->on('users_222405')->onDelete('cascade');
         });
     }
 

@@ -16,7 +16,7 @@ class CreateTransaksiTable extends Migration
     {
         Schema::create('transaksi_222405', function (Blueprint $table) {
             $table->string('id_transaksi_222405')->primary();
-            $table->string('id_user_222405');
+            $table->string('email_222405');
             $table->string('id_produk_222405');
             $table->integer('jumlah_222405');
             $table->decimal('harga_total_222405', 10, 2);
@@ -25,7 +25,7 @@ class CreateTransaksiTable extends Migration
             $table->timestamp('tanggal_transaksi_222405')->default(DB::raw('CURRENT_TIMESTAMP'));
 
             $table->timestamps();
-            $table->foreign('id_user_222405')->references('id_user_222405')->on('users_222405')->onDelete('cascade');
+            $table->foreign('email_222405')->references('email_222405')->on('users_222405')->onDelete('cascade');
             $table->foreign('id_produk_222405')->references('id_produk_222405')->on('produk_222405')->onDelete('cascade');
         });
     }
