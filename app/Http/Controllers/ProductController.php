@@ -67,10 +67,11 @@ class ProductController extends Controller
         // Validasi input yang masuk
         $request->validate([
             'nama'        => 'required|string|max:255',
+            'kode'        => 'required|string|max:255',
             'deskripsi'   => 'required|string',
             'harga'       => 'required|numeric',
             'jumlah'      => 'required|integer',
-            'kategori_id' => 'required|integer',
+            'kategori_id' => 'required|string',
             'path_img'    => 'required|image|mimes:jpeg,png,jpg,gif',  // Validasi file gambar
         ]);
 
@@ -83,7 +84,7 @@ class ProductController extends Controller
 
         // Menyimpan data produk ke database dengan field yang sesuai model baru
         Product::create([
-            'id_produk_222405'   => Str::uuid()->toString(),  // Generate UUID untuk primary key
+            'id_produk_222405'   => $request->input('kode'),  // Generate UUID untuk primary key
             'nama_222405'        => $request->input('nama'),
             'deskripsi_222405'   => $request->input('deskripsi'),
             'harga_222405'       => $request->input('harga'),

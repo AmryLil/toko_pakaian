@@ -8,6 +8,14 @@
             <h1 class="text-3xl font-semibold text-gray-800 mb-6">Tambah Produk</h1>
 
             <div class="mb-6">
+                <label for="kode" class="block text-lg font-medium text-gray-700 mb-2">Kode Produk</label>
+                <input type="text" name="kode"
+                    class="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                @error('kode')
+                    <small class="text-red-500">{{ $message }}</small>
+                @enderror
+            </div>
+            <div class="mb-6">
                 <label for="nama" class="block text-lg font-medium text-gray-700 mb-2">Nama Produk</label>
                 <input type="text" name="nama"
                     class="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">

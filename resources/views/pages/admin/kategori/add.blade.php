@@ -10,6 +10,11 @@
 
             <!-- Nama Kategori -->
             <div class="mb-5">
+                <label for="id_kategori" class="block text-gray-700 font-semibold mb-2">Kode Kategori</label>
+                <input type="text" name="id_kategori" id="id_kategori"
+                    class="border border-gray-300 p-3 rounded-lg w-full" placeholder="Masukkan kode kategori">
+            </div>
+            <div class="mb-5">
                 <label for="nama" class="block text-gray-700 font-semibold mb-2">Nama Kategori</label>
                 <input type="text" name="nama" id="nama" class="border border-gray-300 p-3 rounded-lg w-full"
                     placeholder="Masukkan nama kategori">
