@@ -16,6 +16,7 @@ class LoginController extends Controller
     }
 
     // Proses login
+
     public function login(Request $request)
     {
         // Validasi input
@@ -23,6 +24,7 @@ class LoginController extends Controller
             [
                 'email'    => ['required', 'email'],
                 'password' => 'required|min:8|max:10',
+                'role'     => 'required|string',
             ],
             [
                 'email.required'    => 'Email wajib diisi.',
@@ -30,6 +32,7 @@ class LoginController extends Controller
                 'password.required' => 'Password wajib diisi.',
                 'password.min'      => 'Password harus memiliki minimal 8 karakter.',
                 'password.max'      => 'Password tidak boleh lebih dari 10 karakter.',
+                'role.required'     => 'Role wajib dipilih.',
             ]
         );
 
@@ -39,7 +42,8 @@ class LoginController extends Controller
         // Attempt login menggunakan kolom yang sudah disesuaikan
         if (Auth::attempt([
             'email_222405' => $credentials['email'],
-            'password'     => $credentials['password']
+            'password'     => $credentials['password'],
+            'role_222405'  => $credentials['role'],
         ])) {
             // Regenerasi session ID untuk keamanan
             $request->session()->regenerate();

@@ -25,6 +25,7 @@ class SignupController extends Controller
                 'name'                  => 'required|string|max:255',
                 'password'              => 'required|string|min:8|max:10',
                 'password_confirmation' => 'required|string|min:8|max:10',
+                'role'                  => 'required|string',
             ],
             [
                 // Pesan error untuk email
@@ -45,6 +46,7 @@ class SignupController extends Controller
                 'password_confirmation.string'   => 'Konfirmasi password harus berupa teks.',
                 'password_confirmation.min'      => 'Konfirmasi password harus memiliki minimal 8 karakter.',
                 'password_confirmation.max'      => 'Konfirmasi password tidak boleh lebih dari 10 karakter.',
+                'role.required'                  => 'Role wajib dipilih.',
             ]
         );
 
@@ -61,7 +63,7 @@ class SignupController extends Controller
             'email_222405'         => $request->input('email'),
             'name_222405'          => $request->input('name'),
             'password_222405'      => Hash::make($request->input('password')),
-            'role_222405'          => 'customer',
+            'role_222405'          => $request->input('role'),
             // Setting default values for required fields
             'gender_222405'        => null,
             'address_222405'       => null,

@@ -47,8 +47,8 @@
                 <thead class="bg-gray-200 text-gray-800 text-lg">
                     <tr>
                         <th class="py-4 px-6 text-left">No</th>
+                        <th class="py-4 px-6 text-left">ID</th>
                         <th class="py-4 px-6 text-left">Nama</th>
-                        <th class="py-4 px-6 text-left">Deskripsi</th>
                         <th class="py-4 px-6 text-left">Kategori</th>
                         <th class="py-4 px-6 text-left">Harga</th>
                         <th class="py-4 px-6 text-left">Jumlah</th>
@@ -59,8 +59,8 @@
                     @foreach ($products as $index => $product)
                         <tr class="odd:bg-gray-50 even:bg-gray-100 hover:bg-slate-200 transition">
                             <td class="py-4 px-6">{{ $index + 1 }}</td>
+                            <td class="py-4 px-6">{{ $product->id_produk_222405 }}</td>
                             <td class="py-4 px-6 font-semibold">{{ $product->nama_222405 }}</td>
-                            <td class="py-4 px-6">{{ Str::words($product->deskripsi_222405, 5, '...') }}</td>
                             <td class="py-4 px-6">{{ $product->category->nama_222405 ?? 'Tidak ada kategori' }}</td>
                             <td class="py-4 px-6">{{ number_format($product->harga_222405, 0, ',', '.') }}</td>
                             <td class="py-4 px-6">{{ $product->jumlah_222405 }}</td>
