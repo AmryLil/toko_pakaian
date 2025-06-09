@@ -52,7 +52,8 @@
                 <select name="role" id="role"
                     class="mt-1 w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="">Pilih Role</option>
-                    <option value="user" {{ old('role', $user->role_222405) == 'user' ? 'selected' : '' }}>User</option>
+                    <option value="customer" {{ old('role', $user->role_222405) == 'customer' ? 'selected' : '' }}>Customer
+                    </option>
                     <option value="admin" {{ old('role', $user->role_222405) == 'admin' ? 'selected' : '' }}>Admin</option>
                 </select>
                 @error('role')

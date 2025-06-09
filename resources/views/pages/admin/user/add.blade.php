@@ -48,7 +48,7 @@
                 <select name="role"
                     class="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="">Pilih Role</option>
-                    <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
+                    <option value="customer" {{ old('role') == 'customer' ? 'selected' : '' }}>Customer</option>
                     <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                 </select>
                 @error('role')
