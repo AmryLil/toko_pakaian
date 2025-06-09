@@ -54,6 +54,17 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::delete('/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
     });
 
+    // User di Dashboard
+    Route::prefix('user')->group(function () {
+        Route::get('/', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+        Route::get('/create', [\App\Http\Controllers\UserController::class, 'create'])->name('users.create');
+        Route::post('/', [\App\Http\Controllers\UserController::class, 'store'])->name('users.store');
+        Route::get('/{email}', [\App\Http\Controllers\UserController::class, 'show'])->name('users.show');
+        Route::get('/{email}/edit', [\App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
+        Route::put('/{email}', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+        Route::delete('/{email}', [\App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
+    });
+
     // Kategori di Dashboard
     Route::prefix('categories')->group(function () {
         Route::get('/', [KategoriController::class, 'kategori_dashboard'])->name('dashboard.kategori.index');

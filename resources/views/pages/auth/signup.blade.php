@@ -62,12 +62,7 @@
                         <input
                             class="w-full text-sm rounded-lg border border-gray-300 p-4 leading-relaxed placeholder-gray-500 tracking-wide focus:ring-2 focus:ring-green-700 focus:outline-none"
                             type="password" name="password_confirmation" placeholder="Confirm Password" required />
-                        <select name="role" required
-                            class="w-full text-sm rounded-lg border border-gray-300 p-4 leading-relaxed placeholder-gray-500 tracking-wide focus:ring-2 focus:ring-green-700 focus:outline-none">
-                            <option value="" disabled selected>Pilih Role</option>
-                            <option value="admin">Admin</option>
-                            <option value="customer">Customer</option>
-                        </select>
+
                     </div>
                     <button type="submit"
                         class="w-full bg-gray-950 rounded-md text-white py-3 hover:bg-green-800 transition duration-300 font-semibold">

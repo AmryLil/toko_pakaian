@@ -3,7 +3,7 @@
         <div class="flex flex-col">
             <h1 class="font-semibold text-2xl text-slate-950">Administator</h1>
         </div>
-        
+
         <div class="flex items-center  space-x-4">
             <label class="input input-bordered flex items-center gap-2 invisible">
                 <input type="text" class="grow" placeholder="Search" />
@@ -15,29 +15,28 @@
                 </svg>
             </label>
             <div class="dropdown dropdown-end">
-                
-    <div class="flex gap-2 items-center font-semibold p-1 px-4 ">
-        <div>Username</div>
-        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar bg-slate-400">
-            
-            {{-- <div class="w-10 rounded-full">
-                <img alt="Tailwind CSS Navbar component"
-                src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : asset('images/produk.png') }}" 
-                alt="Avatar" />
-            </div> --}}
-        </div>
-    </div>
 
-    <ul tabindex="0"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-        
-        <li>
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="w-full text-left">Logout</button>
-            </form>
-        </li>
-    </ul>
-</div>
-</header>
+                <div class="flex gap-2 items-center font-semibold p-1 px-4 ">
+                    <div class="w-max">{{ Auth::user()->name_222405 }}</div>
+                    <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar ">
+
+                        <div class="rounded-full">
+                            <img alt="Tailwind CSS Navbar component" src="{{ asset('images/profile.png') }}"
+                                alt="Avatar" />
+                        </div>
+                    </div>
+                </div>
+
+                <ul tabindex="0"
+                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="w-full text-left">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+    </header>
 </div>
