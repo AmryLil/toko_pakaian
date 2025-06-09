@@ -562,7 +562,7 @@
 
                         // Optional: Redirect after success
                         setTimeout(() => {
-                            window.location.href = '/orders';
+                            window.location.href = '/pesanan';
                         }, 2000);
                     } else {
                         showNotification(data.message || 'Terjadi kesalahan', 'error');

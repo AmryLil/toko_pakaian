@@ -1,106 +1,111 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Beranda')
 
 @section('content')
-
     <section class="">
         <div class=" h-[500px] w-full overflow-hidden bg-linen flex items-center font-jost   ">
             <div class="flex gap-2 items-center justify-between w-full h-full ">
                 <div class="translate-x-20">
-                    <h1 class="text-6xl font-semibold">SUMMER 2025 ARRIVALS </h1>
-                    <P class="mt-2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto optio reiciendis
-                        labore laborum laudantium nihil eum explicabo enim saepe iusto.</P>
-                    <button class="border mt-10 border-slate-950 px-4 py-1">SHOP NOW</button>
+                    <h1 class="text-6xl font-semibold">KOLEKSI MUSIM PANAS 2025</h1>
+                    <P class="mt-2">Temukan gaya terbaru dengan koleksi eksklusif kami. Nikmati kenyamanan dan kemewahan
+                        dalam setiap pilihan pakaian yang telah dirancang khusus untuk Anda yang menghargai kualitas dan
+                        style.</P>
+                    <button class="border mt-10 border-slate-950 px-4 py-1">BELANJA SEKARANG</button>
                 </div>
                 <img src="{{ asset('images/banner.png') }}" alt=""
                     class="w-[130%] h-full object-cover object-[30%_0%]  ">
             </div>
         </div>
         <div class=" flex gap-4 py-4">
-            <div class="w-1/2 h-40 bg-linen"></div>
-            <div class="w-1/2 h-40 bg-linen"></div>
+            <div class="w-1/2 h-40 bg-linen flex items-center justify-center">
+                <div class="text-center">
+                    <h3 class="text-2xl font-semibold mb-2">GRATIS ONGKIR</h3>
+                    <p class="text-gray-600">Untuk pembelian minimal Rp 500.000</p>
+                </div>
+            </div>
+            <div class="w-1/2 h-40 bg-linen flex items-center justify-center">
+                <div class="text-center">
+                    <h3 class="text-2xl font-semibold mb-2">GARANSI KUALITAS</h3>
+                    <p class="text-gray-600">Jaminan uang kembali 100%</p>
+                </div>
+            </div>
         </div>
     </section>
+
     <section class=" py-10">
-        <h1 class="font-semibold text-xl text-center">NEW ARRIVALS</h1>
+        <h1 class="font-semibold text-xl text-center">KOLEKSI TERBARU</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
             <!-- Product 1 -->
-            <x-shop.card_product path="produk/black-hoodie" title="Black Hoodie" price="108.00" image="images/banner.png"
-                class="custom-class" />
-            <x-shop.card_product path="produk/black-hoodie" title="Black Hoodie" price="108.00" image="images/banner.png"
-                class="custom-class" />
-            <x-shop.card_product path="produk/black-hoodie" title="Black Hoodie" price="108.00" image="images/banner.png"
-                class="custom-class" />
-            <x-shop.card_product path="produk/black-hoodie" title="Black Hoodie" price="108.00" image="images/banner.png"
-                class="custom-class" />
-
-
-
+            <x-shop.card_product path="produk/hoodie-hitam" title="Hoodie Hitam Premium" price="250.000"
+                image="images/banner.png" class="custom-class" />
+            <x-shop.card_product path="produk/kemeja-putih" title="Kemeja Putih Formal" price="180.000"
+                image="images/banner.png" class="custom-class" />
+            <x-shop.card_product path="produk/celana-jeans" title="Celana Jeans Slim Fit" price="320.000"
+                image="images/banner.png" class="custom-class" />
+            <x-shop.card_product path="produk/dress-casual" title="Dress Casual Wanita" price="220.000"
+                image="images/banner.png" class="custom-class" />
+        </div>
     </section>
 
     <section>
-
-
         <!-- Product Section -->
         <div class=" mx-auto py-10 ">
             <div class="relative w-full bg-linen h-96  flex items-center justify-between">
                 <img src="{{ asset('images/banner.png') }}" alt=""
                     class="w-[70%] h-full object-cover object-[30%_0%]  -translate-x-10">
                 <div class="pr-10">
-                    <h1 class="text-3xl font-bold">ACTIVE WEAR</h1>
-                    <p class="text-gray-700 mt-2">New collection now available online and in stores. Comes in a variety of
-                        colors, fabrics, and styles.</p>
-                    <a href="#" class="mt-4 inline-block bg-black text-white px-4 py-2">SHOP NOW →</a>
+                    <h1 class="text-3xl font-bold">KOLEKSI OLAHRAGA</h1>
+                    <p class="text-gray-700 mt-2">Koleksi terbaru sudah tersedia secara online dan di toko. Hadir dalam
+                        berbagai pilihan warna, bahan, dan gaya yang sesuai dengan aktivitas olahraga Anda.</p>
+                    <a href="#" class="mt-4 inline-block bg-black text-white px-4 py-2">BELANJA SEKARANG →</a>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <section>
+    {{-- <section>
         <div class=" mx-auto py-10 ">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-semibold">CATEGORIES</h2>
-                <a href="#" class="text-gray-500 hover:underline">VIEW ALL →</a>
+                <h2 class="text-2xl font-semibold">KATEGORI PRODUK</h2>
+                <a href="#" class="text-gray-500 hover:underline">LIHAT SEMUA →</a>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Category 1 -->
                 <div class="relative group bg-linen">
-                    <img src="{{ asset('images/banner.png') }}" alt="Tops" class="w-full h-auto object-cover">
+                    <img src="{{ asset('images/banner.png') }}" alt="Kemeja" class="w-full h-auto object-cover">
                     <div class="absolute mx-6 bottom-4 left-0 right-0 bg-white text-center py-2">
-                        <span class="font-semibold text-gray-800">TOPS</span>
+                        <span class="font-semibold text-gray-800">KEMEJA & BLOUSE</span>
                     </div>
                 </div>
 
                 <!-- Category 2 -->
                 <div class="relative group bg-linen">
-                    <img src="{{ asset('images/banner.png') }}" alt="Shoes" class="w-full h-auto object-cover">
+                    <img src="{{ asset('images/banner.png') }}" alt="Celana" class="w-full h-auto object-cover">
                     <div class="absolute mx-6 bottom-4 left-0 right-0 bg-white text-center py-2">
-                        <span class="font-semibold text-gray-800">SHOES</span>
+                        <span class="font-semibold text-gray-800">CELANA & ROK</span>
                     </div>
                 </div>
 
                 <!-- Category 3 -->
                 <div class="relative group bg-linen">
-                    <img src="{{ asset('images/banner.png') }}" alt="Accessories" class="w-full h-auto object-cover">
+                    <img src="{{ asset('images/banner.png') }}" alt="Dress" class="w-full h-auto object-cover">
                     <div class="absolute mx-6 bottom-4 left-0 right-0 bg-white text-center py-2">
-                        <span class="font-semibold text-gray-800">ACCESSORIES</span>
+                        <span class="font-semibold text-gray-800">DRESS & TERUSAN</span>
                     </div>
                 </div>
 
                 <!-- Category 4 -->
                 <div class="relative group bg-linen">
-                    <img src="{{ asset('images/banner.png') }}" alt="Sweatshirts" class="w-full h-auto object-cover">
+                    <img src="{{ asset('images/banner.png') }}" alt="Outerwear" class="w-full h-auto object-cover">
                     <div class="absolute mx-6 bottom-4 left-0 right-0 bg-white text-center py-2">
-                        <span class="font-semibold text-gray-800">SWEATSHIRTS</span>
+                        <span class="font-semibold text-gray-800">JAKET & OUTER</span>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
+    </section> --}}
 
 @endsection
 
@@ -141,7 +146,6 @@
             return {{ auth()->check() ? 'true' : 'false' }};
         }
 
-
         document.querySelectorAll('#add-to-cart').forEach(button => {
             button.addEventListener('click', async function() {
                 if (!isUserLoggedIn()) {
@@ -156,7 +160,7 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'Quantity harus minimal 1.'
+                        text: 'Jumlah harus minimal 1.'
                     });
                     return;
                 }
@@ -222,7 +226,6 @@
             });
         });
     </script>
-
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
