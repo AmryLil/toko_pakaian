@@ -55,6 +55,12 @@ class ProductController extends Controller
         return view('pages.admin.produk.show', compact('product'));
     }
 
+    public function showUser($id)
+    {
+        $product = Product::with('category')->findOrFail($id);
+        return view('pages.users.product_detail', compact('product'));
+    }
+
     public function create()
     {
         $categories = CategoryProduct::all();

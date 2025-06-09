@@ -6,12 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Toko Pakaian - @yield('title', 'Laravel')</title>
 
-
     <!-- CSS -->
-    <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
@@ -19,8 +15,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
 
     <!-- Custom Styles -->
     <style>
@@ -44,16 +38,10 @@
         @yield('content')
     </main>
 
-    <!-- Footer -->
     @include('components.footer')
-
-
     @yield('scripts')
-    <!-- Scripts -->
-    {{-- <script src="{{ asset('js/handleModalProduct.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @livewireScripts
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script> --}}
 </body>
 
 </html>

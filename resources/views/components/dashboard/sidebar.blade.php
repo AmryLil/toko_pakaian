@@ -54,6 +54,21 @@
                     <path d="m6.25 7.5 -4.375 4.375" stroke-width="1"></path>
                     <path d="m6.25 10.625 -2.5 2.5" stroke-width="1"></path>
                 </svg></x-dashboard.menulink>
+            <x-dashboard.menulink path="{{ route('admin.transaksi.index') }}" title="Transaksi"><svg
+                    class="group-hover:stroke-[var(--color-yellow-700)]  stroke-black"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 -0.5 16 16" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round" id="Table-Column--Streamline-Tabler" height="20" width="20">
+                    <desc>Table Column Streamline Icon: https://streamlinehq.com</desc>
+                    <path
+                        d="M1.875 3.125a1.25 1.25 0 0 1 1.25 -1.25h8.75a1.25 1.25 0 0 1 1.25 1.25v8.75a1.25 1.25 0 0 1 -1.25 1.25H3.125a1.25 1.25 0 0 1 -1.25 -1.25V3.125z"
+                        stroke-width="1"></path>
+                    <path d="M6.25 6.25h6.875" stroke-width="1"></path>
+                    <path d="M6.25 1.875v11.25" stroke-width="1"></path>
+                    <path d="M5.625 1.875 1.875 5.625" stroke-width="1"></path>
+                    <path d="m6.25 4.375 -4.375 4.375" stroke-width="1"></path>
+                    <path d="m6.25 7.5 -4.375 4.375" stroke-width="1"></path>
+                    <path d="m6.25 10.625 -2.5 2.5" stroke-width="1"></path>
+                </svg></x-dashboard.menulink>
 
 
 

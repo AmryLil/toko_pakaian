@@ -75,7 +75,7 @@
                 }
 
                 try {
-                    const response = await fetch(`{{ route('cart.add', ':id') }}`.replace(':id',
+                    const response = await fetch(`#`.replace(':id',
                         productId), {
                         method: 'POST',
                         headers: {
