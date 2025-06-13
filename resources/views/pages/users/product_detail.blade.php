@@ -337,6 +337,99 @@
                 });
                 showNotification('Data produk tidak lengkap', 'error');
             }
+
+            const addToCartBtn = document.getElementById('add-to-cart');
+            const qtyInput = document.getElementById('qty');
+            const cartModal = document.getElementById('cart_modal');
+
+            // Pastikan tombol 'Add to Cart' ada di halaman
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', function() {
+                    const quantity = qtyInput.value;
+
+                    // URL untuk menambahkan produk ke keranjang, dihasilkan oleh helper 'route' Laravel
+                    const url = "{{ route('cart.add', ['productId' => $product->id_produk_222405]) }}";
+
+                    // Dapatkan CSRF token dari meta tag di layout Anda
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
+                        'content');
+
+                    // Kirim request ke server menggunakan Fetch API
+                    fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken, // Sertakan CSRF token
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                quantity: quantity
+                            })
+                        })
+                        .then(response => {
+                            // Cek jika response adalah redirect (misal, karena belum login)
+                            if (response.redirected) {
+                                window.location.href = response.url; // Arahkan ke halaman login
+                                return;
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data && data.message === 'Product added to cart successfully') {
+                                // Jika berhasil, tampilkan modal sukses
+                                if (cartModal) {
+                                    cartModal.showModal();
+                                }
+                            } else {
+                                // Tangani kemungkinan error lain dari server
+                                alert(data.message || 'Gagal menambahkan produk ke keranjang.');
+                            }
+                        })
+                        .catch(error => {
+                            // Tangani error jaringan atau JavaScript
+                            console.error('Error:', error);
+                            alert('Terjadi kesalahan. Pastikan Anda sudah login dan coba lagi.');
+                        });
+                });
+            }
+
+            // --- Logika untuk quantity increment/decrement dan size selection ---
+            const incrementBtn = document.getElementById('increment');
+            const decrementBtn = document.getElementById('decrement');
+
+            incrementBtn.addEventListener('click', () => {
+                let currentValue = parseInt(qtyInput.value);
+                const max = parseInt(qtyInput.max);
+                if (currentValue < max) {
+                    qtyInput.value = currentValue + 1;
+                }
+            });
+
+            decrementBtn.addEventListener('click', () => {
+                let currentValue = parseInt(qtyInput.value);
+                const min = parseInt(qtyInput.min);
+                if (currentValue > min) {
+                    qtyInput.value = currentValue - 1;
+                }
+            });
+
+            const sizeBtns = document.querySelectorAll('.size-btn');
+            sizeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Hapus kelas 'active' dari semua tombol ukuran
+                    sizeBtns.forEach(b => {
+                        b.classList.remove('active', 'bg-black', 'text-white');
+                        b.classList.add('bg-white', 'text-gray-700');
+                    });
+
+                    // Tambahkan kelas 'active' ke tombol yang diklik
+                    this.classList.add('active', 'bg-black', 'text-white');
+                    this.classList.remove('bg-white', 'text-gray-700');
+
+                    // (Opsional) Anda bisa menyimpan ukuran yang dipilih di suatu tempat
+                    // let selectedSize = this.dataset.size;
+                });
+            });
         });
 
         // Initialize quantity controls

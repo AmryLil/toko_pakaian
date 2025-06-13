@@ -40,7 +40,6 @@
 
     @include('components.footer')
     @yield('scripts')
-    @livewireScripts
 
 </body>
 
