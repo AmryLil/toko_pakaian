@@ -24,25 +24,36 @@
 
         <!-- Navigation Menu -->
         <nav class="flex-1 p-4 space-y-2">
-            <!-- Dashboard -->
-
+            <!-- Profile -->
+            <a href="{{ route('admin.profile') }}"
+                class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-amber-50 hover:text-amber-700 transition-all duration-200 
+                {{ request()->routeIs('admin.profile') ? 'bg-amber-50 text-amber-700 border border-amber-200' : '' }}">
+                <svg class="w-5 h-5 mr-3 {{ request()->routeIs('admin.profile') ? 'text-amber-600' : 'group-hover:text-amber-600' }}"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <span class="font-medium">Profile</span>
+            </a>
 
             <!-- Products -->
             <a href="{{ route('dashboard.products') }}"
-                class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-amber-50 hover:text-amber-700 transition-all duration-200 bg-amber-50 text-amber-700 border border-amber-200">
-                <svg class="w-5 h-5 mr-3 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-amber-50 hover:text-amber-700 transition-all duration-200 
+                {{ request()->routeIs('dashboard.products') ? 'bg-amber-50 text-amber-700 border border-amber-200' : '' }}">
+                <svg class="w-5 h-5 mr-3 {{ request()->routeIs('dashboard.products') ? 'text-amber-600' : 'group-hover:text-amber-600' }}"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
                 <span class="font-medium">Produk</span>
-
             </a>
 
             <!-- Categories -->
             <a href="{{ route('dashboard.kategori.index') }}"
-                class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-amber-50 hover:text-amber-700 transition-all duration-200">
-                <svg class="w-5 h-5 mr-3 group-hover:text-amber-600" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
+                class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-amber-50 hover:text-amber-700 transition-all duration-200 
+                {{ request()->routeIs('dashboard.kategori.*') ? 'bg-amber-50 text-amber-700 border border-amber-200' : '' }}">
+                <svg class="w-5 h-5 mr-3 {{ request()->routeIs('dashboard.kategori.*') ? 'text-amber-600' : 'group-hover:text-amber-600' }}"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                 </svg>
@@ -51,21 +62,22 @@
 
             <!-- Transactions -->
             <a href="{{ route('admin.transaksi.index') }}"
-                class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-amber-50 hover:text-amber-700 transition-all duration-200">
-                <svg class="w-5 h-5 mr-3 group-hover:text-amber-600" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
+                class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-amber-50 hover:text-amber-700 transition-all duration-200 
+                {{ request()->routeIs('admin.transaksi.*') ? 'bg-amber-50 text-amber-700 border border-amber-200' : '' }}">
+                <svg class="w-5 h-5 mr-3 {{ request()->routeIs('admin.transaksi.*') ? 'text-amber-600' : 'group-hover:text-amber-600' }}"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
                 <span class="font-medium">Transaksi</span>
-
             </a>
 
             <!-- User Management -->
             <a href="{{ route('users.index') }}"
-                class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-amber-50 hover:text-amber-700 transition-all duration-200">
-                <svg class="w-5 h-5 mr-3 group-hover:text-amber-600" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
+                class="group flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-amber-50 hover:text-amber-700 transition-all duration-200 
+                {{ request()->routeIs('users.*') ? 'bg-amber-50 text-amber-700 border border-amber-200' : '' }}">
+                <svg class="w-5 h-5 mr-3 {{ request()->routeIs('users.*') ? 'text-amber-600' : 'group-hover:text-amber-600' }}"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
                 </svg>
@@ -83,9 +95,7 @@
                 <span class="font-medium">Laporan</span>
             </a> --}}
 
-
         </nav>
-
 
     </div>
 </aside>

@@ -34,17 +34,56 @@
     </section>
 
     <section class=" py-10">
-        <h1 class="font-semibold text-xl text-center">KOLEKSI TERBARU</h1>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
-            <!-- Product 1 -->
-            <x-shop.card_product path="produk/hoodie-hitam" title="Hoodie Hitam Premium" price="250.000"
-                image="images/banner.png" class="custom-class" />
-            <x-shop.card_product path="produk/kemeja-putih" title="Kemeja Putih Formal" price="180.000"
-                image="images/banner.png" class="custom-class" />
-            <x-shop.card_product path="produk/celana-jeans" title="Celana Jeans Slim Fit" price="320.000"
-                image="images/banner.png" class="custom-class" />
-            <x-shop.card_product path="produk/dress-casual" title="Dress Casual Wanita" price="220.000"
-                image="images/banner.png" class="custom-class" />
+        <h1 class="font-semibold text-xl text-center mb-5">KOLEKSI TERBARU</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            @foreach ($products as $index => $product)
+                <div
+                    class="product-card group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 fade-in">
+                    <!-- Product Image Container -->
+                    <div class="relative overflow-hidden h-64 bg-gray-100">
+                        <img src="{{ asset('storage/' . $product->path_img_222405) }}" alt="{{ $product->nama_222405 }}"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+
+                        <!-- Overlay with Quick View -->
+                        <div
+                            class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                            <a href="{{ route('product.show', $product->id_produk_222405) }}"
+                                class="bg-white text-gray-800 px-4 py-2 rounded-full font-medium opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-gray-100">
+                                <i class="fas fa-eye mr-2"></i>Lihat Detail
+                            </a>
+                        </div>
+
+
+                    </div>
+
+                    <!-- Product Info -->
+                    <div class="p-6">
+                        <h3
+                            class="font-bold text-lg text-gray-800 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300">
+                            {{ $product->nama_222405 }}
+                        </h3>
+
+                        <!-- Price -->
+                        <div class="mb-4">
+                            <span class="text-2xl font-bold text-blue-600">
+                                Rp {{ number_format($product->harga_222405, 0, ',', '.') }}
+                            </span>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex gap-2">
+                            <!-- Add to Cart Button -->
+                            <button onclick="addToCart({{ $product->id_produk_222405 }})"
+                                class="flex-1 bg-linen text-black font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center gap-2">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Keranjang</span>
+                            </button>
+
+
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </section>
 

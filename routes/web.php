@@ -5,8 +5,10 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Halaman utama
@@ -48,6 +50,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/submit-payment-proof', [PaymentController::class, 'store']);
 
     Route::put('/update-pesanan/{id}', [TransaksiController::class, 'updateStatusByUser'])->name('pesanan.updatebyuser');
+
+    Route::get('/profile', [UserController::class, 'viewProfile'])->name('user.profile');
+    Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('user.edit');
+    Route::post('/profile/update', [UserController::class, 'updateProfile'])->name('user.update');
+    Route::get('/edit-profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/edit-profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 // Dashboard untuk Admin
@@ -62,6 +70,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::put('/{id}', [ProductController::class, 'update'])->name('products.update');
         Route::delete('/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
     });
+
+    Route::get('/admin-profile', [\App\Http\Controllers\UserController::class, 'viewProfileAdmin'])->name('admin.profile');
 
     // User di Dashboard
     Route::prefix('user')->group(function () {

@@ -140,7 +140,7 @@
                                         <span class="text-sm font-medium">Riwayat Pesanan</span>
                                     </a>
 
-                                    <a href="#"
+                                    <a href="/profile"
                                         class="flex items-center space-x-3 px-4 py-3 text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-all duration-200">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                             viewBox="0 0 24 24">
