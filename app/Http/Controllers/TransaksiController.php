@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Exception;
 
 class TransaksiController extends Controller
@@ -73,30 +75,45 @@ class TransaksiController extends Controller
     public function updateStatus(Request $request, $id)
     {
         try {
-            $transaksi  = Transaksi::findOrFail($id);
+            $validated = $request->validate([
+                'status' => 'required|in:pending,dikemas,dikirim,selesai',
+            ]);
+
+            $transaksi  = Transaksi::where('id_transaksi_222405', $id)->firstOrFail();
             $statusLama = $transaksi->status_222405;
 
-            $transaksi->status_222405 = $request->status;
-            $transaksi->save();
+            $transaksi->status_222405 = $validated['status'];
 
+            if ($transaksi->save()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Status transaksi berhasil diperbarui',
+                ]);
+            } else {
+                Log::error("Gagal menyimpan transaksi ID: {$id}. Metode save() mengembalikan false. Kemungkinan ada model event yang membatalkan.");
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal menyimpan data. Kemungkinan dibatalkan oleh sebuah event. Silakan cek log.',
+                ], 500);  // 500 Internal Server Error
+            }
+        } catch (ValidationException $e) {
+            Log::warning("Gagal validasi update status untuk ID {$id}: ", $e->errors());
             return response()->json([
-                'success' => true,
-                'message' => 'Status transaksi berhasil diperbarui',
-                'data'    => [
-                    'id'          => $id,
-                    'status_lama' => $statusLama,
-                    'status_baru' => $request->status
-                ]
-            ]);
+                'success' => false,
+                'message' => 'Data yang dikirim tidak valid.',
+                'errors'  => $e->errors(),
+            ], 422);
         } catch (ModelNotFoundException $e) {
+            Log::error("Transaksi tidak ditemukan saat update status: ID {$id}");
             return response()->json([
                 'success' => false,
                 'message' => 'Transaksi tidak ditemukan'
             ], 404);
         } catch (Exception $e) {
+            Log::error("Error saat update status untuk ID {$id}: " . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal mengupdate status',
+                'message' => 'Terjadi kesalahan pada server.',
                 'error'   => $e->getMessage()
             ], 500);
         }

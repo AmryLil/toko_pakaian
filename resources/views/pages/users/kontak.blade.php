@@ -8,7 +8,7 @@
             <div class="w-full flex flex-col items-center gap-10">
                 <div class="text-center">
                     <h6 class="text-gray-400 text-xl font-normal leading-relaxed">Hubungi Kami</h6>
-                    <h2 class="text-4xl font-bold font-manrope leading-normal text-slate-950">Layanan Pelanggan Terra Shop
+                    <h2 class="text-4xl font-bold font-manrope leading-normal text-slate-950">Layanan Pelanggan MailFashion
                     </h2>
 
                     <p class="text-gray-500 text-base font-normal leading-relaxed mt-4">

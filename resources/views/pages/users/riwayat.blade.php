@@ -1,47 +1,46 @@
-<!-- resources/views/transaksi/index.blade.php -->
+    <!-- resources/views/transaksi/index.blade.php -->
 
-@extends('layouts.app')
+    @extends('layouts.app')
 
-@section('title', 'Daftar Transaksi')
+    @section('title', 'Daftar Transaksi')
 
-@section('content')
-    <div class="p-6 bg-gray-50 min-h-screen ">
-        <h2 class="text-2xl font-semibold mb-6">Daftar Transaksi Anda</h2>
+    @section('content')
+        <div class="p-6 bg-gray-50 min-h-screen ">
+            <h2 class="text-2xl font-semibold mb-6">Daftar Transaksi Anda</h2>
 
-        @foreach ($transaksiList as $transaksi)
-            <div class="bg-white p-6 rounded-lg shadow-md mb-4">
-                <div class="flex justify-between items-center mb-2">
+            @foreach ($transaksiList as $transaksi)
+                <div class="bg-white p-6 rounded-lg shadow-md mb-4">
+                    <div class="flex justify-between items-center mb-2">
 
-                    <p class="text-sm text-gray-500">Tanggal Transaksi:
-                        <span
-                            class="font-medium text-gray-800">{{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi_222405)->format('M d, Y') }}</span>
-                    </p>
-                </div>
+                        <p class="text-sm text-gray-500">Tanggal Transaksi:
+                            <span
+                                class="font-medium text-gray-800">{{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi_222405)->format('M d, Y') }}</span>
+                        </p>
+                    </div>
 
-                <!-- Bagian Produk -->
-                <div class="bg-gray-100 p-4 rounded-lg mt-4">
-                    @foreach ($transaksi->products_222405 as $product)
+                    <!-- Bagian Produk -->
+                    <div class="bg-gray-100 p-4 rounded-lg mt-4">
                         <div class="flex items-center py-2 border-b border-gray-200">
-                            <img src="{{ Str::startsWith($product->path_img, 'http') ? $product->path_img_222405 : asset('storage/' . $product->path_img_222405) }}"
-                                alt="{{ $product->nama }}" class="w-16 h-16 rounded mr-4">
+                            <img src="{{ asset('storage/' . $transaksi->product->path_img_222405) }}"
+                                alt="{{ $transaksi->product->nama_222405 }}" class="w-16 h-16 rounded mr-4">
                             <div class="flex-1">
-                                <h4 class="text-lg font-semibold">{{ $product->nama_222405 }}</h4>
-                                <p class="text-sm text-gray-500">{{ $product->deskripsi_222405 }}</p>
+                                <h4 class="text-lg font-semibold">{{ $transaksi->product->nama_222405 }}</h4>
+                                <p class="text-sm text-gray-500">{{ $transaksi->product->deskripsi_222405 }}</p>
                             </div>
                             <div class="text-right">
-                                <p class="text-lg font-semibold">Rp {{ number_format($product->harga_222405, 2) }}</p>
+                                <p class="text-lg font-semibold">Rp
+                                    {{ number_format($transaksi->product->harga_222405, 2) }}</p>
                                 <p class="text-sm text-gray-500">Qty: {{ $transaksi->jumlah_222405 }}</p>
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
 
-                <div class="mt-4">
-                    <p class="text-right font-semibold">Total Harga: Rp
-                        {{ number_format($transaksi->harga_total_222405, 2) }}
-                    </p>
+                    <div class="mt-4">
+                        <p class="text-right font-semibold">Total Harga: Rp
+                            {{ number_format($transaksi->harga_total_222405, 2) }}
+                        </p>
+                    </div>
                 </div>
-            </div>
-        @endforeach
-    </div>
-@endsection
+            @endforeach
+        </div>
+    @endsection

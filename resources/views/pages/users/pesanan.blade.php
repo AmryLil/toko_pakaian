@@ -14,7 +14,7 @@
                         <p class="text-sm text-gray-500">Status:
                             <span
                                 class="font-semibold {{ $transaksi->status_222405 === 'dikirim' ? 'text-yellow-500' : 'text-blue-500' }}">
-                                {{ ucfirst($transaksi->status) }}
+                                {{ ucfirst($transaksi->status_222405) }}
                             </span>
                         </p>
                     </div>
@@ -40,7 +40,7 @@
                     </p>
 
                     <!-- Tombol Pesanan Diterima -->
-                    @if ($transaksi->statu_222405s === 'dikirim')
+                    @if ($transaksi->status_222405 === 'dikirim')
                         <button type="button" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
                             onclick="konfirmasiPesananDiterima('{{ $transaksi->id_transaksi_222405 }}')">
                             Pesanan Diterima
@@ -68,14 +68,26 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Kirimkan form secara programatis
                     let form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = `{{ url('pesanan') }}/${transaksiId}`;
-                    form.innerHTML = `
-                    @csrf
-                    @extends('layouts.app')
-                `;
+                    form.method = 'POST'; // pakai POST
+                    form.action = `/update-pesanan/${transaksiId}`;
+
+                    // CSRF token
+                    let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    let csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = csrfToken;
+
+                    // Spoofing method PUT
+                    let methodInput = document.createElement('input');
+                    methodInput.type = 'hidden';
+                    methodInput.name = '_method';
+                    methodInput.value = 'PUT';
+
+                    form.appendChild(csrfInput);
+                    form.appendChild(methodInput);
+
                     document.body.appendChild(form);
                     form.submit();
                 }

@@ -15,6 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Custom Styles -->
     <style>
@@ -40,6 +41,8 @@
 
     @include('components.footer')
     @yield('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 </body>
 

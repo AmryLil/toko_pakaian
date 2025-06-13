@@ -29,7 +29,7 @@
             </div>
             <!-- Logo -->
             <div class="relative p-5 z-50 px-10">
-                <h1 class="font-bold text-2xl text-center mb-5 dark:text-slate-950">TERRA SHOP</h1>
+                <h1 class="font-bold text-2xl text-center mb-5 dark:text-slate-950">MailFashion</h1>
 
                 <!-- Title -->
                 <h2 class="text-center text-2xl  text-gray-800 mb-1">Enter your Account</h2>

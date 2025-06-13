@@ -20,15 +20,15 @@
                     class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
                     Toko
                 </a>
-                <a href="#"
+                <a href="/kategori"
                     class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
                     Kategori
                 </a>
-                <a href="#"
+                <a href="{{ route('about') }}"
                     class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
                     Tentang Kami
                 </a>
-                <a href="#"
+                <a href="{{ route('contact_us') }}"
                     class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
                     Kontak
                 </a>

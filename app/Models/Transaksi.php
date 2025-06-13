@@ -198,19 +198,7 @@ class Transaksi extends Model
         return Carbon::parse($this->tanggal_transaksi_222405)->format('d/m/Y H:i:s');
     }
 
-    /**
-     * Mutator untuk set status dengan validasi
-     */
-    public function setStatus222405Attribute($value)
-    {
-        $allowedStatuses = ['pending', 'paid', 'cancelled', 'refunded'];
-
-        if (in_array($value, $allowedStatuses)) {
-            $this->attributes['status_222405'] = $value;
-        } else {
-            $this->attributes['status_222405'] = 'pending';
-        }
-    }
+    /** Mutator untuk set status dengan validasi */
 
     /**
      * Method untuk mengecek apakah transaksi sudah dibayar

@@ -19,7 +19,7 @@ class PaymentController extends Controller
     // Method untuk menampilkan semua transaksi
     public function index()
     {
-        $transaksi = Transaksi::where('id_user_222405', Auth::id())->get();
+        $transaksi = Transaksi::where('email_222405', Auth::id())->get();
         return response()->json($transaksi);
     }
 
@@ -41,7 +41,7 @@ class PaymentController extends Controller
         ]);
 
         // Ambil data pengguna yang sedang login dari session
-        $userId = session('user_id');
+        $userId = session('email');
 
         // Debugging: Log user_id
         Log::debug('User ID from session: ' . $userId);
@@ -51,7 +51,7 @@ class PaymentController extends Controller
         }
 
         // Ambil data keranjang berdasarkan user_id
-        $cart = Cart::where('id_user_222405', $userId)->first();
+        $cart = Cart::where('email_222405', $userId)->first();
 
         // Debugging: Log cart data
         Log::debug('Cart data: ' . json_encode($cart));
@@ -109,7 +109,7 @@ class PaymentController extends Controller
             // Buat transaksi baru
             Transaksi::create([
                 'id_transaksi_222405'      => (string) Str::uuid(),
-                'id_user_222405'           => $userId,
+                'email_222405'             => $userId,
                 'jumlah_222405'            => $item->quantity_222405,
                 'id_produk_222405'         => $product->id_produk_222405,
                 'harga_total_222405'       => $product->harga_222405 * $item->quantity_222405,

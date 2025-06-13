@@ -11,10 +11,10 @@
                         <div class="flex-col justify-start lg:items-start items-center gap-4 flex">
                             <div class="w-full flex-col justify-start lg:items-start ite    ms-center gap-3 flex">
                                 <h2 class="text-4xl font-bold font-manrope leading-normal lg:text-start text-center">
-                                    Temukan Kemudahan Berbelanja di Terra Shop
+                                    Temukan Kemudahan Berbelanja di MailFashion
                                 </h2>
                                 <p class="text-gray-500 text-base font-normal leading-relaxed lg:text-start text-center">
-                                    Terra Shop adalah solusi belanja online terpercaya yang menyediakan berbagai produk
+                                    MailFashion adalah solusi belanja online terpercaya yang menyediakan berbagai produk
                                     berkualitas
                                     dengan harga terbaik. Kami berkomitmen untuk memberikan pengalaman berbelanja yang
                                     mudah, aman,

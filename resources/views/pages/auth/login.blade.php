@@ -30,7 +30,7 @@
             </div>
             <!-- Logo -->
             <div class="p-5 z-50 px-10 relative dark:text-slate-950">
-                <h1 class="font-bold text-2xl text-center mb-5 ">TERRA SHOP</h1>
+                <h1 class="font-bold text-2xl text-center mb-5 ">MailFashion</h1>
 
                 <!-- Title -->
                 <h2 class="text-center text-2xl  text-gray-800 mb-1">Enter your Account</h2>

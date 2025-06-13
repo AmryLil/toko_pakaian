@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\TransaksiController;
@@ -32,7 +33,7 @@ Route::view('/about', 'pages.users.about_us')->name('about');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
-    Route::post('/pesanan/{id}/update-status', [TransaksiController::class, 'updateStatusByUser'])->name('pesanan.updateStatus');
+    // Route::post('/pesanan/{id}/update-status', [TransaksiController::class, 'updateStatusByUser'])->name('pesanan.updateStatus');
     Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
 
     Route::delete('/cart/remove/{productId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
@@ -43,6 +44,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pesanan', [TransaksiController::class, 'showPesanan'])->name('pesanan');
 
     Route::post('/checkout/{productId}', [\App\Http\Controllers\PaymentController::class, 'checkoutSingleProduct'])->name('checkout.single');
+
+    Route::post('/submit-payment-proof', [PaymentController::class, 'store']);
+
+    Route::put('/update-pesanan/{id}', [TransaksiController::class, 'updateStatusByUser'])->name('pesanan.updatebyuser');
 });
 
 // Dashboard untuk Admin
