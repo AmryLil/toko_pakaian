@@ -99,7 +99,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::get('/', [TransaksiController::class, 'showAll'])->name('admin.transaksi.index');
         Route::put('/{id}/update-status', [TransaksiController::class, 'updateStatus'])->name('admin.transaksi.updateStatus');
         Route::get('/laporan', [TransaksiController::class, 'showAllLaporan'])->name('admin.transaksi.laporan');
-        Route::get('/pdf/{filter}', [TransaksiController::class, 'generatePdf'])->name('admin.transaksi.pdf');
+        Route::get('/pdf', [TransaksiController::class, 'generatePdf'])->name('admin.transaksi.pdf');
         Route::delete('/{id}', [TransaksiController::class, 'destroy'])->name('admin.transaksi.destroy');
     });
 });
