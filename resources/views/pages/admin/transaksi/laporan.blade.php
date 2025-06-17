@@ -4,6 +4,27 @@
     <div class="container pt-24 mx-auto px-4">
         <h1 class="mb-4 text-3xl font-bold text-gray-800">Laporan Transaksi</h1>
 
+        <div class="flex flex-wrap items-center gap-2 mb-6">
+            <span class="text-sm font-medium text-gray-600">Filter Cepat:</span>
+            <a href="{{ route('admin.transaksi.laporan', ['filter' => 'today']) }}"
+                class="px-4 py-2 text-sm rounded-lg shadow-sm transition-colors {{ request('filter') == 'today' ? 'bg-blue-600 text-white font-semibold' : 'bg-white text-gray-700 hover:bg-gray-100' }}">
+                Hari Ini
+            </a>
+            <a href="{{ route('admin.transaksi.laporan', ['filter' => 'month']) }}"
+                class="px-4 py-2 text-sm rounded-lg shadow-sm transition-colors {{ request('filter') == 'month' ? 'bg-blue-600 text-white font-semibold' : 'bg-white text-gray-700 hover:bg-gray-100' }}">
+                Bulan Ini
+            </a>
+            <a href="{{ route('admin.transaksi.laporan', ['filter' => 'year']) }}"
+                class="px-4 py-2 text-sm rounded-lg shadow-sm transition-colors {{ request('filter') == 'year' ? 'bg-blue-600 text-white font-semibold' : 'bg-white text-gray-700 hover:bg-gray-100' }}">
+                Tahun Ini
+            </a>
+            {{-- Tombol untuk menghapus semua filter --}}
+            <a href="{{ route('admin.transaksi.laporan') }}"
+                class="px-4 py-2 text-sm rounded-lg shadow-sm transition-colors bg-gray-200 text-gray-800 hover:bg-gray-300">
+                Reset Filter
+            </a>
+        </div>
+
         <form action="{{ route('admin.transaksi.laporan') }}" method="GET"
             class="flex flex-wrap items-center gap-4 mb-8 p-6 bg-white shadow-md rounded-lg">
             <div class="flex-1 min-w-[200px]">
@@ -98,7 +119,7 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    @forelse ($transaksi as $item)
+                    @forelse ($transaksis as $item)
                         <tr class="border-b hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4 font-medium">{{ $loop->iteration }}</td>
                             <td class="px-6 py-4">{{ $item->pelanggan->name_222405 ?? 'N/A' }}</td>

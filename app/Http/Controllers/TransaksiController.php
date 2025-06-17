@@ -121,82 +121,79 @@ class TransaksiController extends Controller
         }
     }
 
-    public function showAllLaporan(Request $request)
+    private function getLaporanData(Request $request)
     {
-        // Ambil parameter start_date dan end_date
+        $filter    = $request->input('filter');
         $startDate = $request->input('start_date');
         $endDate   = $request->input('end_date');
 
-        // --- Query untuk daftar transaksi utama (TETAP SAMA) ---
+        // --- BAGIAN BARU: Logika untuk Filter Cepat ---
+        if ($filter) {
+            switch ($filter) {
+                case 'today':
+                    $startDate = Carbon::today()->toDateString();
+                    $endDate   = Carbon::today()->toDateString();
+                    break;
+                case 'month':
+                    $startDate = Carbon::now()->startOfMonth()->toDateString();
+                    $endDate   = Carbon::now()->endOfMonth()->toDateString();
+                    break;
+                case 'year':
+                    $startDate = Carbon::now()->startOfYear()->toDateString();
+                    $endDate   = Carbon::now()->endOfYear()->toDateString();
+                    break;
+            }
+        }
+        // --- AKHIR BAGIAN BARU ---
+
+        // Query utama
         $query = Transaksi::with(['pelanggan', 'produk'])->orderBy('tanggal_transaksi_222405', 'desc');
+        if ($startDate)
+            $query->whereDate('tanggal_transaksi_222405', '>=', $startDate);
+        if ($endDate)
+            $query->whereDate('tanggal_transaksi_222405', '<=', $endDate);
 
-        if ($startDate) {
-            $query->where('tanggal_transaksi_222405', '>=', $startDate);
-        }
-        if ($endDate) {
-            $query->where('tanggal_transaksi_222405', '<=', $endDate);
-        }
+        $transaksis = $query->get();
 
-        $transaksis     = $query->get();
-        $totalTransaksi = $transaksis->sum('harga_total_222405');
-
-        // --- MULAI PERUBAHAN: Query untuk Statistik ---
-
-        // 1. Cari Pelanggan Teratas (Berdasarkan jumlah transaksi)
-        $pelangganTeratasQuery = Transaksi::query()
-            ->select('email_222405', DB::raw('COUNT(id_transaksi_222405) as total_transaksi'))
-            ->groupBy('email_222405')
-            ->orderBy('total_transaksi', 'desc');
-
-        if ($startDate) {
-            $pelangganTeratasQuery->where('tanggal_transaksi_222405', '>=', $startDate);
-        }
-        if ($endDate) {
-            $pelangganTeratasQuery->where('tanggal_transaksi_222405', '<=', $endDate);
-        }
-
+        // Statistik Pelanggan Teratas
+        $pelangganTeratasQuery = Transaksi::query()->select('email_222405', DB::raw('COUNT(*) as total_transaksi'))->groupBy('email_222405')->orderBy('total_transaksi', 'desc');
+        if ($startDate)
+            $pelangganTeratasQuery->whereDate('tanggal_transaksi_222405', '>=', $startDate);
+        if ($endDate)
+            $pelangganTeratasQuery->whereDate('tanggal_transaksi_222405', '<=', $endDate);
         $pelangganTeratasData = $pelangganTeratasQuery->first();
-        $pelangganTeratas     = null;
-        if ($pelangganTeratasData) {
-            // Ambil data user lengkap berdasarkan email
-            $pelangganTeratas = User::find($pelangganTeratasData->email_222405);
-            if ($pelangganTeratas) {
-                $pelangganTeratas->total_transaksi = $pelangganTeratasData->total_transaksi;
-            }
-        }
+        $pelangganTeratas     = $pelangganTeratasData ? User::find($pelangganTeratasData->email_222405) : null;
+        if ($pelangganTeratas)
+            $pelangganTeratas->total_transaksi = $pelangganTeratasData->total_transaksi;
 
-        // 2. Cari Produk Terlaris (Berdasarkan jumlah unit terjual)
-        $produkTerlarisQuery = Transaksi::query()
-            ->select('id_produk_222405', DB::raw('SUM(jumlah_222405) as total_terjual'))  // <-- PERBAIKAN DI SINI
-            ->groupBy('id_produk_222405')
-            ->orderBy('total_terjual', 'desc');
-
-        if ($startDate) {
-            $produkTerlarisQuery->where('tanggal_transaksi_222405', '>=', $startDate);
-        }
-        if ($endDate) {
-            $produkTerlarisQuery->where('tanggal_transaksi_222405', '<=', $endDate);
-        }
-
+        // Statistik Produk Terlaris
+        $produkTerlarisQuery = Transaksi::query()->select('id_produk_222405', DB::raw('SUM(jumlah_222405) as total_terjual'))->groupBy('id_produk_222405')->orderBy('total_terjual', 'desc');
+        if ($startDate)
+            $produkTerlarisQuery->whereDate('tanggal_transaksi_222405', '>=', $startDate);
+        if ($endDate)
+            $produkTerlarisQuery->whereDate('tanggal_transaksi_222405', '<=', $endDate);
         $produkTerlarisData = $produkTerlarisQuery->first();
-        $produkTerlaris     = null;
-        if ($produkTerlarisData) {
-            // Ambil data produk lengkap berdasarkan ID
-            $produkTerlaris = Product::find($produkTerlarisData->id_produk_222405);
-            if ($produkTerlaris) {
-                $produkTerlaris->total_terjual = $produkTerlarisData->total_terjual;
-            }
-        }
+        $produkTerlaris     = $produkTerlarisData ? Product::find($produkTerlarisData->id_produk_222405) : null;
+        if ($produkTerlaris)
+            $produkTerlaris->total_terjual = $produkTerlarisData->total_terjual;
 
-        // --- AKHIR PERUBAHAN ---
+        return [
+            'transaksis'       => $transaksis,
+            'totalTransaksi'   => $transaksis->sum('harga_total_222405'),
+            'pelangganTeratas' => $pelangganTeratas,
+            'produkTerlaris'   => $produkTerlaris,
+            'startDate'        => $startDate,
+            'endDate'          => $endDate,
+        ];
+    }
 
-        // Kirim semua data ke view
-        return view('pages.admin.transaksi.laporan', [
-            'transaksi'        => $transaksis,
-            'totalTransaksi'   => $totalTransaksi,
-            'pelangganTeratas' => $pelangganTeratas,  // Data baru
-            'produkTerlaris'   => $produkTerlaris,  // Data baru
-        ]);
+    /**
+     * Menampilkan halaman laporan.
+     */
+    public function showAllLaporan(Request $request)
+    {
+        $data = $this->getLaporanData($request);
+        return view('pages.admin.transaksi.laporan', $data);
     }
 
     // ... method generatePdf() akan kita ubah nanti
