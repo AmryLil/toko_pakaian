@@ -10,6 +10,10 @@
                 class="px-4 py-2 text-sm rounded-lg shadow-sm transition-colors {{ request('filter') == 'today' ? 'bg-blue-600 text-white font-semibold' : 'bg-white text-gray-700 hover:bg-gray-100' }}">
                 Hari Ini
             </a>
+            <a href="{{ route('admin.transaksi.laporan', ['filter' => 'week']) }}"
+                class="px-4 py-2 text-sm rounded-lg shadow-sm transition-colors {{ request('filter') == 'week' ? 'bg-blue-600 text-white font-semibold' : 'bg-white text-gray-700 hover:bg-gray-100' }}">
+                Minggu Ini
+            </a>
             <a href="{{ route('admin.transaksi.laporan', ['filter' => 'month']) }}"
                 class="px-4 py-2 text-sm rounded-lg shadow-sm transition-colors {{ request('filter') == 'month' ? 'bg-blue-600 text-white font-semibold' : 'bg-white text-gray-700 hover:bg-gray-100' }}">
                 Bulan Ini
@@ -93,7 +97,7 @@
                     {{ number_format($totalTransaksi, 0, ',', '.') }}</span>
             </div>
             <div>
-                <a href="{{ route('admin.transaksi.pdf', ['start_date' => request('start_date'), 'end_date' => request('end_date')]) }}"
+                <a href="{{ route('admin.transaksi.pdf', ['start_date' => request('start_date'), 'end_date' => request('end_date'), 'filter' => request('filter')]) }}"
                     class="bg-red-600 text-white px-6 py-3 rounded-md shadow-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-300 ease-in-out flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">

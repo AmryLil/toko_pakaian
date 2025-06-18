@@ -134,6 +134,10 @@ class TransaksiController extends Controller
                     $startDate = Carbon::today()->toDateString();
                     $endDate   = Carbon::today()->toDateString();
                     break;
+                case 'week':
+                    $startDate = Carbon::now()->startOfWeek()->toDateString();
+                    $endDate   = Carbon::now()->endOfWeek()->toDateString();
+                    break;
                 case 'month':
                     $startDate = Carbon::now()->startOfMonth()->toDateString();
                     $endDate   = Carbon::now()->endOfMonth()->toDateString();
