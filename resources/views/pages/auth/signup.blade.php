@@ -29,7 +29,7 @@
             </div>
             <!-- Logo -->
             <div class="relative p-5 z-50 px-10">
-                <h1 class="font-bold text-2xl text-center mb-5 dark:text-slate-950">TERRA SHOP</h1>
+                <h1 class="font-bold text-2xl text-center mb-5 dark:text-slate-950">MailFashion</h1>
 
                 <!-- Title -->
                 <h2 class="text-center text-2xl  text-gray-800 mb-1">Enter your Account</h2>
@@ -62,6 +62,7 @@
                         <input
                             class="w-full text-sm rounded-lg border border-gray-300 p-4 leading-relaxed placeholder-gray-500 tracking-wide focus:ring-2 focus:ring-green-700 focus:outline-none"
                             type="password" name="password_confirmation" placeholder="Confirm Password" required />
+
                     </div>
                     <button type="submit"
                         class="w-full bg-gray-950 rounded-md text-white py-3 hover:bg-green-800 transition duration-300 font-semibold">

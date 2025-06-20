@@ -23,7 +23,7 @@ class CartSeeder extends Seeder
         foreach ($customers as $customer) {
             Cart::create([
                 'id_cart_222405' => Str::uuid()->toString(),
-                'id_user_222405' => $customer->id_user_222405
+                'email_222405'   => $customer->email_222405
             ]);
         }
     }

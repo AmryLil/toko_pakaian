@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Cart extends Model
 {
@@ -15,8 +16,23 @@ class Cart extends Model
     protected $keyType    = 'string';  // Karena UUID adalah string
 
     protected $fillable = [
-        'id_user_222405'
+        'email_222405',
+        'id_cart_222405'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Event ini akan dijalankan sebelum model dibuat (disimpan ke database untuk pertama kali)
+        static::creating(function ($model) {
+            // Jika id_cart_222405 belum diisi, buat UUID baru
+            if (empty($model->{$model->getKeyName()})) {
+                // Generate UUID dan ambil 10 karakter pertama
+                $model->{$model->getKeyName()} = substr((string) Str::uuid(), 0, 10);
+            }
+        });
+    }
 
     public function items()
     {

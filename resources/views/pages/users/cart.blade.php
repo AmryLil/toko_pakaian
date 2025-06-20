@@ -20,41 +20,53 @@
 
                 <div class="flex flex-col gap-3">
                     @php $totalPrice = 0; @endphp
-                    @foreach ($cartItems as $item)
+                    @forelse ($cartItems as $item)
                         @php
-                            $itemTotal = $item->price * $item->quantity;
+                            // Menggunakan field dari model CartItem
+                            $itemTotal = $item->price_222405 * $item->quantity_222405;
                             $totalPrice += $itemTotal;
                         @endphp
-                        <div class="flex items-center hover:bg-gray-100 px-6 py-5">
+                        <div class="flex items-center hover:bg-gray-100 px-6 py-5"
+                            id="cart-item-{{ $item->id_cart_item_222405 }}">
                             <div class="flex w-2/5">
                                 <div class="w-20">
+                                    {{-- Menggunakan field dari relasi product --}}
                                     <img class="h-24 w-full object-cover"
-                                        src="{{ Str::startsWith($item->product->path_img, 'http') ? $item->product->path_img : asset('storage/' . $item->product->path_img) }}"
-                                        alt="{{ $item->product->nama }}">
+                                        src="{{ Str::startsWith($item->product->path_img_222405, 'http') ? $item->product->path_img_222405 : asset('storage/' . $item->product->path_img_222405) }}"
+                                        alt="{{ $item->product->nama_222405 }}">
                                 </div>
                                 <div class="flex flex-col justify-between ml-4 flex-grow">
-                                    <span class="font-bold text-sm text-slate-950">{{ $item->product->nama }}</span>
+                                    <span class="font-bold text-sm text-slate-950">{{ $item->product->nama_222405 }}</span>
                                     <span
-                                        class="font-light text-sm text-slate-950">{{ $item->product->category->nama }}</span>
-                                    <button onclick="removeItemFromCart({{ $item->product_id }})"
-                                        class="font-bold text-sm text-start rounded text-red-500">
+                                        class="font-light text-sm text-slate-950">{{ $item->product->category->nama_222405 }}</span>
+                                    {{-- Menggunakan id_produk_222405 untuk menghapus item --}}
+                                    <button onclick="removeItemFromCart('{{ $item->id_produk_222405 }}')"
+                                        class="font-bold text-sm text-start rounded text-red-500 hover:text-red-700">
                                         Remove
                                     </button>
                                 </div>
                             </div>
                             <div class="flex justify-center w-1/5 items-center gap-2">
-                                <button onclick="updateQuantity({{ $item->id }}, {{ $item->quantity - 1 }})"
+                                {{-- Menggunakan id_cart_item_222405 untuk update kuantitas --}}
+                                <button
+                                    onclick="updateQuantity('{{ $item->id_cart_item_222405 }}', {{ $item->quantity_222405 - 1 }})"
                                     class="text-gray-900 text-xl">-</button>
-                                <span class="text-center w-8">{{ $item->quantity }}</span>
-                                <button onclick="updateQuantity({{ $item->id }}, {{ $item->quantity + 1 }})"
+                                <span class="text-center w-8">{{ $item->quantity_222405 }}</span>
+                                <button
+                                    onclick="updateQuantity('{{ $item->id_cart_item_222405 }}', {{ $item->quantity_222405 + 1 }})"
                                     class="text-gray-900 text-xl">+</button>
                             </div>
                             <span class="text-center w-1/5 font-semibold text-sm">Rp
-                                {{ number_format($item->product->harga, 2) }}</span>
+                                {{-- Menggunakan harga dari cart item, bukan dari produk langsung --}}
+                                {{ number_format($item->price_222405, 0, ',', '.') }}</span>
                             <span class="text-center w-1/5 font-semibold text-sm">Rp
-                                {{ number_format($itemTotal, 2) }}</span>
+                                {{ number_format($itemTotal, 0, ',', '.') }}</span>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="text-center py-10 px-6">
+                            <p class="text-gray-500">Keranjang Anda masih kosong.</p>
+                        </div>
+                    @endforelse
                 </div>
             </div>
 
@@ -69,10 +81,10 @@
                 <div class="border-t mt-8">
                     <div class="flex font-semibold justify-between py-6 text-sm uppercase">
                         <span>Total cost</span>
-                        <span>Rp {{ number_format($totalPrice, 2) }}</span>
+                        <span>Rp {{ number_format($totalPrice, 0, ',', '.') }}</span>
                     </div>
                     <button
-                        class="border-2 border-slate-950 font-semibold hover:bg-linen py-3 text-sm text-slate-950 uppercase w-full"
+                        class="border-2 border-slate-950 font-semibold hover:bg-gray-100 transition-colors py-3 text-sm text-slate-950 uppercase w-full"
                         onclick="showPaymentModal()">Checkout</button>
 
                 </div>
@@ -80,8 +92,10 @@
         </div>
     </div>
 
-    <!-- Modal for Bank Transfer -->
-    <div id="payment-modal" class="fixed z-50 inset-0 bg-opacity-50 hidden flex items-center justify-center overflow-auto">
+    <!-- Modal for Bank Transfer (Your existing modal code) -->
+    {{-- Pastikan field di dalam modal juga sudah disesuaikan jika diperlukan --}}
+    <div id="payment-modal"
+        class="fixed z-50 inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center overflow-auto">
         <div class="bg-white rounded-lg w-1/3 p-5 border-2 ">
             <h2 class="text-xl font-bold mb-4">Pembayaran QRIS</h2>
             <p>Silakan scan kode QR di bawah ini untuk menyelesaikan pembayaran:</p>
@@ -99,7 +113,7 @@
                 <h3 class="font-semibold">Barang yang Dibeli:</h3>
                 <ul class="list-disc list-inside">
                     @foreach ($cartItems as $item)
-                        <li>{{ $item->product->nama }} - {{ $item->quantity }} pcs</li>
+                        <li>{{ $item->product->nama_222405 }} - {{ $item->quantity_222405 }} pcs</li>
                     @endforeach
                 </ul>
             </div>
@@ -107,7 +121,7 @@
             <!-- Total Biaya -->
             <div class="flex justify-between font-bold mt-4">
                 <span>Total:</span>
-                <span>Rp {{ number_format($totalPrice, 2) }}</span>
+                <span>Rp {{ number_format($totalPrice, 0, ',', '.') }}</span>
             </div>
 
             <!-- Form Upload Bukti Pembayaran -->
@@ -133,6 +147,7 @@
     </div>
 
 @endsection
+
 
 @section('scripts')
     <script>
@@ -239,7 +254,7 @@
             }
 
             fetch(`/cart/update/${itemId}`, {
-                    method: 'PUT',
+                    method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'

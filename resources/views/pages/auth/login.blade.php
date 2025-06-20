@@ -30,7 +30,7 @@
             </div>
             <!-- Logo -->
             <div class="p-5 z-50 px-10 relative dark:text-slate-950">
-                <h1 class="font-bold text-2xl text-center mb-5 ">TERRA SHOP</h1>
+                <h1 class="font-bold text-2xl text-center mb-5 ">MailFashion</h1>
 
                 <!-- Title -->
                 <h2 class="text-center text-2xl  text-gray-800 mb-1">Enter your Account</h2>
@@ -55,8 +55,14 @@
                             class="w-full border bg-slate-50 border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-green-700 focus:outline-none mb-4 text-sm"
                             type="text" name="email" placeholder="Username or Email" required />
                         <input
-                            class="w-full border bg-slate-50 border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-green-700 focus:outline-none mb-6 text-sm"
+                            class="w-full border bg-slate-50 border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-green-700 focus:outline-none mb-4 text-sm"
                             type="password" name="password" placeholder="Password" required />
+                        <select name="role" required
+                            class="w-full border bg-slate-50 border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-green-700 focus:outline-none mb-6 text-sm">
+                            <option value="" disabled selected>Pilih Role</option>
+                            <option value="admin">Admin</option>
+                            <option value="customer">Customer</option>
+                        </select>
                     </div>
                     <button type="submit"
                         class="w-full bg-gray-950 rounded-md text-white py-3 hover:bg-green-800 transition duration-300 font-semibold">

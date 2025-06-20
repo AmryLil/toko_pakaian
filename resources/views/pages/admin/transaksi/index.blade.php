@@ -10,7 +10,7 @@
         <!-- Transaksi Table -->
         <div class="overflow-x-auto bg-slate-50 p-4 rounded-lg shadow-lg">
             <table class="table-auto w-full text-sm text-gray-600 rounded-xl overflow-hidden">
-                <thead class="bg-gray-200 text-gray-800 text-lg ">
+                <thead class="bg-gray-200 text-gray-800 text-lg">
                     <tr>
                         <th class="px-5 py-3 text-left">No</th>
                         <th class="px-5 py-3 text-left">Pelanggan</th>
@@ -23,66 +23,55 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    @forelse ($transaksi as $transaksi)
+                    @forelse ($transaksi as $item)
                         <tr class="border-b hover:bg-slate-50 transition-all duration-300">
                             <td class="px-6 py-4">{{ $loop->iteration }}</td>
-                            <td class="px-6 py-4">{{ $transaksi->pelanggan->name ?? 'Nama Tidak Ditemukan' }}</td>
-                            <td class="px-6 py-4">{{ $transaksi->produk->nama ?? 'Produk Tidak Ditemukan' }}</td>
-                            <td class="px-6 py-4">{{ $transaksi->jumlah }}</td>
-                            <td class="px-6 py-4">Rp {{ number_format($transaksi->harga_total, 0, ',', '.') }}</td>
+                            <td class="px-6 py-4">{{ $item->pelanggan->name_222405 ?? 'Nama Tidak Ditemukan' }}</td>
+                            <td class="px-6 py-4">{{ $item->produk->nama_222405 ?? 'Produk Tidak Ditemukan' }}</td>
+                            <td class="px-6 py-4">{{ $item->jumlah_222405 }}</td>
+                            <td class="px-6 py-4">Rp {{ number_format($item->harga_total_222405, 0, ',', '.') }}</td>
                             <td class="px-6 py-4">
                                 <select
-                                    class="status-dropdown text-green-800 hover:bg-indigo-100 focus:outline-none rounded-lg shadow-sm"
-                                    data-id="{{ $transaksi->id_transaksi }}" onchange="updateStatus(this)">
-                                    <option value="pending" {{ $transaksi->status == 'pending' ? 'selected' : '' }}>Pending
-                                    </option>
-                                    <option value="dikemas" {{ $transaksi->status == 'dikemas' ? 'selected' : '' }}>Dikemas
-                                    </option>
-                                    <option value="dikirim" {{ $transaksi->status == 'dikirim' ? 'selected' : '' }}>Dikirim
-                                    </option>
-                                    <option value="selesai" {{ $transaksi->status == 'selesai' ? 'selected' : '' }}>Selesai
-                                    </option>
+                                    class="status-dropdown p-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-200 rounded-lg shadow-sm"
+                                    data-id="{{ $item->id_transaksi_222405 }}"
+                                    data-original-status="{{ $item->status_222405 }}" onchange="updateStatus(this)">
+                                    <option value="pending" {{ $item->status_222405 == 'pending' ? 'selected' : '' }}>
+                                        Pending</option>
+                                    <option value="dikemas" {{ $item->status_222405 == 'dikemas' ? 'selected' : '' }}>
+                                        Dikemas</option>
+                                    <option value="dikirim" {{ $item->status_222405 == 'dikirim' ? 'selected' : '' }}>
+                                        Dikirim</option>
+                                    <option value="selesai" {{ $item->status_222405 == 'selesai' ? 'selected' : '' }}>
+                                        Selesai</option>
                                 </select>
                             </td>
                             <td class="px-6 py-4">
-                                {{ \Carbon\Carbon::parse($transaksi->tanggal_transaksi)->format('d-m-Y') }}</td>
-
+                                {{ \Carbon\Carbon::parse($item->tanggal_transaksi_222405)->format('d-m-Y') }}</td>
                             <td class="px-6 py-4 flex gap-1">
-                                <button onclick="showBuktiTF('{{ asset('storage/' . $transaksi->bukti_tf) }}')"
-                                    class=" p-2 text-white">
+                                <button onclick="showBuktiTF('{{ asset('storage/' . $item->bukti_tf_222405) }}')"
+                                    class="p-2 text-gray-700 hover:text-blue-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        id="Visible--Streamline-Sharp" height="18" width="18">
-                                        <desc>Visible Streamline Icon: https://streamlinehq.com</desc>
-                                        <g id="visible--eye-eyeball-open-view">
-                                            <path id="Subtract" fill="#000000" fill-rule="evenodd"
-                                                d="M12.0814 3.25c-2.58537 0 -4.50957 1.12303 -6.19867 2.70213 -0.83741 0.78286 -1.62746 1.68718 -2.41532 2.62921 -0.25314 0.30268 -0.50499 0.60792 -0.75864 0.91534l-0.00003 0.00003 -0.00002 0.00003 -0.00003 0.00003 -0.00001 0.00002 -0.00001 0c-0.54539 0.66101 -1.09909 1.33211 -1.69169 2.00931L0.584839 12l0.432141 0.4939c0.59258 0.6772 1.14627 1.3483 1.69165 2.0093l0.00003 0 0.00003 0 0.00002 0.0001 0.00003 0 0.00002 0c0.25366 0.3074 0.50551 0.6127 0.75865 0.9154 0.78786 0.942 1.57791 1.8463 2.41532 2.6292 1.6891 1.5791 3.6133 2.7021 6.19867 2.7021 2.5854 0 4.5095 -1.123 6.1987 -2.7021 0.8374 -0.7829 1.6274 -1.6872 2.4153 -2.6292 0.2531 -0.3027 0.505 -0.608 0.7587 -0.9155l0 -0.0001 0.0001 0c0.5454 -0.661 1.099 -1.332 1.6916 -2.0092L23.5779 12l-0.4321 -0.4939c-0.5926 -0.6772 -1.1462 -1.3482 -1.6916 -2.00915l-0.0001 -0.00016c-0.2537 -0.30746 -0.5056 -0.61273 -0.7587 -0.91545 -0.7879 -0.94203 -1.5779 -1.84635 -2.4154 -2.62921C16.5909 4.37303 14.6667 3.25 12.0814 3.25Zm-0.0002 5c-2.0711 0 -3.75002 1.67893 -3.75002 3.75 0 2.0711 1.67892 3.75 3.75002 3.75 2.071 0 3.75 -1.6789 3.75 -3.75 0 -2.07107 -1.679 -3.75 -3.75 -3.75Z"
-                                                clip-rule="evenodd" stroke-width="1"></path>
-                                        </g>
+                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
                                 </button>
-
-                                <form action="{{ route('transaksi.destroy', $transaksi->id_transaksi) }}" method="POST"
+                                <form action="{{ route('admin.transaksi.destroy', $item->id_transaksi_222405) }}"
+                                    method="POST"
                                     onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class=" p-2 rounded-lg">
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                            id="Bin-1--Streamline-Ultimate" height="18" width="18">
-                                            <desc>Bin 1 Streamline Icon: https://streamlinehq.com</desc>
-                                            <g id="Bin-1--Streamline-Ultimate.svg">
-                                                <path
-                                                    d="M19.45 7.5H4.55a0.5 0.5 0 0 0 -0.5 0.54l1.28 14.14a2 2 0 0 0 2 1.82h9.34a2 2 0 0 0 2 -1.82L20 8a0.5 0.5 0 0 0 -0.5 -0.54Zm-9.2 13a0.75 0.75 0 0 1 -1.5 0v-9a0.75 0.75 0 0 1 1.5 0Zm5 0a0.75 0.75 0 0 1 -1.5 0v-9a0.75 0.75 0 0 1 1.5 0Z"
-                                                    fill="#000000" stroke-width="1"></path>
-                                                <path
-                                                    d="M22 4h-4.75a0.25 0.25 0 0 1 -0.25 -0.25V2.5A2.5 2.5 0 0 0 14.5 0h-5A2.5 2.5 0 0 0 7 2.5v1.25a0.25 0.25 0 0 1 -0.25 0.25H2a1 1 0 0 0 0 2h20a1 1 0 0 0 0 -2ZM9 3.75V2.5a0.5 0.5 0 0 1 0.5 -0.5h5a0.5 0.5 0 0 1 0.5 0.5v1.25a0.25 0.25 0 0 1 -0.25 0.25h-5.5A0.25 0.25 0 0 1 9 3.75Z"
-                                                    fill="#000000" stroke-width="1"></path>
-                                            </g>
+                                    <button type="submit" class="p-2 text-gray-700 hover:text-red-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.134-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.067-2.09 1.02-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                         </svg>
                                     </button>
                                 </form>
                             </td>
-
                         </tr>
                     @empty
                         <tr>
@@ -96,9 +85,13 @@
 
     <!-- Modal untuk menampilkan bukti TF -->
     <div id="buktiTFModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 w-96 shadow-lg relative">
-            <!-- Tombol Close -->
-            <button class="absolute top-2 right-2 text-gray-600 hover:text-gray-800" onclick="tutup()">✕</button>
+        <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-xl relative">
+            <button class="absolute top-2 right-2 text-gray-600 hover:text-gray-800" onclick="tutup()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
             <h2 class="text-xl font-bold mb-4">Bukti Transfer</h2>
             <img id="buktiTFImage" src="" alt="Bukti Transfer" class="rounded-md w-full">
         </div>
@@ -106,66 +99,74 @@
 @endsection
 
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function updateStatus(selectElement) {
-            const status = selectElement.value;
+            const newStatus = selectElement.value;
+            const originalStatus = selectElement.getAttribute('data-original-status');
             const transaksiId = selectElement.getAttribute('data-id');
 
-            console.log(`ID Transaksi: ${transaksiId}, Status: ${status}`); // Debug log untuk ID dan status
+            console.log(transaksiId)
 
-            // Menampilkan konfirmasi SweetAlert sebelum melanjutkan update status
             Swal.fire({
                 title: 'Apakah Anda yakin?',
-                text: `Status transaksi akan diubah menjadi ${status}.`,
+                text: `Status transaksi akan diubah menjadi "${newStatus}".`,
                 icon: 'warning',
                 showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
                 confirmButtonText: 'Ya, ubah!',
                 cancelButtonText: 'Batal',
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Jika konfirmasi, kirim request PATCH
+                    // Kirim request PATCH ke server
                     fetch(`/admin/transaksi/${transaksiId}/update-status`, {
-                            method: 'PATCH',
+                            method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Menyertakan token CSRF
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
                             },
                             body: JSON.stringify({
-                                status: status
+                                status: newStatus
                             })
                         })
-                        .then(response => {
-                            if (response.ok) {
-                                // Jika berhasil, tampilkan SweetAlert dengan pesan sukses
+                        .then(response => response.json()) // Selalu parse JSON untuk mendapatkan detailnya
+                        .then(data => {
+                            // Cek properti 'success' dari JSON yang dikirim backend
+                            if (data.success) {
                                 Swal.fire(
                                     'Berhasil!',
-                                    'Status transaksi telah diperbarui.',
+                                    data.message, // Gunakan pesan dari backend
                                     'success'
                                 );
+                                // Perbarui status original di atribut data agar konsisten
+                                selectElement.setAttribute('data-original-status', newStatus);
                             } else {
-                                // Jika gagal, tampilkan SweetAlert dengan pesan error
+                                // Jika gagal, tampilkan pesan error dari backend
                                 Swal.fire(
                                     'Gagal!',
-                                    'Terjadi kesalahan dalam memperbarui status.',
+                                    data.message || 'Terjadi kesalahan.', // Fallback message
                                     'error'
                                 );
+                                // Kembalikan dropdown ke status semula
+                                selectElement.value = originalStatus;
                             }
                         })
                         .catch(error => {
-                            Swal.fire(
-                                'Gagal!',
-                                'Terjadi kesalahan dalam memperbarui status.',
-                                'error'
-                            );
+                            // Tangani error jaringan atau parsing
                             console.error('Error:', error);
+                            Swal.fire('Error Jaringan', 'Gagal terhubung ke server.', 'error');
+                            // Kembalikan dropdown ke status semula
+                            selectElement.value = originalStatus;
                         });
+                } else {
+                    // Jika user menekan "Batal", kembalikan dropdown ke status semula
+                    selectElement.value = originalStatus;
                 }
             });
         }
-    </script>
 
-    <script>
         function showBuktiTF(imageUrl) {
             const modal = document.getElementById('buktiTFModal');
             const img = document.getElementById('buktiTFImage');

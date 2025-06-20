@@ -1,259 +1,279 @@
-<header
-    class="flex top-0 justify-between items-center py-4 px-24 bg-white z-50 bg-gradient-to-r from-cream to-gray-100 w-full fixed font-jost">
-    {{-- logo --}}
-    <div class="text-2xl font-semibold text-slate-700">
-        TERRA SHOP
-    </div>
-
-
-
-    {{-- menu --}}
-    <nav class="space-x-5 text-sm flex ">
-        <a href="/"
-            class="text-gray-900 hover:text-white {{ Request::is('/') ? 'bg-slate-900 text-white' : '' }} px-4 py-2 "
-            style="transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='var(--color-slate-900)';"
-            onmouseout="this.style.backgroundColor='';">Beranda</a>
-
-        <a href="/shop"
-            class="text-gray-900 hover:text-white {{ Request::is('shop') ? 'bg-slate-900 text-white' : '' }} px-4 py-2 "
-            style="transition: background-color 0.3s;"
-            onmouseover="this.style.backgroundColor='var(--color-slate-900)';"
-            onmouseout="this.style.backgroundColor='';">Toko</a>
-
-        <a href="/kategori"
-            class="text-gray-900 hover:text-white {{ Request::is('kategori') ? 'bg-slate-900 text-white' : '' }} px-4 py-2 "
-            style="transition: background-color 0.3s;"
-            onmouseover="this.style.backgroundColor='var(--color-slate-900)';"
-            onmouseout="this.style.backgroundColor='';">Kategori</a>
-
-        <a href="/about"
-            class="text-gray-900 hover:text-white {{ Request::is('about') ? 'bg-slate-900 text-white' : '' }} px-4 py-2 "
-            style="transition: background-color 0.3s;"
-            onmouseover="this.style.backgroundColor='var(--color-slate-900)';"
-            onmouseout="this.style.backgroundColor='';">Tentang Kami</a>
-
-        <a href="/contact-us"
-            class="text-gray-900 hover:text-white {{ Request::is('contact-us') ? 'bg-slate-900 text-white' : '' }} px-4 py-2 "
-            style="transition: background-color 0.3s;"
-            onmouseover="this.style.backgroundColor='var(--color-slate-900)';"
-            onmouseout="this.style.backgroundColor='';">Kontak</a>
-        <div x-data="{ open: false }" class="relative">
-            <button @click="open = !open"
-                class=" flex justify-center items-center h-full w-full cursor-pointer hover:scale-105">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 -0.5 16 16" fill="none" stroke="#000000"
-                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"
-                    id="Search--Streamline-Feather" height="16" width="16">
-                    <desc>Search Streamline Icon: https://streamlinehq.com</desc>
-                    <path d="M1.875 6.875a5 5 0 1 0 10 0 5 5 0 1 0 -10 0" stroke-width="1"></path>
-                    <path d="m13.125 13.125 -2.71875 -2.71875" stroke-width="1"></path>
-                </svg>
-            </button>
-
-            <!-- Search Form -->
-            <div x-show="open" x-transition class="absolute top-10 right-0 bg-white shadow-md p-2 rounded-md">
-                <input type="text" placeholder="Cari..."
-                    class="border p-2 rounded-md focus:outline-none focus:ring focus:ring-green-500">
+<!-- Modern Header -->
+<header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200/50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <div class="flex-shrink-0">
+                <div
+                    class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+                    MAIL<span class="text-emerald-600">FASHION</span>
+                </div>
             </div>
-        </div>
 
-    </nav>
+            <!-- Navigation -->
+            <nav class="hidden md:flex items-center space-x-1">
+                <a href="/"
+                    class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                    Beranda
+                </a>
+                <a href="/shop"
+                    class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                    Toko
+                </a>
+                <a href="/kategori"
+                    class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                    Kategori
+                </a>
+                <a href="{{ route('about') }}"
+                    class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                    Tentang Kami
+                </a>
+                <a href="{{ route('contact_us') }}"
+                    class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                    Kontak
+                </a>
+            </nav>
 
-
-
-    {{-- auth --}}
-    @if (Auth::check())
-        {{-- Jika pengguna sudah login --}}
-        <div class="flex gap-2">
-            <a href="{{ route('cart.view') }}" class="dropdown dropdown-end">
-                <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-                    <div class="indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
+            <!-- Right Side -->
+            <div class="flex items-center space-x-4">
+                <!-- Search -->
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open"
+                        class="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
+                    </button>
+
+                    <!-- Search Dropdown -->
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-75"
+                        x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                        @click.away="open = false"
+                        class="absolute right-0 top-12 w-80 bg-white rounded-xl shadow-lg border border-gray-200 p-4">
+                        <div class="flex items-center space-x-3">
+                            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            <input type="text" placeholder="Cari produk..."
+                                class="flex-1 outline-none text-slate-700 placeholder-slate-400">
+                            <button
+                                class="px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-lg hover:bg-slate-800 transition-colors">
+                                Cari
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-            </a>
+                @if (Auth::check())
+                    <!-- User Section - Logged In -->
+                    <div class="flex items-center space-x-3">
+                        <!-- Cart -->
+                        <a href="{{ route('cart.show') }}">
+                            <button
+                                class="relative p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
+                                    </path>
+                                </svg>
+                                <!-- Cart Badge (optional) -->
 
-            <div class="drawer drawer-end z-50">
-                <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
-                <div class="drawer-content">
-                    <!-- Page content here -->
-                    <label for="my-drawer-4" class="drawer-button ">
+                            </button>
+                        </a>
 
-                        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                            <div
-                                class="bg-gradient-to-br from-primary to-secondary text-primary-content rounded-full w-10 h-10 ring ring-primary ring-offset-2 ring-offset-base-100 shadow-lg flex justify-center items-center pt-1">
-                                <span
-                                    class="text-lg font-bold">{{ preg_match_all('/\b\w/u', Auth::user()->name_222405, $matches) ? strtoupper(implode('', $matches[0])) : '' }}</span>
-                            </div>
-                        </div>
-                    </label>
-                </div>
-                <div class="drawer-side">
-                    <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
-                    <ul class="text-base-content min-h-full w-96 bg-gradient-to-b from-slate-50 to-white">
-                        <!-- Sidebar content here -->
-                        <div class="flex flex-col items-center w-full h-screen">
-                            <!-- Profile Section -->
-                            <div class="w-full max-w-md p-8 text-center">
-                                <div class="flex justify-center">
-                                    <!-- Avatar with enhanced styling -->
-                                    <div
-                                        class="w-32 h-32 rounded-full border-4 border-primary flex items-center justify-center bg-gradient-to-br from-primary to-secondary text-white shadow-xl transform hover:scale-105 transition-transform duration-300">
-                                        <span
-                                            class="text-4xl font-bold">{{ preg_match_all('/\b\w/u', Auth::user()->name_222405, $matches) ? strtoupper(implode('', $matches[0])) : '' }}</span>
+                        <!-- User Profile Dropdown -->
+                        <div x-data="{ open: false }" class="relative">
+                            <button @click="open = !open"
+                                class="flex items-center space-x-2 p-1 rounded-lg hover:bg-slate-100 transition-all duration-200">
+                                <img class="w-8 h-8 rounded-full border-2 border-emerald-500 object-cover"
+                                    src="https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-541.jpg"
+                                    alt="Profile">
+                            </button>
+
+                            <!-- Profile Dropdown -->
+                            <div x-show="open" x-transition:enter="transition ease-out duration-200"
+                                x-transition:enter-start="opacity-0 scale-95"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-75"
+                                x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0 scale-95" @click.away="open = false"
+                                class="absolute right-0 top-12 w-80 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+
+                                <!-- Profile Header -->
+                                <div class="p-6 bg-gradient-to-r from-slate-50 to-emerald-50 border-b border-gray-200">
+                                    <div class="flex items-center space-x-4">
+                                        <img class="w-16 h-16 rounded-full border-4 border-emerald-500 object-cover"
+                                            src="https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-541.jpg"
+                                            alt="Profile">
+                                        <div>
+                                            <h3 class="text-lg font-semibold text-slate-900">
+                                                {{ Auth::user()->name_222405 }}</h3>
+                                            <p class="text-sm text-slate-600">{{ Auth::user()->email_222405 }}</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <h2 class="mt-6 text-2xl font-bold text-slate-800">{{ session('name') }}</h2>
-                                <p class="text-slate-500 text-sm mt-1">{{ session('email') }}</p>
-                            </div>
 
-                            <!-- Menu Section with refined design -->
-                            <div class="w-full max-w-md bg-white rounded-t-3xl shadow-xl p-6 px-8">
+                                <!-- Menu Items -->
+                                <div class="p-2">
+                                    <a href="{{ route('pesanan') }}"
+                                        class="flex items-center space-x-3 px-4 py-3 text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-all duration-200">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                            </path>
+                                        </svg>
+                                        <span class="text-sm font-medium">Pesanan Saya</span>
+                                    </a>
 
-                                <!-- Profile Link -->
-                                <a href="{{ route('user.profile') }}"
-                                    class="flex items-center justify-between py-4 px-3 rounded-xl hover:bg-slate-50 transition-colors duration-200 group mb-2">
-                                    <div class="flex items-center space-x-4">
-                                        <div
-                                            class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-200">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" class="h-5 w-5 text-blue-600">
-                                                <path d="M12 20h9" />
-                                                <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-                                            </svg>
-                                        </div>
-                                        <p class="text-slate-700 font-medium group-hover:text-slate-900">Profile Saya
-                                        </p>
-                                    </div>
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5 text-slate-400 group-hover:text-slate-700" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </a>
+                                    <a href="{{ route('riwayat') }}"
+                                        class="flex items-center space-x-3 px-4 py-3 text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-all duration-200">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z">
+                                            </path>
+                                        </svg>
+                                        <span class="text-sm font-medium">Riwayat Pesanan</span>
+                                    </a>
 
-                                <!-- Orders Link -->
-                                <a href="{{ route('pesanan') }}"
-                                    class="flex items-center justify-between py-4 px-3 rounded-xl hover:bg-slate-50 transition-colors duration-200 group mb-2">
-                                    <div class="flex items-center space-x-4">
-                                        <div
-                                            class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center group-hover:bg-green-100 transition-colors duration-200">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="h-5 w-5 text-green-600">
-                                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                                                <line x1="3" y1="6" x2="21" y2="6" />
-                                                <path d="M16 10a4 4 0 0 1-8 0" />
-                                            </svg>
-                                        </div>
-                                        <p class="text-slate-700 font-medium group-hover:text-slate-900">Pesanan Saya
-                                        </p>
-                                    </div>
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5 text-slate-400 group-hover:text-slate-700" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </a>
+                                    <a href="/profile"
+                                        class="flex items-center space-x-3 px-4 py-3 text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-all duration-200">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
+                                            </path>
+                                        </svg>
+                                        <span class="text-sm font-medium">Profil Saya</span>
+                                    </a>
 
-                                <!-- Transaction History Link -->
-                                <a href="{{ route('transaksi.index') }}"
-                                    class="flex items-center justify-between py-4 px-3 rounded-xl hover:bg-slate-50 transition-colors duration-200 group mb-2">
-                                    <div class="flex items-center space-x-4">
-                                        <div
-                                            class="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center group-hover:bg-purple-100 transition-colors duration-200">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="h-5 w-5 text-purple-600">
-                                                <circle cx="12" cy="12" r="10" />
-                                                <polyline points="12 6 12 12 16 14" />
-                                            </svg>
-                                        </div>
-                                        <p class="text-slate-700 font-medium group-hover:text-slate-900">Riwayat
-                                            Transaksi</p>
-                                    </div>
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5 text-slate-400 group-hover:text-slate-700" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </a>
+                                    <div class="border-t border-gray-200 my-2"></div>
 
-                                <!-- Cart Link -->
-                                <a href="{{ route('cart.view') }}"
-                                    class="flex items-center justify-between py-4 px-3 rounded-xl hover:bg-slate-50 transition-colors duration-200 group mb-2">
-                                    <div class="flex items-center space-x-4">
-                                        <div
-                                            class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center group-hover:bg-amber-100 transition-colors duration-200">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="h-5 w-5 text-amber-600">
-                                                <circle cx="9" cy="21" r="1" />
-                                                <circle cx="20" cy="21" r="1" />
-                                                <path
-                                                    d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                                            </svg>
-                                        </div>
-                                        <p class="text-slate-700 font-medium group-hover:text-slate-900">Keranjang</p>
-                                    </div>
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5 text-slate-400 group-hover:text-slate-700" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </a>
-
-                                <!-- Logout Button -->
-                                <div class="mt-6 pt-4 border-t border-slate-100">
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
                                         <button type="submit"
-                                            class="flex items-center w-full py-4 px-3 rounded-xl hover:bg-red-50 transition-colors duration-200 group">
-                                            <div class="flex items-center space-x-4">
-                                                <div
-                                                    class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center group-hover:bg-red-100 transition-colors duration-200">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="none" stroke="currentColor" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                        class="h-5 w-5 text-red-600">
-                                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                                                        <polyline points="16 17 21 12 16 7" />
-                                                        <line x1="21" y1="12" x2="9"
-                                                            y2="12" />
-                                                    </svg>
-                                                </div>
-                                                <p class="text-red-600 font-medium">Logout</p>
-                                            </div>
+                                            class="w-full flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 hover:text-red-700 rounded-lg transition-all duration-200">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                                                </path>
+                                            </svg>
+                                            <span class="text-sm font-medium">Logout</span>
                                         </button>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                    </ul>
-                </div>
+                    </div>
+                @else
+                    <!-- User Section - Not Logged In -->
+                    <div class="flex items-center space-x-3">
+                        <!-- Login Button -->
+                        <a href="{{ route('login') }}"
+                            class="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                            Masuk
+                        </a>
+
+                        <!-- signup Button -->
+                        <a href="{{ route('signup') }}"
+                            class="px-4 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg transition-all duration-200">
+                            Daftar
+                        </a>
+                    </div>
+                @endif
+
+                <!-- Mobile Menu Button -->
+                <button x-data @click="$dispatch('mobile-menu-toggle')"
+                    class="md:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
             </div>
         </div>
-    @else
-        {{-- Jika pengguna belum login --}}
-        <div class="space-x-2">
-            <a href="/login" class="text-gray-900 hover:text-black">Login</a>
-            <a href="/signup" class="border  py-1 px-4 -lg text-slate-950 ">Register</a>
-        </div>
-    @endif
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div x-data="{ mobileOpen: false }" @mobile-menu-toggle.window="mobileOpen = !mobileOpen" x-show="mobileOpen"
+        x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2"
+        x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
+        class="md:hidden border-t border-gray-200 bg-white">
+        <nav class="px-6 py-4 space-y-2">
+            <a href="/"
+                class="block px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                Beranda
+            </a>
+            <a href="/shop"
+                class="block px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                Toko
+            </a>
+            <a href="#"
+                class="block px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                Kategori
+            </a>
+            <a href="#"
+                class="block px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                Tentang Kami
+            </a>
+            <a href="#"
+                class="block px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                Kontak
+            </a>
+
+            @if (Auth::check())
+                <!-- Mobile User Menu - Logged In -->
+                <div class="border-t border-gray-200 pt-4 mt-4">
+                    <div class="flex items-center space-x-3 px-4 py-2 mb-3">
+                        <img class="w-10 h-10 rounded-full border-2 border-emerald-500 object-cover"
+                            src="https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-541.jpg"
+                            alt="Profile">
+                        <div>
+                            <p class="text-sm font-medium text-slate-900">{{ Auth::user()->name_222405 }}</p>
+                            <p class="text-xs text-slate-600">{{ Auth::user()->email_222405 }}</p>
+                        </div>
+                    </div>
+
+                    <a href="{{ route('pesanan') }}"
+                        class="block px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                        Pesanan Saya
+                    </a>
+                    <a href="{{ route('riwayat') }}"
+                        class="block px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                        Riwayat Pesanan
+                    </a>
+                    <a href="#"
+                        class="block px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                        Profil Saya
+                    </a>
+
+                    <form method="POST" action="{{ route('logout') }}" class="mt-2">
+                        @csrf
+                        <button type="submit"
+                            class="w-full text-left px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200">
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            @else
+                <!-- Mobile User Menu - Not Logged In -->
+                <div class="border-t border-gray-200 pt-4 mt-4 space-y-2">
+                    <a href="{{ route('login') }}"
+                        class="block px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200">
+                        Masuk
+                    </a>
+                    <a href="{{ route('signup') }}"
+                        class="block px-4 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg transition-all duration-200 text-center">
+                        Daftar
+                    </a>
+                </div>
+            @endif
+        </nav>
+    </div>
 </header>

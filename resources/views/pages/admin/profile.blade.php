@@ -1,126 +1,290 @@
 @extends('layouts.dashboard-layout')
 
+@section('title', 'Profile')
+
 @section('content')
-    <!-- Dashboard Stat Cards -->
-    
-    <div class="w-full bg-white shadow-lg rounded-lg overflow-hidden">
-      <!-- Banner Section -->
-      <div class="h-[300px] relative bg-linen">
-          
-      </div>
+    <main class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 ">
+        <div class="max-w-6xl mx-auto px-4 pt-20">
+            <!-- Header Card -->
+            <div class="relative bg-white rounded-3xl shadow-2xl overflow-hidden mb-8">
+                <!-- Background Pattern -->
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-800"></div>
+                <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60"
+                    xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff"
+                    fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4" /%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]
+                    opacity-20"></div>
 
-      <!-- Profile Section -->
-      <form id="profileForm" action="{{ route('admin.update') }}" method="POST" enctype="multipart/form-data" class="flex flex-col items-center relative px-32">
-          <!-- Avatar Section -->
-          <div class="absolute top-[-100px] left-[155px] text-center">
-              <label for="avatarInput" class="cursor-pointer relative">
-                  <img id="avatarPreview" class="h-44 w-44 border-4 border-white rounded-full"
-                      src="{{ asset('images/banner.png') }}" 
-                      alt="Profile Image">
-                  <div class="absolute bottom-0 right-0 bg-gray-200 p-1 rounded-full hidden" id="iconedit">
-                      <img src="{{ asset('images/icons/edit.png') }}" class="w-5 h-5" alt="Edit">
-                  </div>
-              </label>
-              <input type="file" id="avatarInput" class="hidden" accept="image/*" name="profile_photo">
-              <div class="mt-3 text-start">
-                  <h2 class="text-4xl font-semibold">Username</h2>
-                  <p class="flex items-center text-gray-400 text-lg mt-1">
-                      alamat
-                  </p>
-              </div>
-          </div>
+                <!-- Content -->
+                <div class="relative z-10 px-8 py-12">
+                    <div class="flex flex-col lg:flex-row items-center gap-8">
+                        <!-- Avatar Section -->
+                        <div class="relative group">
+                            <div
+                                class="absolute -inset-4 bg-gradient-to-r from-pink-500 to-violet-500 rounded-full opacity-30 group-hover:opacity-50 transition-all duration-300 blur-lg">
+                            </div>
+                            {{-- This label correctly points to "avatarInput" which is now inside the form --}}
+                            <label for="avatarInput" class="relative cursor-pointer block">
+                                <img id="avatarPreview"
+                                    class="w-40 h-40 object-cover rounded-full border-4 border-white shadow-2xl transition-transform duration-300 group-hover:scale-105"
+                                    src="{{ $user->profile_photo_222405 ? asset('storage/' . $user->profile_photo_222405) : asset('images/produk.png') }}"
+                                    alt="Profile Image">
+                                <div class="absolute -bottom-2 -right-2 bg-white p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-0 group-hover:scale-100"
+                                    id="iconedit">
+                                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z">
+                                        </path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                            </label>
+                        </div>
 
-          <!-- Action Buttons -->
-          <div class="flex space-x-3 mt-4 absolute top-[90px] right-[155px]">
-              <button type="button" id="editBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
-                  Update Profile
-              </button>
-          </div>
+                        <!-- User Info -->
+                        <div class="text-center lg:text-left text-white">
+                            <h1
+                                class="text-4xl lg:text-5xl font-bold mb-2 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+                                {{ $user->name_222405 }}
+                            </h1>
+                            <p class="text-blue-100 text-lg mb-4 flex items-center justify-center lg:justify-start gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                    </path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                {{ $user->address_222405 ?? 'Alamat belum diatur' }}
+                            </p>
+                            <div class="flex flex-wrap gap-3 justify-center lg:justify-start">
+                                <span class="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium">
+                                    {{ $user->email_222405 }}
+                                </span>
+                                @if ($user->phone_222405)
+                                    <span class="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium">
+                                        {{ $user->phone_222405 }}
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
-          <!-- Profile Form -->
-          <div  class="w-full px-6 py-4 mt-44 h-screen">
-              @csrf
-              @method('PUT')
-              <div class="grid grid-cols-2 gap-4 text-gray-700">
-                  <div>
-                      <label class="font-semibold">Username</label>
-                      <input type="text" name="name" id="username" class="w-full border rounded p-2" value="Username" disabled>
-                  </div>
-                  <div>
-                      <label class="font-semibold">Email</label>
-                      <input type="email" name="email" id="email" class="w-full border rounded p-2"  disabled>
-                  </div>
-                  <div>
-                      <label class="font-semibold">Alamat</label>
-                      <input type="text" name="address" id="alamat" class="w-full border rounded p-2"  disabled>
-                  </div>
-                  <div>
-                      <label class="font-semibold">Phone</label>
-                      <input type="text" name="phone" id="phone" class="w-full border rounded p-2"  disabled>
-                  </div>
-                  <div>
-                      <label class="font-semibold">Tanggal Lahir</label>
-                      <input type="date" name="birth_date" id="dob" class="w-full border rounded p-2"  disabled>
-                  </div>
-                 <div>
-                  <label class="font-semibold">Jenis Kelamin</label>
-                  <select id="gender" name="gender" class="text-gray-500 w-full border rounded p-2" disabled>
-                      
-                  </select>
-                 </div>
-              </div>
-              <div class="flex gap-3 mt-5">
-                  <button type="submit" id="saveBtn" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 hidden">
-                      Simpan Perubahan
-                  </button>
-                  <button type="button" id="cancelBtn" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition duration-300 hidden">
-                      Batal
-                  </button>
-              </div>
-          </div>
-      </form>
-  </div>
+                        <!-- Action Button -->
+                        <div class="lg:ml-auto">
+                            <button type="button" id="editBtn"
+                                class="px-8 py-3 bg-white text-indigo-600 rounded-full font-semibold hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                    </path>
+                                </svg>
+                                Edit Profile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-      
+            <!-- Profile Form Card -->
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                <div class="p-8">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div
+                            class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800">Personal Information</h2>
+                    </div>
+
+                    <form id="profileForm" action="{{ route('user.update') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        {{-- Laravel requires POST method, but we spoof it with PUT/PATCH for updates --}}
+                        @method('POST')
+
+                        {{-- THE FIX: The file input is now INSIDE the form --}}
+                        <input type="file" id="avatarInput" name="profile_photo" class="hidden" accept="image/*">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Username -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                    Username
+                                </label>
+                                <input type="text" name="name" id="username"
+                                    class="w-full border-2 border-gray-200 rounded-xl p-4 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 disabled:bg-gray-50 disabled:text-gray-500"
+                                    value="{{ $user->name_222405 }}" disabled>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207">
+                                        </path>
+                                    </svg>
+                                    Email
+                                </label>
+                                <input type="email" name="email" id="email"
+                                    class="w-full border-2 border-gray-200 rounded-xl p-4 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 disabled:bg-gray-50 disabled:text-gray-500"
+                                    value="{{ $user->email_222405 }}" disabled>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                        </path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                    Alamat
+                                </label>
+                                <input type="text" name="address" id="alamat"
+                                    class="w-full border-2 border-gray-200 rounded-xl p-4 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 disabled:bg-gray-50 disabled:text-gray-500"
+                                    value="{{ $user->address_222405 }}" disabled>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                        </path>
+                                    </svg>
+                                    Phone
+                                </label>
+                                <input type="text" name="phone" id="phone"
+                                    class="w-full border-2 border-gray-200 rounded-xl p-4 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 disabled:bg-gray-50 disabled:text-gray-500"
+                                    value="{{ $user->phone_222405 }}" disabled>
+                            </div>
+
+                            <!-- Birth Date -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                    Tanggal Lahir
+                                </label>
+                                <input type="date" name="birth_date" id="dob"
+                                    class="w-full border-2 border-gray-200 rounded-xl p-4 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 disabled:bg-gray-50 disabled:text-gray-500"
+                                    value="{{ $user->birth_date_222405 }}" disabled>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z">
+                                        </path>
+                                    </svg>
+                                    Jenis Kelamin
+                                </label>
+                                <select id="gender" name="gender"
+                                    class="w-full border-2 border-gray-200 rounded-xl p-4 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 disabled:bg-gray-50 disabled:text-gray-500"
+                                    disabled>
+                                    <option value="" disabled {{ !$user->gender_222405 ? 'selected' : '' }}>Pilih
+                                        Gender</option>
+                                    <option value="male" {{ $user->gender_222405 == 'male' ? 'selected' : '' }}>
+                                        Laki-laki</option>
+                                    <option value="female" {{ $user->gender_222405 == 'female' ? 'selected' : '' }}>
+                                        Perempuan</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex gap-4 mt-8 pt-8 border-t border-gray-200">
+                            <button type="submit" id="saveBtn"
+                                class="px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-semibold hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg hidden flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Simpan Perubahan
+                            </button>
+                            <button type="button" id="cancelBtn"
+                                class="px-8 py-3 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-xl font-semibold hover:from-gray-600 hover:to-gray-700 transition-all duration-300 transform hover:scale-105 shadow-lg hidden flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                                Batal
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
 @endsection
-@section("scripts")
-<script>
-    document.getElementById('editBtn').addEventListener('click', function() {
-        // Enable all input fields
-        document.querySelectorAll('#profileForm input').forEach(input => input.removeAttribute('disabled'));
-        document.querySelectorAll('#profileForm select').forEach(input => input.removeAttribute('disabled'));
-        
-        // Show save and cancel buttons, hide edit button
-        document.getElementById('saveBtn').classList.remove('hidden');
-        document.getElementById('cancelBtn').classList.remove('hidden');
-        this.classList.add('hidden');
-        
-        // Show avatar input and edit icon
-        document.getElementById('iconedit').classList.remove('hidden');
-    });
 
-    document.getElementById('cancelBtn').addEventListener('click', function() {
-        // Disable all input fields
-        document.querySelectorAll('#profileForm input').forEach(input => input.setAttribute('disabled', true));
-        
-        // Show edit button, hide save and cancel buttons
-        document.getElementById('editBtn').classList.remove('hidden');
-        document.getElementById('saveBtn').classList.add('hidden');
-        this.classList.add('hidden');
-        
-        // Hide avatar input and edit icon
-        document.getElementById('iconedit').classList.add('hidden');
-    });
+@section('scripts')
+    {{-- Your existing JavaScript goes here --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editBtn = document.getElementById('editBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const profileForm = document.getElementById('profileForm');
+            const formInputs = profileForm.querySelectorAll('input, select');
+            const avatarInput = document.getElementById('avatarInput');
+            const avatarPreview = document.getElementById('avatarPreview');
+            const iconEdit = document.getElementById('iconedit');
 
-    document.getElementById('avatarInput').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('avatarPreview').src = e.target.result;
+            function toggleEditMode(isEditing) {
+                formInputs.forEach(input => {
+                    if (input.id !== 'avatarInput') { // Don't disable the file input
+                        input.disabled = !isEditing;
+                    }
+                });
+
+                editBtn.classList.toggle('hidden', isEditing);
+                saveBtn.classList.toggle('hidden', !isEditing);
+                cancelBtn.classList.toggle('hidden', !isEditing);
+                // The icon should only appear when you hover over the image, not permanently
+                // iconEdit.classList.toggle('hidden', !isEditing);
             }
-            reader.readAsDataURL(file);
-        }
-    });
-</script>
+
+            editBtn.addEventListener('click', () => toggleEditMode(true));
+            cancelBtn.addEventListener('click', () => {
+                toggleEditMode(false);
+                profileForm.reset(); // Reset form fields to original values
+                avatarPreview.src =
+                    "{{ $user->profile_photo_222405 ? asset('storage/' . $user->profile_photo_222405) : asset('images/produk.png') }}"; // Reset image preview
+            });
+
+            avatarInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        avatarPreview.src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
 @endsection

@@ -23,11 +23,11 @@ class CartController extends Controller
             return response()->json(['message' => 'Product not found'], 404);
         }
 
-        $userId = session('id_user_222405');
+        $userId = session('email');
 
         // Find or create cart using the correct field names
         $cart = Cart::firstOrCreate(
-            ['id_user_222405' => $userId],
+            ['email_222405' => $userId],
             ['id_cart_222405' => Str::uuid()->toString()]
         );
 
@@ -54,10 +54,10 @@ class CartController extends Controller
 
     public function showCart()
     {
-        $userId = session('id_user_222405');
+        $userId = session('email');
 
         // Get cart with items using correct field names and relationships
-        $cart = Cart::where('id_user_222405', $userId)->first();
+        $cart = Cart::where('email_222405', $userId)->first();
 
         if (!$cart) {
             return view('pages.users.cart', ['cartItems' => collect()]);
@@ -72,8 +72,8 @@ class CartController extends Controller
     // Fungsi untuk melihat isi cart
     public function viewCart()
     {
-        $userId = session('id_user_222405');
-        $cart   = Cart::where('id_user_222405', $userId)->first();
+        $userId = session('email');
+        $cart   = Cart::where('email_222405', $userId)->first();
 
         if (!$cart) {
             return response()->json(['message' => 'Cart is empty'], 200);
@@ -98,8 +98,8 @@ class CartController extends Controller
 
     public function removeFromCart(Request $request, $productId)
     {
-        $userId = session('id_user_222405');
-        $cart   = Cart::where('id_user_222405', $userId)->first();
+        $userId = session('email');
+        $cart   = Cart::where('email_222405', $userId)->first();
 
         if (!$cart) {
             return response()->json(['message' => 'Cart not found'], 404);
@@ -141,8 +141,8 @@ class CartController extends Controller
     // Additional helpful method to get cart total
     public function getCartTotal()
     {
-        $userId = session('id_user_222405');
-        $cart   = Cart::where('id_user_222405', $userId)->first();
+        $userId = session('email');
+        $cart   = Cart::where('email_222405', $userId)->first();
 
         if (!$cart) {
             return response()->json(['total' => 0], 200);

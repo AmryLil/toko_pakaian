@@ -9,12 +9,12 @@
                     <div>
                         <p class="text-sm text-gray-500">Tanggal Pesanan:
                             <span
-                                class="font-medium text-gray-800">{{ \Carbon\Carbon::parse($transaksi->created_at)->format('M d, Y') }}</span>
+                                class="font-medium text-gray-800">{{ \Carbon\Carbon::parse($transaksi->created_at_222405)->format('M d, Y') }}</span>
                         </p>
                         <p class="text-sm text-gray-500">Status:
                             <span
-                                class="font-semibold {{ $transaksi->status === 'dikirim' ? 'text-yellow-500' : 'text-blue-500' }}">
-                                {{ ucfirst($transaksi->status) }}
+                                class="font-semibold {{ $transaksi->status_222405 === 'dikirim' ? 'text-yellow-500' : 'text-blue-500' }}">
+                                {{ ucfirst($transaksi->status_222405) }}
                             </span>
                         </p>
                     </div>
@@ -22,26 +22,27 @@
 
                 <!-- Bagian Produk -->
                 <div class="flex items-center py-4 border-b border-gray-300 last:border-none">
-                    <img src="{{ asset('storage/' . $transaksi->product->path_img) }}" alt="{{ $transaksi->product->nama }}"
-                        class="w-20 h-20 object-cover rounded-lg mr-4">
+                    <img src="{{ asset('storage/' . $transaksi->product->path_img_222405) }}"
+                        alt="{{ $transaksi->product->nama_222405 }}" class="w-20 h-20 object-cover rounded-lg mr-4">
                     <div class="flex-1">
-                        <h4 class="text-lg font-semibold">{{ $transaksi->product->nama }}</h4>
-                        <p class="text-sm text-gray-500 pr-20">{{ $transaksi->product->deskripsi }}</p>
+                        <h4 class="text-lg font-semibold">{{ $transaksi->product->nama_222405 }}</h4>
+                        <p class="text-sm text-gray-500 pr-20">{{ $transaksi->product->deskripsi_222405 }}</p>
                     </div>
                     <div class="text-right">
-                        <p class="text-lg font-semibold">Rp {{ number_format($transaksi->product->harga, 2) }}</p>
-                        <p class="text-sm text-gray-500">Qty: {{ $transaksi->jumlah }}</p>
+                        <p class="text-lg font-semibold">Rp {{ number_format($transaksi->product->harga_222405, 2) }}</p>
+                        <p class="text-sm text-gray-500">Qty: {{ $transaksi->jumlah_222405 }}</p>
                     </div>
                 </div>
 
                 <!-- Total Harga -->
                 <div class="mt-4 flex justify-between items-center">
-                    <p class="text-lg font-semibold">Total Harga: Rp {{ number_format($transaksi->harga_total, 2) }}</p>
+                    <p class="text-lg font-semibold">Total Harga: Rp {{ number_format($transaksi->harga_total_222405, 2) }}
+                    </p>
 
                     <!-- Tombol Pesanan Diterima -->
-                    @if ($transaksi->status === 'dikirim')
+                    @if ($transaksi->status_222405 === 'dikirim')
                         <button type="button" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
-                            onclick="konfirmasiPesananDiterima('{{ $transaksi->id_transaksi }}')">
+                            onclick="konfirmasiPesananDiterima('{{ $transaksi->id_transaksi_222405 }}')">
                             Pesanan Diterima
                         </button>
                     @endif
@@ -67,14 +68,26 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Kirimkan form secara programatis
                     let form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = `{{ url('pesanan') }}/${transaksiId}`;
-                    form.innerHTML = `
-                    @csrf
-                    @extends('layouts.app')
-                `;
+                    form.method = 'POST'; // pakai POST
+                    form.action = `/update-pesanan/${transaksiId}`;
+
+                    // CSRF token
+                    let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    let csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = csrfToken;
+
+                    // Spoofing method PUT
+                    let methodInput = document.createElement('input');
+                    methodInput.type = 'hidden';
+                    methodInput.name = '_method';
+                    methodInput.value = 'PUT';
+
+                    form.appendChild(csrfInput);
+                    form.appendChild(methodInput);
+
                     document.body.appendChild(form);
                     form.submit();
                 }

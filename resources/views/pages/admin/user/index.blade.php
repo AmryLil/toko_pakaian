@@ -1,21 +1,19 @@
 @extends('layouts.dashboard-layout')
 
 @section('content')
-    <!-- Dashboard Header -->
     <div class="rounded-xl pt-20 w-full ">
         <div class="flex justify-between items-center mb-4 p-4 text-slate-950 rounded-t-xl bg-linen ">
-            <h1 class="text-2xl font-bold">Kelola Semua Data Produk</h1>
-            <a href="{{ route('products.create') }}">
+            <h1 class="text-2xl font-bold">Kelola Semua Data User</h1>
+            <a href="{{ route('users.create') }}">
                 <button
                     class="btn bg-white text-slate-900 hover:bg-gray-200 font-semibold px-4 py-2 rounded-lg shadow-md">Tambah
-                    Produk</button>
+                    User</button>
             </a>
         </div>
         <div class="overflow-x-auto px-4">
-            <!-- Input Pencarian -->
             <div class="mb-4 flex gap-2">
-                <input type="text" id="search" placeholder="Cari produk..."
-                    class="border-2 border-gray-300 p-2 rounded-lg w-full" onkeyup="searchProducts()">
+                <input type="text" id="search" placeholder="Cari user..."
+                    class="border-2 border-gray-300 p-2 rounded-lg w-full" onkeyup="searchUsers()">
                 <div class="flex items-center justify-center">
                     <svg id="Horizontal-Sliders-Lines--Streamline-Atlas" xmlns="http://www.w3.org/2000/svg"
                         viewBox="-0.5 -0.5 16 16" height="24" width="24">
@@ -47,32 +45,31 @@
                 <thead class="bg-gray-200 text-gray-800 text-lg">
                     <tr>
                         <th class="py-4 px-6 text-left">No</th>
-                        <th class="py-4 px-6 text-left">ID</th>
-                        <th class="py-4 px-6 text-left">Nama</th>
-                        <th class="py-4 px-6 text-left">Kategori</th>
-                        <th class="py-4 px-6 text-left">Harga</th>
-                        <th class="py-4 px-6 text-left">Jumlah</th>
+                        <th class="py-4 px-6 text-left">Email</th>
+                        <th class="py-4 px-6 text-left">Name</th>
+                        <th class="py-4 px-6 text-left">Role</th>
+                        <th class="py-4 px-6 text-left">Gender</th>
+                        <th class="py-4 px-6 text-left">Phone</th>
                         <th class="py-4 px-6 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody id="product-table" class="text-gray-700">
-                    @foreach ($products as $index => $product)
+                <tbody id="user-table" class="text-gray-700">
+                    @foreach ($users as $index => $user)
                         <tr class="odd:bg-gray-50 even:bg-gray-100 hover:bg-slate-200 transition">
                             <td class="py-4 px-6">{{ $index + 1 }}</td>
-                            <td class="py-4 px-6">{{ $product->id_produk_222405 }}</td>
-                            <td class="py-4 px-6 font-semibold">{{ $product->nama_222405 }}</td>
-                            <td class="py-4 px-6">{{ $product->category->nama_222405 ?? 'Tidak ada kategori' }}</td>
-                            <td class="py-4 px-6">{{ number_format($product->harga_222405, 0, ',', '.') }}</td>
-                            <td class="py-4 px-6">{{ $product->jumlah_222405 }}</td>
+                            <td class="py-4 px-6 font-semibold">{{ $user->email_222405 }}</td>
+                            <td class="py-4 px-6">{{ $user->name_222405 }}</td>
+                            <td class="py-4 px-6">{{ $user->role_222405 }}</td>
+                            <td class="py-4 px-6">{{ $user->gender_222405 }}</td>
+                            <td class="py-4 px-6">{{ $user->phone_222405 }}</td>
                             <td class="py-4 px-6 text-center">
                                 <div class="flex justify-center space-x-2">
-                                    <a href="{{ route('products.show', $product->id_produk_222405) }}"
+                                    <a href="{{ route('users.show', $user->email_222405) }}"
                                         class="btn btn-info p-2 rounded-lg">Lihat</a>
-                                    <a href="{{ route('products.edit', $product->id_produk_222405) }}"
+                                    <a href="{{ route('users.edit', $user->email_222405) }}"
                                         class="btn btn-warning p-2 rounded-lg">Edit</a>
-                                    <form action="{{ route('products.destroy', $product->id_produk_222405) }}"
-                                        method="POST"
-                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus barang ini?');">
+                                    <form action="{{ route('users.destroy', $user->email_222405) }}" method="POST"
+                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-error p-2 rounded-lg">Hapus</button>
@@ -86,17 +83,11 @@
         </div>
     </div>
 
-    <!-- Confirmation Dialog for Delete -->
     <script>
-        function confirmDelete() {
-            return confirm('Apakah Anda yakin ingin menghapus barang ini?');
-        }
-
-        // Fungsi untuk mencari produk
-        function searchProducts() {
+        function searchUsers() {
             const input = document.getElementById('search');
             const filter = input.value.toLowerCase();
-            const table = document.getElementById('product-table');
+            const table = document.getElementById('user-table');
             const rows = table.getElementsByTagName('tr');
 
             for (let i = 0; i < rows.length; i++) {
