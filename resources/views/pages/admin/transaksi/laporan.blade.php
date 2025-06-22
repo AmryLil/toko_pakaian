@@ -90,6 +90,46 @@
             </div>
         </div>
 
+        {{-- CARD BARU: Daftar Produk Stok Menipis --}}
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold text-gray-800">Daftar Produk dengan Stok Menipis</h3>
+                <span class="text-sm font-medium text-red-600">Perlu Segera Diisi Ulang!</span>
+            </div>
+
+            {{-- Tabel untuk menampilkan daftar produk --}}
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-gray-600">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-4 py-3">Nama Produk</th>
+                            <th scope="col" class="px-4 py-3 text-center">Sisa Stok</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($produkStokSedikit as $produk)
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="px-4 py-3 font-medium text-gray-900">
+                                    {{ $produk->nama_222405 }}
+                                </td>
+                                <td class="px-4 py-3 text-center">
+                                    <span class="bg-red-100 text-red-800 text-sm font-semibold me-2 px-3 py-1 rounded-full">
+                                        {{ $produk->jumlah_222405 }}
+                                    </span>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr class="border-b">
+                                <td colspan="2" class="px-4 py-4 text-center text-gray-500">
+                                    Tidak ada produk dengan stok menipis saat ini. Semua stok aman.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div class="bg-white shadow-lg rounded-lg p-6 mb-8 flex flex-wrap justify-between items-center gap-4">
             <div>
                 <strong class="text-lg text-gray-700">Total Nilai Transaksi:</strong>

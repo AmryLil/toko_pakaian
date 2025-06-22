@@ -127,7 +127,6 @@ class TransaksiController extends Controller
         $startDate = $request->input('start_date');
         $endDate   = $request->input('end_date');
 
-        // --- BAGIAN BARU: Logika untuk Filter Cepat ---
         if ($filter) {
             switch ($filter) {
                 case 'today':
@@ -148,7 +147,6 @@ class TransaksiController extends Controller
                     break;
             }
         }
-        // --- AKHIR BAGIAN BARU ---
 
         // Query utama
         $query = Transaksi::with(['pelanggan', 'produk'])->orderBy('tanggal_transaksi_222405', 'desc');
@@ -181,13 +179,20 @@ class TransaksiController extends Controller
         if ($produkTerlaris)
             $produkTerlaris->total_terjual = $produkTerlarisData->total_terjual;
 
+        $stokMenipisThreshold = 10;
+        $produkStokSedikit    = Product::query()
+            ->where('jumlah_222405', '<=', $stokMenipisThreshold)
+            ->orderBy('jumlah_222405', 'asc')  // Urutkan dari yang paling sedikit
+            ->get();
+
         return [
-            'transaksis'       => $transaksis,
-            'totalTransaksi'   => $transaksis->sum('harga_total_222405'),
-            'pelangganTeratas' => $pelangganTeratas,
-            'produkTerlaris'   => $produkTerlaris,
-            'startDate'        => $startDate,
-            'endDate'          => $endDate,
+            'transaksis'        => $transaksis,
+            'totalTransaksi'    => $transaksis->sum('harga_total_222405'),
+            'pelangganTeratas'  => $pelangganTeratas,
+            'produkTerlaris'    => $produkTerlaris,
+            'produkStokSedikit' => $produkStokSedikit,  // <-- DATA BARU
+            'startDate'         => $startDate,
+            'endDate'           => $endDate,
         ];
     }
 
