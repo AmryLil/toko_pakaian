@@ -25,6 +25,6 @@ class CategoryProduct extends Model
     // Relasi one-to-many dengan produk
     public function products()
     {
-        return $this->hasMany(Product::class, 'kategori_id', 'id');
+        return $this->hasMany(Product::class, 'id_kategori_222405', 'id_kategori_222405');
     }
 }

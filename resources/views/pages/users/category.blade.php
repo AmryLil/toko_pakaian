@@ -13,7 +13,7 @@
                 @foreach ($categories as $category)
                     <!-- Dynamic Category Cards -->
                     @include('components.categories.card_category', [
-                        'path' => route('categories.show', $category->id_kategori_222405),
+                        'path' => '/shop',
                         'title' => $category->nama_222405,
                         'isOdd' => $loop->iteration % 2 !== 1,
                         'desc' => $category->deskripsi_222405,

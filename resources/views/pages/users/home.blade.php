@@ -11,7 +11,9 @@
                     <P class="mt-2">Temukan gaya terbaru dengan koleksi eksklusif kami. Nikmati kenyamanan dan kemewahan
                         dalam setiap pilihan pakaian yang telah dirancang khusus untuk Anda yang menghargai kualitas dan
                         style.</P>
-                    <button class="border mt-10 border-slate-950 px-4 py-1">BELANJA SEKARANG</button>
+                    <a href="/shop">
+                        <button class="border mt-10 border-slate-950 px-4 py-1">BELANJA SEKARANG</button>
+                    </a>
                 </div>
                 <img src="{{ asset('images/banner.png') }}" alt=""
                     class="w-[130%] h-full object-cover object-[30%_0%]  ">
@@ -37,8 +39,8 @@
         <h1 class="font-semibold text-xl text-center mb-5">KOLEKSI TERBARU</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             @foreach ($products as $index => $product)
-                <div
-                    class="product-card group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 fade-in">
+                <div class="product-card group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 fade-in"
+                    style="animation-delay: {{ $index * 0.1 }}s;">
                     <!-- Product Image Container -->
                     <div class="relative overflow-hidden h-64 bg-gray-100">
                         <img src="{{ asset('storage/' . $product->path_img_222405) }}" alt="{{ $product->nama_222405 }}"
@@ -46,20 +48,18 @@
 
                         <!-- Overlay with Quick View -->
                         <div
-                            class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                            class="absolute inset-0  bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
                             <a href="{{ route('product.show', $product->id_produk_222405) }}"
                                 class="bg-white text-gray-800 px-4 py-2 rounded-full font-medium opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-gray-100">
                                 <i class="fas fa-eye mr-2"></i>Lihat Detail
                             </a>
                         </div>
-
-
                     </div>
 
                     <!-- Product Info -->
                     <div class="p-6">
                         <h3
-                            class="font-bold text-lg text-gray-800 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300">
+                            class="font-bold text-lg text-gray-800 mb-2 h-14 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300">
                             {{ $product->nama_222405 }}
                         </h3>
 
@@ -73,13 +73,11 @@
                         <!-- Action Buttons -->
                         <div class="flex gap-2">
                             <!-- Add to Cart Button -->
-                            <button onclick="addToCart({{ $product->id_produk_222405 }})"
-                                class="flex-1 bg-linen text-black font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center gap-2">
+                            <button onclick="addToCart('{{ $product->id_produk_222405 }}')"
+                                class="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center gap-2">
                                 <i class="fas fa-shopping-cart"></i>
                                 <span>Keranjang</span>
                             </button>
-
-
                         </div>
                     </div>
                 </div>
@@ -97,7 +95,7 @@
                     <h1 class="text-3xl font-bold">KOLEKSI OLAHRAGA</h1>
                     <p class="text-gray-700 mt-2">Koleksi terbaru sudah tersedia secara online dan di toko. Hadir dalam
                         berbagai pilihan warna, bahan, dan gaya yang sesuai dengan aktivitas olahraga Anda.</p>
-                    <a href="#" class="mt-4 inline-block bg-black text-white px-4 py-2">BELANJA SEKARANG →</a>
+                    <a href="/shop" class="mt-4 inline-block bg-black text-white px-4 py-2">BELANJA SEKARANG →</a>
                 </div>
             </div>
         </div>
@@ -175,103 +173,102 @@
             transform: scale(1) !important;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
-        function toggleModal(modalId, show = true) {
-            const modal = document.getElementById(modalId);
-            modal.classList.toggle('hidden', !show);
+        // Add to Cart Function
+        function addToCart(productId) {
+            // Periksa apakah pengguna sudah login
+            if (!isUserLoggedIn()) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Login Diperlukan',
+                    text: 'Silakan login terlebih dahulu untuk menambahkan produk ke keranjang.',
+                    showCancelButton: true,
+                    confirmButtonText: 'Login Sekarang',
+                    cancelButtonText: 'Batal',
+                    confirmButtonColor: '#3B82F6'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "{{ route('login') }}";
+                    }
+                });
+                return;
+            }
+
+            // Tampilkan notifikasi loading
+            Swal.fire({
+                title: 'Menambahkan ke keranjang...',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            // Kirim request ke server menggunakan Fetch API
+            fetch(`{{ route('cart.add', ['productId' => ':id']) }}`.replace(':id', productId), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        quantity: 1
+                    })
+                })
+                .then(response => {
+                    // Sangat penting: Periksa jika ada redirect dari middleware 'auth'
+                    if (response.redirected) {
+                        window.location.href = response.url; // Arahkan ke halaman login
+                        return Promise.reject(new Error('Redirecting to login.')); // Hentikan proses selanjutnya
+                    }
+                    return response.json(); // Lanjutkan untuk mem-parsing JSON
+                })
+                .then(data => {
+                    // Periksa pesan dari backend
+                    if (data && data.message === 'Product added to cart successfully') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: 'Produk berhasil ditambahkan ke keranjang.',
+                            timer: 2000,
+                            showConfirmButton: false,
+                            toast: true,
+                            position: 'top-end'
+                        });
+                    } else {
+                        // Jika ada pesan error dari backend
+                        throw new Error(data.message || 'Gagal menambahkan produk.');
+                    }
+                })
+                .catch(error => {
+                    // Tangani semua jenis error (jaringan, redirect, atau dari backend)
+                    // Jangan tampilkan error jika itu karena redirect
+                    if (error.message !== 'Redirecting to login.') {
+                        console.error('Error:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: error.message || 'Gagal menambahkan ke keranjang. Silakan coba lagi.',
+                            confirmButtonColor: '#EF4444'
+                        });
+                    }
+                });
         }
 
+        // Check if user is logged in
         function isUserLoggedIn() {
             return {{ auth()->check() ? 'true' : 'false' }};
         }
 
-        document.querySelectorAll('#add-to-cart').forEach(button => {
-            button.addEventListener('click', async function() {
-                if (!isUserLoggedIn()) {
-                    window.location.href = "{{ route('login') }}";
-                    return;
-                }
-
-                const productId = this.dataset.productId; // Ambil ID produk dari data-attribute tombol
-                const qty = 1; // Set default quantity
-
-                if (isNaN(qty) || qty < 1) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Jumlah harus minimal 1.'
-                    });
-                    return;
-                }
-
-                try {
-                    const response = await fetch(`#`.replace(':id',
-                        productId), {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            quantity: qty
-                        })
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Terjadi kesalahan saat menambahkan ke keranjang.');
-                    }
-
-                    const data = await response.json();
-                    console.log('Response:', data);
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil!',
-                        text: 'Produk berhasil ditambahkan ke keranjang.',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-
-                } catch (error) {
-                    console.error('Error:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal',
-                        text: 'Gagal menambahkan ke keranjang. Silakan coba lagi.'
-                    });
-                }
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const swiper = new Swiper('.swiper-container', {
-                slidesPerView: 1, // Menampilkan satu slide per kali
-                loop: true, // Slider akan kembali ke awal setelah slide terakhir
-                autoplay: {
-                    delay: 3000, // Interval antar slide (ms)
-                    disableOnInteraction: false,
-                },
-                pagination: {
-                    el: '.swiper-pagination', // Elemen pagination
-                    clickable: true, // Membuat pagination interaktif
-                },
-                speed: 600, // Kecepatan transisi slide (ms)
-                effect: 'fade', // Tambahkan efek transisi jika ingin
-                fadeEffect: {
-                    crossFade: true, // Memperhalus efek transisi fade
-                },
-            });
-        });
-    </script>
-
-    <script>
+        // Scroll to top functionality
         document.addEventListener("DOMContentLoaded", function() {
             const scrollToTopButton = document.getElementById("scrollToTopButton");
 
             window.addEventListener("scroll", () => {
-                if (window.scrollY > 00) {
+                if (window.scrollY > 300) {
                     scrollToTopButton.classList.remove("hidden");
                 } else {
                     scrollToTopButton.classList.add("hidden");
@@ -284,25 +281,6 @@
                     behavior: "smooth",
                 });
             });
-        });
-    </script>
-
-    <!-- JavaScript untuk Animasi Modal -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const modal = document.getElementById('my_modal_3');
-            if (modal) {
-                modal.addEventListener('click', (event) => {
-                    if (event.target === modal) {
-                        modal.close();
-                    }
-                });
-            }
-        });
-
-        // Tambahkan delay ke setiap kartu produk untuk animasi berurutan
-        document.querySelectorAll('.fade-in').forEach((el, index) => {
-            el.style.animationDelay = `${index * 0.2}s`;
         });
     </script>
 @endsection
